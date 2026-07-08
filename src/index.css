@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-canvas-light dark:bg-canvas-dark text-body-light dark:text-body-dark font-body antialiased transition-colors duration-300;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-heading-light dark:text-heading-dark;
+  }
+  ::selection {
+    @apply bg-accent/20;
+  }
+  *:focus-visible {
+    outline: 2px solid #00D2C4;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-xs tracking-wide text-accent dark:text-accent-dark uppercase;
+  }
+  .container-page {
+    @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-10;
+  }
+  .card-surface {
+    @apply bg-surface-light dark:bg-surface-dark border border-slate-200/70 dark:border-slate-700/60 rounded-2xl shadow-card;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
