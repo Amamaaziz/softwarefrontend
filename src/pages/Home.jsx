@@ -1,6 +1,20 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, ChevronLeft, ChevronRight, Star, CheckCircle2 } from 'lucide-react'
+import { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } from 'framer-motion'
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  CheckCircle2,
+  Code2,
+  Smartphone,
+  Palette,
+  TrendingUp,
+  Layers,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import Button from '../components/ui/Button.jsx'
 import Card from '../components/ui/Card.jsx'
@@ -25,6 +39,120 @@ const CEO = {
   photo: 'https://i.pravatar.cc/300?img=47',
   message:
     'As CEO, Sara is a strategist and creative technologist who believes that real innovation begins when you stop showcasing technology and start solving human problems.',
+}
+
+// Icons + accent colors cycled per card, in order
+const SERVICE_VISUALS = [
+  { icon: Code2, ring: 'ring-blue-400/30', bg: 'bg-blue-500/10', text: 'text-blue-500 dark:text-blue-400', glow: 'rgba(59,130,246,0.35)' },
+  { icon: Smartphone, ring: 'ring-violet-400/30', bg: 'bg-violet-500/10', text: 'text-violet-500 dark:text-violet-400', glow: 'rgba(139,92,246,0.35)' },
+  { icon: Palette, ring: 'ring-pink-400/30', bg: 'bg-pink-500/10', text: 'text-pink-500 dark:text-pink-400', glow: 'rgba(236,72,153,0.35)' },
+  { icon: TrendingUp, ring: 'ring-amber-400/30', bg: 'bg-amber-500/10', text: 'text-amber-500 dark:text-amber-400', glow: 'rgba(245,158,11,0.35)' },
+  { icon: Layers, ring: 'ring-emerald-400/30', bg: 'bg-emerald-500/10', text: 'text-emerald-500 dark:text-emerald-400', glow: 'rgba(16,185,129,0.35)' },
+  { icon: ShieldCheck, ring: 'ring-cyan-400/30', bg: 'bg-cyan-500/10', text: 'text-cyan-500 dark:text-cyan-400', glow: 'rgba(6,182,212,0.35)' },
+]
+
+/**
+ * Premium service card:
+ * - 3D tilt that follows the mouse (perspective + rotateX/rotateY)
+ * - A soft spotlight glow that follows the cursor inside the card
+ * - Glassmorphism surface
+ */
+function ServiceCard({ service, index, visual }) {
+  const ref = useRef(null)
+  const Icon = visual.icon
+
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  // Smoothed rotation values for a natural tilt feel
+  const rotateX = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 })
+  const rotateY = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 })
+
+  const spotlightBackground = useMotionTemplate`radial-gradient(220px circle at ${mouseX}px ${mouseY}px, ${visual.glow}, transparent 75%)`
+
+  function handleMouseMove(e) {
+    const rect = ref.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    mouseX.set(x)
+    mouseY.set(y)
+
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateAmount = 8 // max degrees of tilt
+
+    rotateY.set(((x - centerX) / centerX) * rotateAmount)
+    rotateX.set((-(y - centerY) / centerY) * rotateAmount)
+  }
+
+  function handleMouseLeave() {
+    rotateX.set(0)
+    rotateY.set(0)
+  }
+
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 40, scale: 0.96 },
+        show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: 'easeOut' } },
+      }}
+      className="group relative"
+      style={{ perspective: 1000 }}
+    >
+      {/* gradient glow ring behind the card, appears on hover */}
+      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-accent to-blue-400 opacity-0 blur transition-opacity duration-300 group-hover:opacity-40" />
+
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="relative h-full"
+      >
+        <Link to={`/services/${service.slug}`} className="relative block h-full">
+          <Card className="relative flex h-full flex-col overflow-hidden border-transparent bg-white/70 backdrop-blur-md transition-shadow duration-300 group-hover:shadow-2xl dark:bg-slate-900/70">
+            {/* cursor-following spotlight */}
+            <motion.div
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ background: spotlightBackground }}
+            />
+
+            {/* faint number watermark */}
+            <span className="absolute -right-2 -top-4 select-none font-display text-7xl font-bold text-slate-900/[0.04] dark:text-white/[0.05]">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+
+            <div
+              style={{ transform: 'translateZ(40px)' }}
+              className={`relative flex h-12 w-12 items-center justify-center rounded-xl ${visual.bg} ${visual.text} ring-1 ${visual.ring} transition-transform duration-300 group-hover:scale-110`}
+            >
+              <Icon size={22} strokeWidth={2} />
+            </div>
+
+            <h3 style={{ transform: 'translateZ(30px)' }} className="relative mt-5 font-display text-xl font-semibold">
+              {service.title}
+            </h3>
+            <div className="relative mt-4 h-px w-full bg-gradient-to-r from-slate-200 via-slate-200 to-transparent dark:from-slate-600 dark:via-slate-600" />
+            <p style={{ transform: 'translateZ(20px)' }} className="relative mt-4 text-sm leading-relaxed">
+              {service.shortDescription}
+            </p>
+
+            <span
+              style={{ transform: 'translateZ(30px)' }}
+              className="relative mt-auto flex items-center gap-1 pt-6 text-sm font-semibold text-accent-hoverLight dark:text-accent-dark"
+            >
+              <span className="opacity-0 transition-all duration-300 group-hover:opacity-100">Learn more</span>
+              <ArrowUpRight
+                size={16}
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </span>
+          </Card>
+        </Link>
+      </motion.div>
+    </motion.div>
+  )
 }
 
 export default function Home() {
@@ -127,11 +255,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ SERVICES — centered heading, card grid ============ */}
-      <section className="bg-surface-light dark:bg-surface-dark py-24">
-        <div className="container-page">
-          <div className="flex flex-col items-center text-center">
-            <span className="rounded-full border border-slate-300 dark:border-slate-600 px-5 py-2 font-mono text-xs uppercase tracking-wide">
+      {/* ============ SERVICES — premium 3D tilt + spotlight card grid ============ */}
+      <section className="relative overflow-hidden bg-surface-light dark:bg-surface-dark py-24">
+        {/* animated moving gradient blobs in the background */}
+        <motion.div
+          className="pointer-events-none absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-accent/25 dark:bg-accent-dark/25 blur-3xl"
+          animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="pointer-events-none absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-blue-400/15 blur-3xl"
+          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        <div className="container-page relative">
+          <motion.div
+            className="flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm px-5 py-2 font-mono text-xs uppercase tracking-wide">
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1], rotate: [0, 15, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="inline-flex"
+              >
+                <Sparkles size={13} className="text-accent-hoverLight dark:text-accent-dark" />
+              </motion.span>
               Our Services
             </span>
             <h2 className="mt-6 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -141,27 +294,32 @@ export default function Home() {
               Being a trusted IT services provider means building a culture that nurtures growth,
               encourages creativity, and drives excellence in every digital solution we deliver.
             </p>
-          </div>
+          </motion.div>
 
           <div className="mt-14">
             {services.status === 'loading' && <Spinner />}
             {services.status === 'error' && <ErrorState onRetry={services.retry} />}
             {services.status === 'success' && services.data.length === 0 && <EmptyState title="No services published yet" />}
             {services.status === 'success' && services.data.length > 0 && (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {services.data.slice(0, 6).map((service) => (
-                  <Link key={service._id} to={`/services/${service.slug}`} className="group">
-                    <Card className="flex h-full flex-col transition-all hover:-translate-y-1 hover:shadow-lg hover:border-accent dark:hover:border-accent-dark">
-                      <h3 className="font-display text-xl font-semibold">{service.title}</h3>
-                      <div className="mt-4 h-px w-full bg-slate-200 dark:bg-slate-600" />
-                      <p className="mt-4 text-sm leading-relaxed">{service.shortDescription}</p>
-                      <span className="mt-auto pt-6 flex items-center gap-1 text-sm font-semibold text-accent-hoverLight dark:text-accent-dark opacity-0 transition-opacity group-hover:opacity-100">
-                        Learn more <ArrowUpRight size={14} />
-                      </span>
-                    </Card>
-                  </Link>
+              <motion.div
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.15 }}
+                variants={{
+                  hidden: {},
+                  show: { transition: { staggerChildren: 0.12 } },
+                }}
+              >
+                {services.data.slice(0, 6).map((service, i) => (
+                  <ServiceCard
+                    key={service._id}
+                    service={service}
+                    index={i}
+                    visual={SERVICE_VISUALS[i % SERVICE_VISUALS.length]}
+                  />
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
