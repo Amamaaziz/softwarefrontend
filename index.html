@@ -2,12 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nexbyte Software House</title>
-    <meta name="description" content="Nexbyte builds web, mobile, and custom software products for startups and businesses worldwide." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>Nexbyte — Software House</title>
+    <!--
+      Pre-paint theme script: runs before any rendering so dark-mode users
+      never see a white flash. Must stay inline and synchronous.
+      Uses the same 'nexbyte-theme' key as ThemeContext.jsx.
+    -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('nexbyte-theme')
+          var dark = stored
+            ? stored === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {
+          /* localStorage unavailable (private mode etc.) — default to light */
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

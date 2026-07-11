@@ -11,6 +11,7 @@ import ErrorState from '../components/ui/ErrorState.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import { Input } from '../components/ui/Input.jsx'
 import Button from '../components/ui/Button.jsx'
+import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getJobBySlug, submitJobApplication } from '../lib/api.js'
 
@@ -72,19 +73,21 @@ export default function JobDetail() {
       <section className="container-page py-20">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{j.title}</h1>
-              <Badge tone={j.status === 'open' ? 'open' : 'closed'}>{j.status}</Badge>
-            </div>
-            <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-              <span>{j.department}</span>
-              <span className="flex items-center gap-1"><MapPin size={13} /> {j.location}</span>
-              <span className="font-mono text-xs uppercase">{j.type.replace('-', ' ')} · {j.experienceLevel}</span>
-            </div>
+            <Reveal>
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{j.title}</h1>
+                <Badge tone={j.status === 'open' ? 'open' : 'closed'}>{j.status}</Badge>
+              </div>
+              <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
+                <span>{j.department}</span>
+                <span className="flex items-center gap-1"><MapPin size={13} /> {j.location}</span>
+                <span className="font-mono text-xs uppercase">{j.type.replace('-', ' ')} · {j.experienceLevel}</span>
+              </div>
 
-            <p className="mt-8 text-base leading-relaxed">{j.description}</p>
+              <p className="mt-8 text-base leading-relaxed">{j.description}</p>
+            </Reveal>
 
-            <div className="mt-10">
+            <Reveal className="mt-10">
               <h3 className="font-display text-lg font-semibold">What you'll do</h3>
               <ul className="mt-3 flex flex-col gap-2">
                 {j.responsibilities.map((r) => (
@@ -93,9 +96,9 @@ export default function JobDetail() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
 
-            <div className="mt-8">
+            <Reveal className="mt-8">
               <h3 className="font-display text-lg font-semibold">What we're looking for</h3>
               <ul className="mt-3 flex flex-col gap-2">
                 {j.requirements.map((r) => (
@@ -104,10 +107,10 @@ export default function JobDetail() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           </div>
 
-          <div>
+          <Reveal delay={150}>
             <div className="card-surface sticky top-24 p-6">
               {j.status !== 'open' ? (
                 <EmptyState title="This role is closed" description="It's no longer accepting applications. See our other open roles." />
@@ -159,7 +162,7 @@ export default function JobDetail() {
                 </form>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

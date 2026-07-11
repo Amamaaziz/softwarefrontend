@@ -1,15 +1,18 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { MapPin, ArrowUpRight, UploadCloud, CheckCircle2, ArrowLeft } from 'lucide-react'
+import {
+  ArrowUpRight,
+  UploadCloud,
+  CheckCircle2,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import SectionHeading from '../components/ui/SectionHeading.jsx'
-import Spinner from '../components/ui/Spinner.jsx'
-import ErrorState from '../components/ui/ErrorState.jsx'
-import EmptyState from '../components/ui/EmptyState.jsx'
-import Badge from '../components/ui/Badge.jsx'
 import Button from '../components/ui/Button.jsx'
 import { Input, Textarea, Select } from '../components/ui/Input.jsx'
 import { useAsync } from '../lib/useAsync.js'
@@ -31,6 +34,87 @@ const applySchema = z.object({
   about: z.string().min(10, 'Tell us a little about yourself (10+ characters)'),
   resume: z.any().refine((files) => files?.length === 1, 'Attach your resume (PDF or DOCX)'),
 })
+
+/* ── Announcement bar: cycles through open vacancies ─────────────────── */
+function AnnouncementBar({ jobs }) {
+  const [index, setIndex] = useState(0)
+
+  // Auto-rotate every 6s when there is more than one vacancy
+  useEffect(() => {
+    if (jobs.length <= 1) return
+    const id = setInterval(() => setIndex((i) => (i + 1) % jobs.length), 6000)
+    return () => clearInterval(id)
+  }, [jobs.length])
+
+  if (jobs.length === 0) return null
+
+  const job = jobs[index % jobs.length]
+  const prev = () => setIndex((i) => (i - 1 + jobs.length) % jobs.length)
+  const next = () => setIndex((i) => (i + 1) % jobs.length)
+
+  return (
+    <div className="bg-slate-950 text-white">
+      <div className="relative flex items-center justify-center px-14 py-5 text-center sm:px-20">
+        {jobs.length > 1 && (
+          <button
+            onClick={prev}
+            aria-label="Previous vacancy"
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-300 transition-colors hover:text-white sm:left-6"
+          >
+            <ChevronLeft size={22} />
+          </button>
+        )}
+
+        <div>
+          <p className="font-display text-base font-bold sm:text-xl">
+            Vacancy Opened For {job.title}. Apply Now
+          </p>
+          <Link
+            to={`/careers/${job.slug}`}
+            className="mt-3 inline-flex items-center rounded-full border border-white/70 px-6 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-slate-900"
+          >
+            Click Here
+          </Link>
+        </div>
+
+        {jobs.length > 1 && (
+          <button
+            onClick={next}
+            aria-label="Next vacancy"
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-300 transition-colors hover:text-white sm:right-6"
+          >
+            <ChevronRight size={22} />
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/* ── Page banner: dark hero with title + breadcrumb ───────────────────── */
+function CareersBanner() {
+  return (
+    <section className="relative overflow-hidden bg-[#0a1c1b]">
+      <img
+        src="https://images.unsplash.com/photo-1545987796-200677ee1011?auto=format&fit=crop&w=1400&q=70"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="absolute inset-y-0 right-0 h-full w-full object-cover opacity-40 sm:w-2/3 sm:[mask-image:linear-gradient(to_left,black_40%,transparent)]"
+      />
+      <div className="relative container-page flex flex-col items-center justify-center py-24 text-center sm:py-32">
+        <h1 className="font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+          Careers
+        </h1>
+        <p className="mt-4 text-sm text-slate-300">
+          <Link to="/" className="transition-colors hover:text-accent">Home</Link>
+          <span className="mx-2">/</span>
+          <span className="text-accent">Careers</span>
+        </p>
+      </div>
+    </section>
+  )
+}
 
 export default function CareersList() {
   const jobs = useAsync(getJobs, [])
@@ -82,6 +166,12 @@ export default function CareersList() {
   return (
     <>
       <Seo title="Careers" description="Open roles at Nexbyte." />
+
+      {/* ANNOUNCEMENT BAR — cycles through open vacancies */}
+      <AnnouncementBar jobs={openJobs} />
+
+      {/* PAGE BANNER — dark hero with breadcrumb */}
+      <CareersBanner />
 
       {/* HERO — cards left, message / apply form right */}
       <section className="container-page py-20">
@@ -217,44 +307,23 @@ export default function CareersList() {
         </div>
       </section>
 
-      {/* OPEN ROLES (unchanged) */}
+      {/* EXPLORE OPPORTUNITIES — replaces the inline openings list */}
       <section className="container-page pb-20">
-        <SectionHeading
-          eyebrow="open roles"
-          title="Current openings"
-          description="Apply to a specific role below, or use the general application form above."
-        />
-
-        <div className="mt-12">
-          {jobs.status === 'loading' && <Spinner />}
-          {jobs.status === 'error' && <ErrorState onRetry={jobs.retry} />}
-          {jobs.status === 'success' && openJobs.length === 0 && (
-            <EmptyState title="No open roles right now" description="Check back soon, or send your resume to hello@nexbyte.dev and we'll reach out when something opens." />
-          )}
-          {jobs.status === 'success' && openJobs.length > 0 && (
-            <div className="flex flex-col divide-y divide-slate-200/70 dark:divide-slate-700/60 border-t border-b border-slate-200/70 dark:border-slate-700/60">
-              {openJobs.map((job) => (
-                <Link
-                  key={job._id}
-                  to={`/careers/${job.slug}`}
-                  className="group flex flex-wrap items-center justify-between gap-4 py-6 transition-colors hover:bg-surface-light dark:hover:bg-surface-dark px-2 -mx-2 rounded-lg"
-                >
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <h3 className="font-display text-lg font-semibold">{job.title}</h3>
-                      <Badge tone="open">{job.status}</Badge>
-                    </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-4 text-sm">
-                      <span>{job.department}</span>
-                      <span className="flex items-center gap-1"><MapPin size={13} /> {job.location}</span>
-                      <span className="font-mono text-xs uppercase">{job.type.replace('-', ' ')}</span>
-                    </div>
-                  </div>
-                  <ArrowUpRight size={18} className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              ))}
-            </div>
-          )}
+        <div className="card-surface flex flex-col items-center gap-5 px-6 py-14 text-center sm:px-14">
+          <SectionHeading
+            eyebrow="opportunities"
+            title="Find the role that fits you"
+            align="center"
+            description={
+              jobs.status === 'success' && openJobs.length > 0
+                ? `We currently have ${openJobs.length} open ${openJobs.length === 1 ? 'position' : 'positions'} across the team. See every opening in one place and apply directly.`
+                : 'Browse every current opening in one place and apply directly to the role that fits you best.'
+            }
+          />
+          <Button to="/careers/opportunities" className="group">
+            Explore Opportunities
+            <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Button>
         </div>
       </section>
     </>

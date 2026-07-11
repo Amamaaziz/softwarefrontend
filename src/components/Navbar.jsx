@@ -47,14 +47,15 @@ export default function Navbar() {
   }
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled
-          ? 'bg-canvas-light/90 dark:bg-canvas-dark/90 backdrop-blur border-b border-slate-200/70 dark:border-slate-700/60'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="container-page flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 px-4 pt-3 sm:px-6">
+      {/* Floating rounded bar — narrower than the page container */}
+      <div
+        className={`mx-auto flex h-14 max-w-5xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 sm:px-5 ${
+          scrolled
+            ? 'bg-canvas-light/90 dark:bg-canvas-dark/90 backdrop-blur border-slate-200/70 dark:border-slate-700/60 shadow-card'
+            : 'bg-canvas-light/60 dark:bg-canvas-dark/60 backdrop-blur border-slate-200/40 dark:border-slate-700/40'
+        }`}
+      >
         <NavLink to="/" className="flex items-center gap-2 font-display text-lg font-semibold" onClick={closeAll}>
           <span className="flex h-8 w-8 items-center justify-center rounded-md bg-heading-light dark:bg-accent-dark font-mono text-sm text-white dark:text-slate-900">
             &lt;/&gt;
@@ -134,7 +135,7 @@ export default function Navbar() {
           )}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2">
           <button
             onClick={toggleTheme}
             aria-label="Toggle color theme"
@@ -142,12 +143,12 @@ export default function Navbar() {
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <Button to="/contact" className="group">
+          <Button to="/contact" className="group !px-4 !py-2 rounded-xl">
             Contact <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-1 lg:hidden">
           <button onClick={toggleTheme} aria-label="Toggle color theme" className="rounded-lg p-2">
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
@@ -157,9 +158,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile nav */}
+      {/* Mobile nav — floating rounded card below the bar */}
       {open && (
-        <nav className="lg:hidden border-t border-slate-200/70 dark:border-slate-700/60 bg-canvas-light dark:bg-canvas-dark px-5 py-4 flex flex-col gap-1">
+        <nav className="mx-auto mt-2 flex max-w-5xl flex-col gap-1 rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-canvas-light/95 dark:bg-canvas-dark/95 backdrop-blur px-4 py-4 shadow-card lg:hidden">
           {LINKS.map((link) =>
             link.dropdown ? (
               <div key={link.to}>
@@ -212,7 +213,7 @@ export default function Navbar() {
               </NavLink>
             )
           )}
-          <Button to="/contact" className="mt-2 justify-center" onClick={closeAll}>
+          <Button to="/contact" className="mt-2 justify-center rounded-xl" onClick={closeAll}>
             Contact
           </Button>
         </nav>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -7,6 +8,7 @@ import Seo from '../components/ui/Seo.jsx'
 import SectionHeading from '../components/ui/SectionHeading.jsx'
 import { Input, Textarea, Select } from '../components/ui/Input.jsx'
 import Button from '../components/ui/Button.jsx'
+import Reveal from '../components/ui/Reveal.jsx'
 import { COMPANY } from '../data/mockData.js'
 import { submitContactForm } from '../lib/api.js'
 
@@ -43,11 +45,51 @@ export default function Contact() {
     <>
       <Seo title="Contact Us" description="Get in touch with the Nexbyte team about your project." />
 
+      {/* BANNER — "conversation" style: image masked on the LEFT (mirror of Services),
+          right-aligned text block with quick email/phone links in mono */}
+      <section className="relative overflow-hidden bg-[#0a1c1b]">
+        <img
+          src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=70"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-y-0 left-0 h-full w-1/2 object-cover opacity-30 [mask-image:linear-gradient(to_right,black_30%,transparent)]"
+        />
+        {/* accent glow behind the text block */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl"
+        />
+        <div className="relative container-page flex justify-start py-24 sm:justify-end sm:py-28">
+          <div className="max-w-xl text-left sm:text-right">
+            <p className="font-mono text-xs uppercase tracking-wide text-accent">// say hello</p>
+            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              Contact Us
+            </h1>
+            <p className="mt-5 text-base leading-relaxed text-slate-300">
+              Tell us what you&rsquo;re building — we reply within one business day.
+            </p>
+            <p className="mt-6 font-mono text-xs text-slate-300 sm:text-sm">
+              <a href={`mailto:${COMPANY.email}`} className="transition-colors hover:text-accent">{COMPANY.email}</a>
+              <span className="mx-2 text-accent">·</span>
+              <a href={`tel:${COMPANY.phone.replace(/\s+/g, '')}`} className="transition-colors hover:text-accent">{COMPANY.phone}</a>
+            </p>
+            <p className="mt-6 text-sm text-slate-300">
+              <Link to="/" className="transition-colors hover:text-accent">Home</Link>
+              <span className="mx-2">/</span>
+              <span className="text-accent">Contact</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="container-page py-20">
-        <SectionHeading eyebrow="contact" title="Feel free to contact us and join us" description="Fill in the form and we'll reply within one business day, usually sooner." />
+        <Reveal>
+          <SectionHeading eyebrow="contact" title="Feel free to contact us and join us" description="Fill in the form and we'll reply within one business day, usually sooner." />
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-5">
-          <div className="lg:col-span-3">
+          <Reveal className="lg:col-span-3">
             {submitted ? (
               <div className="card-surface flex flex-col items-center gap-3 px-8 py-16 text-center">
                 <CheckCircle2 size={32} className="text-accent-hoverLight dark:text-accent-dark" />
@@ -84,9 +126,9 @@ export default function Contact() {
                 </Button>
               </form>
             )}
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-2">
+          <Reveal delay={150} className="lg:col-span-2">
             <div className="card-surface p-6">
               <h3 className="font-display text-lg font-semibold">Reach us directly</h3>
               <ul className="mt-5 flex flex-col gap-4 text-sm">
@@ -114,7 +156,7 @@ export default function Contact() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

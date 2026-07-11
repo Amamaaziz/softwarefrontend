@@ -4,6 +4,7 @@ import Spinner from '../components/ui/Spinner.jsx'
 import ErrorState from '../components/ui/ErrorState.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import Button from '../components/ui/Button.jsx'
+import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getBlogBySlug } from '../lib/api.js'
 
@@ -28,17 +29,25 @@ export default function BlogDetail() {
       <Seo title={b.title} description={b.excerpt} />
 
       <article className="container-page max-w-3xl py-20">
-        <p className="eyebrow mb-4">{b.category}</p>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">{b.title}</h1>
-        <p className="mt-4 text-sm">
-          {b.author} · {new Date(b.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
-        <img src={b.coverImage} alt={b.title} className="mt-10 h-64 w-full rounded-2xl object-cover sm:h-96" loading="lazy" />
-        <p className="mt-10 text-base leading-relaxed">{b.content}</p>
+        <Reveal>
+          <p className="eyebrow mb-4">{b.category}</p>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">{b.title}</h1>
+          <p className="mt-4 text-sm">
+            {b.author} · {new Date(b.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <img src={b.coverImage} alt={b.title} className="mt-10 h-64 w-full rounded-2xl object-cover sm:h-96" loading="lazy" />
+        </Reveal>
+        <Reveal delay={150}>
+          <p className="mt-10 text-base leading-relaxed">{b.content}</p>
+        </Reveal>
 
-        <div className="mt-14 border-t border-slate-200/70 dark:border-slate-700/60 pt-8">
-          <Button to="/blog" variant="outline">Back to all articles</Button>
-        </div>
+        <Reveal>
+          <div className="mt-14 border-t border-slate-200/70 dark:border-slate-700/60 pt-8">
+            <Button to="/blog" variant="outline">Back to all articles</Button>
+          </div>
+        </Reveal>
       </article>
     </>
   )
