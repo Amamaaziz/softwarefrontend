@@ -8,7 +8,6 @@ import {
   MessageSquareQuote,
   Inbox,
   ShieldCheck,
-  ScrollText,
   X,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext.jsx';
@@ -47,12 +46,6 @@ const navSections = [
   {
     label: 'Leads',
     items: [{ to: '/leads', label: 'Contact Leads', icon: Inbox, roles: null }],
-  },
-  {
-    label: 'Administration',
-    items: [
-      { to: '/logs', label: 'Activity Logs', icon: ScrollText, roles: [ROLES.SUPER_ADMIN] },
-    ],
   },
 ];
 

@@ -14,14 +14,21 @@ export default function Card({ className, children, ...props }) {
   );
 }
 
-export function CardHeader({ className, children }) {
+export function CardHeader({ className, children, ...props }) {
   return (
-    <div className={clsx('flex items-center justify-between border-b border-border px-5 py-4 dark:border-border-dark', className)}>
+    <div
+      className={clsx('flex items-center justify-between border-b border-border px-5 py-4 dark:border-border-dark', className)}
+      {...props}
+    >
       {children}
     </div>
   );
 }
 
-export function CardBody({ className, children }) {
-  return <div className={clsx('p-5', className)}>{children}</div>;
+export function CardBody({ className, children, ...props }) {
+  return (
+    <div className={clsx('p-5', className)} {...props}>
+      {children}
+    </div>
+  );
 }
