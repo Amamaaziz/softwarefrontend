@@ -57,7 +57,6 @@ export default function About() {
         />
         <div className="relative container-page py-24 sm:py-28">
           <div className="border-l-2 border-accent pl-6 sm:pl-8">
-            <p className="font-mono text-xs uppercase tracking-wide text-accent">// our story — est. {COMPANY.foundedYear}</p>
             <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
               About Us
             </h1>

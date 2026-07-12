@@ -118,10 +118,7 @@ function ServiceCard({ service, index, visual }) {
               style={{ background: spotlightBackground }}
             />
 
-            {/* faint number watermark */}
-            <span className="absolute -right-2 -top-4 select-none font-display text-7xl font-bold text-slate-900/[0.04] dark:text-white/[0.05]">
-              {String(index + 1).padStart(2, '0')}
-            </span>
+           
 
             <div
               style={{ transform: 'translateZ(40px)' }}
