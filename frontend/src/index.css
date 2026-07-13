@@ -54,3 +54,32 @@
     transform: none;
   }
 }
+/* Content authored in the admin panel's rich text editor (see RichText.jsx).
+   Jodit outputs plain HTML with no classes, so give those tags sane spacing. */
+.rich-text > * + * {
+  margin-top: 1rem;
+}
+.rich-text ul,
+.rich-text ol {
+  padding-left: 1.25rem;
+  list-style: revert;
+}
+.rich-text li + li {
+  margin-top: 0.35rem;
+}
+.rich-text a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rich-text h2,
+.rich-text h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.rich-text h2 { font-size: 1.5rem; }
+.rich-text h3 { font-size: 1.25rem; }
+.rich-text img {
+  border-radius: 0.75rem;
+  max-width: 100%;
+  height: auto;
+}

@@ -7,6 +7,7 @@ import Button from '../components/ui/Button.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getBlogBySlug } from '../lib/api.js'
+import RichText from '../components/ui/RichText.jsx'
 
 export default function BlogDetail() {
   const { slug } = useParams()
@@ -40,7 +41,7 @@ export default function BlogDetail() {
           <img src={b.coverImage} alt={b.title} className="mt-10 h-64 w-full rounded-2xl object-cover sm:h-96" loading="lazy" />
         </Reveal>
         <Reveal delay={150}>
-          <p className="mt-10 text-base leading-relaxed">{b.content}</p>
+          <RichText html={b.content} className="mt-10 text-base leading-relaxed" />
         </Reveal>
 
         <Reveal>

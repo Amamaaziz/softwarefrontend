@@ -3,35 +3,35 @@ import ProtectedRoute from './routes/ProtectedRoute.jsx';
 import RoleRoute from './routes/RoleRoute.jsx';
 import AdminLayout from './components/layout/AdminLayout.jsx';
 
-import Login from './pages/auth/Login.jsx';
-import ForgotPassword from './pages/auth/ForgotPassword.jsx';
-import ResetPassword from './pages/auth/ResetPassword.jsx';
+import Login from './pages/Login.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import ResetPassword from './pages/ResetPassword.jsx';
 
-import Dashboard from './pages/dashboard/Dashboard.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
-import ServicesList from './pages/services/ServicesList.jsx';
-import ServiceForm from './pages/services/ServiceForm.jsx';
+import ServicesList from './pages/ServicesList.jsx';
+import ServiceForm from './pages/ServiceForm.jsx';
 
-import PortfolioList from './pages/portfolio/PortfolioList.jsx';
-import PortfolioForm from './pages/portfolio/PortfolioForm.jsx';
+import PortfolioList from './pages/PortfolioList.jsx';
+import PortfolioForm from './pages/PortfolioForm.jsx';
 
-import BlogList from './pages/blog/BlogList.jsx';
-import BlogForm from './pages/blog/BlogForm.jsx';
+import BlogList from './pages/BlogList.jsx';
+import BlogForm from './pages/BlogForm.jsx';
 
-import TestimonialsList from './pages/testimonials/TestimonialsList.jsx';
-import TestimonialForm from './pages/testimonials/TestimonialForm.jsx';
+import TestimonialsList from './pages/TestimonialsList.jsx';
+import TestimonialForm from './pages/TestimonialForm.jsx';
 
-import JobsList from './pages/careers/JobsList.jsx';
-import JobForm from './pages/careers/JobForm.jsx';
-import Applications from './pages/careers/Applications.jsx';
+import JobsList from './pages/JobsList.jsx';
+import JobForm from './pages/JobForm.jsx';
+import Applications from './pages/Applications.jsx';
 
-import LeadsList from './pages/leads/LeadsList.jsx';
+import LeadsList from './pages/LeadsList.jsx';
 
-import UsersList from './pages/users/UsersList.jsx';
-import UserForm from './pages/users/UserForm.jsx';
+import UsersList from './pages/UsersList.jsx';
+import UserForm from './pages/UserForm.jsx';
 
-import SiteSettings from './pages/settings/SiteSettings.jsx';
-import ActivityLogs from './pages/logs/ActivityLogs.jsx';
+import SiteSettings from './pages/SiteSettings.jsx';
+import ActivityLogs from './pages/ActivityLogs.jsx';
 
 import NotFound from './pages/NotFound.jsx';
 

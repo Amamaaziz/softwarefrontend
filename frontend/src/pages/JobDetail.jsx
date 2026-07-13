@@ -14,6 +14,7 @@ import Button from '../components/ui/Button.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getJobBySlug, submitJobApplication } from '../lib/api.js'
+import RichText from '../components/ui/RichText.jsx'
 
 const applicationSchema = z.object({
   applicantName: z.string().min(2, 'Enter your full name'),
@@ -84,7 +85,7 @@ export default function JobDetail() {
                 <span className="font-mono text-xs uppercase">{j.type.replace('-', ' ')} · {j.experienceLevel}</span>
               </div>
 
-              <p className="mt-8 text-base leading-relaxed">{j.description}</p>
+              <RichText html={j.description} className="mt-8 text-base leading-relaxed" />
             </Reveal>
 
             <Reveal className="mt-10">

@@ -9,6 +9,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getPortfolioBySlug } from '../lib/api.js'
+import RichText from '../components/ui/RichText.jsx'
 
 export default function PortfolioDetail() {
   const { slug } = useParams()
@@ -124,7 +125,7 @@ export default function PortfolioDetail() {
           ].map((block, i) => (
             <Reveal key={block.heading} delay={i * 120}>
               <h3 className="font-mono text-sm font-bold uppercase tracking-wide text-accent-hoverLight dark:text-accent-dark">{block.heading}</h3>
-              <p className="mt-3 text-sm leading-relaxed">{block.body}</p>
+              <RichText html={block.body} className="mt-3 text-sm leading-relaxed" />
             </Reveal>
           ))}
         </div>

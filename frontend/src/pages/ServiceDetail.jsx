@@ -9,6 +9,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getServiceBySlug } from '../lib/api.js'
+import RichText from '../components/ui/RichText.jsx'
 
 export default function ServiceDetail() {
   const { slug } = useParams()
@@ -39,7 +40,7 @@ export default function ServiceDetail() {
               Discuss this service <ArrowUpRight size={16} />
             </Button>
           </div>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed">{s.description}</p>
+          <RichText html={s.description} className="mt-6 max-w-2xl text-base leading-relaxed" />
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">

@@ -20,7 +20,9 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    {/* basename keeps every admin route under /admin, so the panel can be
+        served through the public site's dev proxy on one shared origin. */}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>

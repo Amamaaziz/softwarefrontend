@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:into-site": "vite build --outDir ../frontend/dist/admin --emptyOutDir"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install:all": "npm install --prefix frontend && npm install --prefix admin-panel",
+    "dev:site": "npm run dev --prefix frontend",
+    "dev:admin": "npm run dev --prefix admin-panel",
+    "build": "npm run build --prefix frontend && npm run build:into-site --prefix admin-panel",
+    "preview": "npm run preview --prefix frontend"
   },
   "repository": {
     "type": "git",

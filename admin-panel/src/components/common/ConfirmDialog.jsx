@@ -9,7 +9,7 @@ export default function ConfirmDialog({
   isLoading,
   onConfirm,
   onCancel,
-  tone = 'danger',cd
+  tone = 'danger',
 }) {
   if (!open) return null;
 
