@@ -46,13 +46,6 @@ export const seedSettings = {
   },
 };
 
-// ── Admin users. Any of these can log in with the password `demo1234`. ───────
-export const seedUsers = [
-  { _id: 'user-1', name: 'Ayesha Khan', email: 'ayesha@nexbyte.dev', role: 'super_admin', image: '', isActive: true, createdAt: daysAgo(120) },
-  { _id: 'user-2', name: 'Bilal Ahmed', email: 'bilal@nexbyte.dev', role: 'content_editor', image: '', isActive: true, createdAt: daysAgo(80) },
-  { _id: 'user-3', name: 'Sara Malik', email: 'sara@nexbyte.dev', role: 'hr_manager', image: '', isActive: true, createdAt: daysAgo(45) },
-  { _id: 'user-4', name: 'Usman Tariq', email: 'usman@nexbyte.dev', role: 'content_editor', image: '', isActive: false, createdAt: daysAgo(200) },
-];
 
 // ── Services ────────────────────────────────────────────────────────────────
 export const seedServices = [
@@ -512,13 +505,6 @@ export const seedLeads = [
   { _id: 'lead-4', name: 'Priya Nair', email: 'priya.nair@example.com', phone: '+91 98765 43210', category: 'Other', message: 'Just exploring options for now, will follow up in a few months.', source: 'contact', status: 'closed', createdAt: daysAgo(35) },
 ];
 
-// ── Activity logs ───────────────────────────────────────────────────────────
-export const seedActivityLogs = [
-  { _id: 'log-1', user: { _id: 'user-1', name: 'Ayesha Khan' }, action: 'publish', module: 'Portfolio', description: 'Published project: Cartly — Headless Commerce Storefront', createdAt: daysAgo(4) },
-  { _id: 'log-2', user: { _id: 'user-2', name: 'Bilal Ahmed' }, action: 'update', module: 'Services', description: 'Updated service: Cloud & DevOps', createdAt: daysAgo(3) },
-  { _id: 'log-3', user: { _id: 'user-3', name: 'Sara Malik' }, action: 'create', module: 'Jobs', description: 'Posted new job: Frontend Engineer (React)', createdAt: daysAgo(10) },
-  { _id: 'log-4', user: { _id: 'user-2', name: 'Bilal Ahmed' }, action: 'delete', module: 'Blog', description: 'Deleted draft post: "Untitled Draft"', createdAt: daysAgo(18) },
-];
 
 // One object holding the whole "database". mockDb.js writes this shape to
 // localStorage on first run.
@@ -526,7 +512,6 @@ export function buildSeedDb() {
   return {
     __version: 1,
     settings: JSON.parse(JSON.stringify(seedSettings)),
-    users: JSON.parse(JSON.stringify(seedUsers)),
     services: JSON.parse(JSON.stringify(seedServices)),
     portfolio: JSON.parse(JSON.stringify(seedPortfolio)),
     blogs: JSON.parse(JSON.stringify(seedBlogs)),
@@ -534,6 +519,5 @@ export function buildSeedDb() {
     jobs: JSON.parse(JSON.stringify(seedJobs)),
     applications: JSON.parse(JSON.stringify(seedJobApplications)),
     leads: JSON.parse(JSON.stringify(seedLeads)),
-    activityLogs: JSON.parse(JSON.stringify(seedActivityLogs)),
   };
 }

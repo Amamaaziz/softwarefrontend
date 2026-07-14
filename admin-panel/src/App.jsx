@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './routes/ProtectedRoute.jsx';
-import RoleRoute from './routes/RoleRoute.jsx';
 import AdminLayout from './components/layout/AdminLayout.jsx';
 
 import Login from './pages/Login.jsx';
@@ -27,12 +26,6 @@ import Applications from './pages/Applications.jsx';
 
 import LeadsList from './pages/LeadsList.jsx';
 
-import UsersList from './pages/UsersList.jsx';
-import UserForm from './pages/UserForm.jsx';
-
-import SiteSettings from './pages/SiteSettings.jsx';
-import ActivityLogs from './pages/ActivityLogs.jsx';
-
 import NotFound from './pages/NotFound.jsx';
 
 export default function App() {
@@ -43,7 +36,8 @@ export default function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-      {/* Protected admin area */}
+      {/* Protected admin area — single admin account, no roles, no user
+          management, no activity logs, no settings page. */}
       <Route
         path="/"
         element={
@@ -55,46 +49,28 @@ export default function App() {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
 
-        {/* Content Editor + Super Admin */}
-        <Route element={<RoleRoute allow={['super_admin', 'content_editor']} />}>
-          <Route path="services" element={<ServicesList />} />
-          <Route path="services/new" element={<ServiceForm />} />
-          <Route path="services/:id/edit" element={<ServiceForm />} />
+        <Route path="services" element={<ServicesList />} />
+        <Route path="services/new" element={<ServiceForm />} />
+        <Route path="services/:id/edit" element={<ServiceForm />} />
 
-          <Route path="portfolio" element={<PortfolioList />} />
-          <Route path="portfolio/new" element={<PortfolioForm />} />
-          <Route path="portfolio/:id/edit" element={<PortfolioForm />} />
+        <Route path="portfolio" element={<PortfolioList />} />
+        <Route path="portfolio/new" element={<PortfolioForm />} />
+        <Route path="portfolio/:id/edit" element={<PortfolioForm />} />
 
-          <Route path="blog" element={<BlogList />} />
-          <Route path="blog/new" element={<BlogForm />} />
-          <Route path="blog/:id/edit" element={<BlogForm />} />
+        <Route path="blog" element={<BlogList />} />
+        <Route path="blog/new" element={<BlogForm />} />
+        <Route path="blog/:id/edit" element={<BlogForm />} />
 
-          <Route path="testimonials" element={<TestimonialsList />} />
-          <Route path="testimonials/new" element={<TestimonialForm />} />
-          <Route path="testimonials/:id/edit" element={<TestimonialForm />} />
-        </Route>
+        <Route path="testimonials" element={<TestimonialsList />} />
+        <Route path="testimonials/new" element={<TestimonialForm />} />
+        <Route path="testimonials/:id/edit" element={<TestimonialForm />} />
 
-        {/* HR Manager + Super Admin */}
-        <Route element={<RoleRoute allow={['super_admin', 'hr_manager']} />}>
-          <Route path="careers/jobs" element={<JobsList />} />
-          <Route path="careers/jobs/new" element={<JobForm />} />
-          <Route path="careers/jobs/:id/edit" element={<JobForm />} />
-          <Route path="careers/applications" element={<Applications />} />
-        </Route>
+        <Route path="careers/jobs" element={<JobsList />} />
+        <Route path="careers/jobs/new" element={<JobForm />} />
+        <Route path="careers/jobs/:id/edit" element={<JobForm />} />
+        <Route path="careers/applications" element={<Applications />} />
 
-        {/* Leads — visible to Super Admin + Content Editor (per PRD leads mgmt) */}
-        <Route element={<RoleRoute allow={['super_admin', 'content_editor', 'hr_manager']} />}>
-          <Route path="leads" element={<LeadsList />} />
-        </Route>
-
-        {/* Super Admin only */}
-        <Route element={<RoleRoute allow={['super_admin']} />}>
-          <Route path="users" element={<UsersList />} />
-          <Route path="users/new" element={<UserForm />} />
-          <Route path="users/:id/edit" element={<UserForm />} />
-          <Route path="settings" element={<SiteSettings />} />
-          <Route path="logs" element={<ActivityLogs />} />
-        </Route>
+        <Route path="leads" element={<LeadsList />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

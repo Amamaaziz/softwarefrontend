@@ -10,47 +10,37 @@ import {
   ShieldCheck,
   X,
 } from 'lucide-react';
-import { useAuth, ROLES } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const navSections = [
   {
     label: 'Overview',
-    items: [{ to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: null }],
+    items: [{ to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }],
   },
   {
     label: 'Content',
     items: [
-      { to: '/services', label: 'Services', icon: Briefcase, roles: [ROLES.SUPER_ADMIN, ROLES.CONTENT_EDITOR] },
-      { to: '/portfolio', label: 'Portfolio', icon: FolderKanban, roles: [ROLES.SUPER_ADMIN, ROLES.CONTENT_EDITOR] },
-      { to: '/blog', label: 'Blog', icon: Newspaper, roles: [ROLES.SUPER_ADMIN, ROLES.CONTENT_EDITOR] },
-      {
-        to: '/testimonials',
-        label: 'Testimonials',
-        icon: MessageSquareQuote,
-        roles: [ROLES.SUPER_ADMIN, ROLES.CONTENT_EDITOR],
-      },
+      { to: '/services', label: 'Services', icon: Briefcase },
+      { to: '/portfolio', label: 'Portfolio', icon: FolderKanban },
+      { to: '/blog', label: 'Blog', icon: Newspaper },
+      { to: '/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
     ],
   },
   {
     label: 'Careers',
     items: [
-      { to: '/careers/jobs', label: 'Job Postings', icon: Briefcase, roles: [ROLES.SUPER_ADMIN, ROLES.HR_MANAGER] },
-      {
-        to: '/careers/applications',
-        label: 'Applications',
-        icon: Inbox,
-        roles: [ROLES.SUPER_ADMIN, ROLES.HR_MANAGER],
-      },
+      { to: '/careers/jobs', label: 'Job Postings', icon: Briefcase },
+      { to: '/careers/applications', label: 'Applications', icon: Inbox },
     ],
   },
   {
     label: 'Leads',
-    items: [{ to: '/leads', label: 'Contact Leads', icon: Inbox, roles: null }],
+    items: [{ to: '/leads', label: 'Contact Leads', icon: Inbox }],
   },
 ];
 
 export default function Sidebar({ open, onClose }) {
-  const { hasRole, user } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
@@ -87,37 +77,33 @@ export default function Sidebar({ open, onClose }) {
         </div>
 
         <nav className="flex-1 space-y-6 overflow-y-auto scrollbar-thin px-3 pb-4">
-          {navSections.map((section) => {
-            const visibleItems = section.items.filter((item) => !item.roles || hasRole(item.roles));
-            if (visibleItems.length === 0) return null;
-            return (
-              <div key={section.label}>
-                <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-body/50 dark:text-body-dark/50">
-                  {section.label}
-                </p>
-                <div className="space-y-1">
-                  {visibleItems.map((item) => (
-                    <NavLink
-                      key={item.to}
-                      to={item.to}
-                      onClick={onClose}
-                      className={({ isActive }) =>
-                        clsx(
-                          'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                          isActive
-                            ? 'bg-cta/10 text-cta-hover dark:bg-cta/15 dark:text-cta-dark'
-                            : 'text-body hover:bg-surface dark:text-body-dark dark:hover:bg-canvas-dark/40'
-                        )
-                      }
-                    >
-                      <item.icon size={18} />
-                      {item.label}
-                    </NavLink>
-                  ))}
-                </div>
+          {navSections.map((section) => (
+            <div key={section.label}>
+              <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-body/50 dark:text-body-dark/50">
+                {section.label}
+              </p>
+              <div className="space-y-1">
+                {section.items.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={onClose}
+                    className={({ isActive }) =>
+                      clsx(
+                        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                        isActive
+                          ? 'bg-cta/10 text-cta-hover dark:bg-cta/15 dark:text-cta-dark'
+                          : 'text-body hover:bg-surface dark:text-body-dark dark:hover:bg-canvas-dark/40'
+                      )
+                    }
+                  >
+                    <item.icon size={18} />
+                    {item.label}
+                  </NavLink>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </nav>
 
         <div className="border-t border-border p-4 dark:border-border-dark">
@@ -125,9 +111,7 @@ export default function Sidebar({ open, onClose }) {
             <ShieldCheck size={16} className="text-cta" />
             <div className="min-w-0">
               <p className="truncate text-xs font-medium text-heading dark:text-heading-dark">{user?.name}</p>
-              <p className="truncate text-[11px] capitalize text-body/70 dark:text-body-dark/70">
-                {user?.role?.replace('_', ' ')}
-              </p>
+              <p className="truncate text-[11px] text-body/70 dark:text-body-dark/70">Admin</p>
             </div>
           </div>
         </div>

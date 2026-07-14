@@ -1,39 +1,21 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { readDb } from '../data/mockDb.js';
 
 const AuthContext = createContext(null);
 
-// Roles, matching PRD Section 8.2
-export const ROLES = {
-  SUPER_ADMIN: 'super_admin',
-  CONTENT_EDITOR: 'content_editor',
-  HR_MANAGER: 'hr_manager',
-};
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Fake auth. There is no backend, so there is no token, no hashing, no session
-// endpoint — passwords are never stored anywhere (see usersApi.beforeWrite).
-//
-// Sign in as:
-//   admin@demo.com          → super_admin  (the catch-all demo account)
-//   or ANY user on the Users page, e.g.
-//   ayesha@nexbyte.dev      → super_admin
-//   bilal@nexbyte.dev       → content_editor   (no Users/Settings/Logs access)
-//   sara@nexbyte.dev        → hr_manager       (careers + leads only)
-//
-// Password for all of them: demo1234
-// Signing in as different roles is how you demo the role-based route guards.
+// endpoint. There is exactly ONE admin account — no user management page, no
+// invite flow, no roles. Sign in as:
+//   admin@demo.com / demo1234
 // ─────────────────────────────────────────────────────────────────────────────
 export const DEMO_PASSWORD = 'demo1234';
 export const DEMO_EMAIL = 'admin@demo.com';
 
-const FALLBACK_ADMIN = {
-  _id: 'demo-user-1',
-  name: 'Demo Admin',
+const ADMIN = {
+  _id: 'admin-1',
+  name: 'Admin',
   email: DEMO_EMAIL,
-  role: ROLES.SUPER_ADMIN,
-  isActive: true,
 };
 
 export function AuthProvider({ children }) {
@@ -51,32 +33,13 @@ export function AuthProvider({ children }) {
     const email = String(credentials.email || '').trim().toLowerCase();
     const password = String(credentials.password || '');
 
-    if (password !== DEMO_PASSWORD) {
+    if (email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
       throw new Error(`Incorrect email or password. Try ${DEMO_EMAIL} / ${DEMO_PASSWORD}.`);
     }
 
-    const match =
-      email === DEMO_EMAIL
-        ? FALLBACK_ADMIN
-        : (readDb().users || []).find((u) => u.email.toLowerCase() === email);
-
-    if (!match) {
-      throw new Error(`No account for that email. Try ${DEMO_EMAIL} / ${DEMO_PASSWORD}.`);
-    }
-    if (!match.isActive) {
-      throw new Error('That account is deactivated. Reactivate it on the Users page.');
-    }
-
-    const signedIn = {
-      _id: match._id,
-      name: match.name,
-      email: match.email,
-      role: match.role,
-      isActive: true,
-    };
-    window.sessionStorage.setItem('adminUser', JSON.stringify(signedIn));
-    setUser(signedIn);
-    return signedIn;
+    window.sessionStorage.setItem('adminUser', JSON.stringify(ADMIN));
+    setUser(ADMIN);
+    return ADMIN;
   }, []);
 
   const logout = useCallback(async () => {
@@ -85,17 +48,8 @@ export function AuthProvider({ children }) {
     navigate('/login');
   }, [navigate]);
 
-  const hasRole = useCallback(
-    (roles) => {
-      if (!user) return false;
-      if (!roles || roles.length === 0) return true;
-      return roles.includes(user.role);
-    },
-    [user]
-  );
-
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, hasRole, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );
