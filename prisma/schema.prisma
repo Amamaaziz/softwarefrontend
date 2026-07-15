@@ -1,13 +1,262 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// ─────────────────────────────────────────────────────────────────────────────
+// Nexbyte — Prisma schema (PostgreSQL / Supabase)
+// ─────────────────────────────────────────────────────────────────────────────
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── Enums ─────────────────────────────────────────────────────────────────
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  REMOTE
+  CONTRACT
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+}
+
+enum ApplicationStatus {
+  NEW
+  SHORTLISTED
+  INTERVIEW
+  REJECTED
+  HIRED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+// Matches the Contact form's "Select a category..." dropdown, grouped into
+// Services and Portfolio in the UI. That grouping is presentation-only —
+// no separate backend meaning beyond which option was picked.
+enum LeadCategory {
+  WEB_DEVELOPMENT
+  MOBILE_APP_DEVELOPMENT
+  UI_UX_DESIGN
+  CUSTOM_SOFTWARE
+  OTHER_SERVICE
+  PORTFOLIO_PROJECT
+  SIMILAR_TO_YOUR_WORK
+}
+
+// ── User (single admin account) ──────────────────────────────────────────
+
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  email        String   @unique
+  passwordHash String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+// ── Services ──────────────────────────────────────────────────────────────
+
+model Service {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title            String
+  slug             String   @unique
+  shortDescription String
+  description      String   @db.Text
+  images           String[] @default([])
+  order            Int      @default(0)
+  isPublished      Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  subServices SubService[]
+  portfolios  Portfolio[]
+
+  @@index([isPublished, order])
+  @@map("services")
+}
+
+model SubService {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceId   String  @db.Uuid
+  service     Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  title       String
+  description String  @db.Text
+  order       Int     @default(0)
+
+  @@index([serviceId])
+  @@map("sub_services")
+}
+
+// ── Portfolio / case studies ─────────────────────────────────────────────
+
+model Portfolio {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title        String
+  slug         String   @unique
+  client       String
+  serviceId    String?  @db.Uuid
+  service      Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  coverImage   String
+  challenge    String   @db.Text
+  solution     String   @db.Text
+  result       String   @db.Text
+  technologies String[] @default([])
+  isFeatured   Boolean  @default(false)
+  isNewArrival Boolean  @default(false)
+  isPublished  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isPublished, isFeatured])
+  @@index([serviceId])
+  @@map("portfolio")
+}
+
+// ── Blog / Insights ───────────────────────────────────────────────────────
+
+model Blog {
+  id                 String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title              String
+  slug               String     @unique
+  category           String
+  coverImage         String
+  content            String     @db.Text
+  excerpt            String
+  authorName         String
+  seoMetaTitle       String?
+  seoMetaDescription String?
+  status             BlogStatus @default(DRAFT)
+  publishedAt        DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("blogs")
+}
+
+// ── Testimonials ──────────────────────────────────────────────────────────
+
+model Testimonial {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clientName  String
+  company     String?
+  photo       String?
+  message     String   @db.Text
+  rating      Int      // 1–5, enforce with a raw SQL CHECK constraint in migration
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+// ── Jobs (Careers) ────────────────────────────────────────────────────────
+
+model Job {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title            String
+  slug             String    @unique
+  department       String
+  location         String
+  type             JobType
+  experienceLevel  String    // free text, no fixed dropdown on the frontend
+  description      String    @db.Text
+  requirements     String[]  @default([])
+  responsibilities String[]  @default([])
+  status           JobStatus @default(OPEN)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  applications Application[]
+
+  @@index([status])
+  @@map("jobs")
+}
+
+// ── Job Applications ──────────────────────────────────────────────────────
+
+model Application {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  jobId         String?           @db.Uuid
+  job           Job?              @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  applyFor      String?           // free-text role name when no job matched
+  applicantName String
+  email         String
+  phone         String
+  gender        String?
+  dob           DateTime?
+  address       String?
+  education     String?
+  experience    String?
+  remoteJob     String?           // 'yes' | 'no' | 'hybrid'
+  about         String?           @db.Text
+  resumeUrl     String?
+  status        ApplicationStatus @default(NEW)
+  createdAt     DateTime          @default(now())
+
+  @@index([status])
+  @@index([jobId])
+  @@map("applications")
+}
+
+// ── Leads (Contact form) ───────────────────────────────────────────────────
+// Single form (Contact page) also serves as "Get a Quote" — no separate
+// source distinction needed, only one category field.
+
+model Lead {
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  email     String
+  phone     String?
+  category  LeadCategory?
+  message   String        @db.Text
+  status    LeadStatus    @default(NEW)
+  createdAt DateTime      @default(now())
+
+  @@index([status])
+  @@index([category])
+  @@map("leads")
+}
+
+// ── Site Settings (singleton) ─────────────────────────────────────────────
+
+model Settings {
+  id                 Int      @id @default(1)
+  companyName        String
+  tagline            String
+  foundedYear        Int?
+  logo               String?
+  contactEmail       String
+  contactPhone       String
+  officeAddress      String
+  socialLinkedin     String?
+  socialTwitter      String?
+  socialFacebook     String?
+  socialInstagram    String?
+  socialGithub       String?
+  seoMetaTitle       String?
+  seoMetaDescription String?
+  stats              Json?
+  updatedAt          DateTime @updatedAt
+
+  @@map("settings")
 }
