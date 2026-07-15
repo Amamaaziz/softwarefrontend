@@ -7,9 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 // ── Enums ─────────────────────────────────────────────────────────────────
@@ -161,7 +159,7 @@ model Testimonial {
   company     String?
   photo       String?
   message     String   @db.Text
-  rating      Int      // 1–5, enforce with a raw SQL CHECK constraint in migration
+  rating      Int // 1–5, enforce with a raw SQL CHECK constraint in migration
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -178,7 +176,7 @@ model Job {
   department       String
   location         String
   type             JobType
-  experienceLevel  String    // free text, no fixed dropdown on the frontend
+  experienceLevel  String // free text, no fixed dropdown on the frontend
   description      String    @db.Text
   requirements     String[]  @default([])
   responsibilities String[]  @default([])
@@ -198,7 +196,7 @@ model Application {
   id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   jobId         String?           @db.Uuid
   job           Job?              @relation(fields: [jobId], references: [id], onDelete: SetNull)
-  applyFor      String?           // free-text role name when no job matched
+  applyFor      String? // free-text role name when no job matched
   applicantName String
   email         String
   phone         String
@@ -207,7 +205,7 @@ model Application {
   address       String?
   education     String?
   experience    String?
-  remoteJob     String?           // 'yes' | 'no' | 'hybrid'
+  remoteJob     String? // 'yes' | 'no' | 'hybrid'
   about         String?           @db.Text
   resumeUrl     String?
   status        ApplicationStatus @default(NEW)
