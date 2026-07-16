@@ -40,7 +40,8 @@ const getPublicServices = asyncHandler(async (req, res) => {
     orderBy: { order: "asc" },
     include: subServiceInclude,
   });
-  return res.status(200).json(new ApiResponse(200, services.map(serializeService)));
+  const data = services.map(serializeService);
+  return res.status(200).json(new ApiResponse(200, { data, total: data.length }));
 });
 
 const getPublicServiceBySlug = asyncHandler(async (req, res) => {
