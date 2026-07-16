@@ -69,23 +69,32 @@ export const blogApi = {
   delete: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
 };
 
+// ── Jobs — real API ───────────────────────────────────────────────────────
+// No .publish() — JobsList.jsx toggles status directly via update(), same
+// pattern as blogApi.
+export const jobsApi = {
+  list: () => http.get('/admin/jobs').then((r) => r.data),
+  getOne: (id) => http.get(`/admin/jobs/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/admin/jobs', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/jobs/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/jobs/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/jobs/${id}`).then((r) => r.data),
+};
+
+// ── Applications — real API ────────────────────────────────────────────────
+// No .create() — applications are only ever created by the public
+// submitJobApplication() flow, never from the admin panel.
+export const applicationsApi = {
+  list: () => http.get('/admin/applications').then((r) => r.data),
+  getOne: (id) => http.get(`/admin/applications/${id}`).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/applications/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/applications/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/applications/${id}`).then((r) => r.data),
+};
+
 // ── Everything else — still mock, unchanged ──────────────────────────────
 
 export const testimonialsApi = createCollection('testimonials', { idPrefix: 'test' });
-
-export const jobsApi = createCollection('jobs', {
-  publishField: 'status',
-  idPrefix: 'job',
-  beforeWrite: (item) => ({
-    ...item,
-    slug: ensureUniqueSlug('jobs', item),
-    requirements: item.requirements || [],
-    responsibilities: item.responsibilities || [],
-    status: item.status || 'open',
-  }),
-});
-
-export const applicationsApi = createCollection('applications', { publishField: 'status', idPrefix: 'app' });
 
 export const leadsApi = createCollection('leads', { publishField: 'status', idPrefix: 'lead' });
 

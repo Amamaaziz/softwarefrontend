@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -28,18 +28,16 @@ const applySchema = z.object({
   email: z.string().email('Enter a valid email address'),
   phone: z.string().min(7, 'Enter a valid phone number'),
   education: z.string().min(2, 'Enter your education'),
-  applyFor: z.string().min(2, 'Enter the role you are applying for'),
+  jobId: z.string().min(1, 'Select the role you are applying for'),
   experience: z.string().min(1, 'Enter your experience'),
   remoteJob: z.string().min(1, 'Select an option'),
   about: z.string().min(10, 'Tell us a little about yourself (10+ characters)'),
   resume: z.any().refine((files) => files?.length === 1, 'Attach your resume (PDF or DOCX)'),
 })
 
-/* ── Announcement bar: cycles through open vacancies ─────────────────── */
 function AnnouncementBar({ jobs }) {
   const [index, setIndex] = useState(0)
 
-  // Auto-rotate every 6s when there is more than one vacancy
   useEffect(() => {
     if (jobs.length <= 1) return
     const id = setInterval(() => setIndex((i) => (i + 1) % jobs.length), 6000)
@@ -91,7 +89,6 @@ function AnnouncementBar({ jobs }) {
   )
 }
 
-/* ── Page banner: dark hero with title + breadcrumb ───────────────────── */
 function CareersBanner() {
   return (
     <section className="relative overflow-hidden bg-[#0a1c1b]">
@@ -119,10 +116,12 @@ function CareersBanner() {
 export default function CareersList() {
   const jobs = useAsync(getJobs, [])
   const openJobs = jobs.status === 'success' ? jobs.data.filter((j) => j.status === 'open') : []
+  const [searchParams] = useSearchParams()
 
   const [showForm, setShowForm] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [resumeFile, setResumeFile] = useState(null)
   const rightPanelRef = useRef(null)
 
   const {
@@ -130,19 +129,36 @@ export default function CareersList() {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm({ resolver: zodResolver(applySchema) })
 
   const openForm = () => {
     setSubmitted(false)
     setShowForm(true)
-    // Smoothly bring the form into view (nice on mobile where it's below the cards)
     setTimeout(() => rightPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
   }
+
+  // Auto-open the form and pre-select the role when arriving via
+  // JobDetail.jsx's "Apply now" button (/careers?jobId=...).
+  useEffect(() => {
+    if (jobs.status !== 'success') return
+    const jobId = searchParams.get('jobId')
+    if (!jobId) return
+    const match = openJobs.find((j) => j._id === jobId)
+    if (!match) return
+
+    setValue('jobId', jobId)
+    openForm()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobs.status])
 
   const onSubmit = async (values) => {
     setSubmitting(true)
     try {
+      const selectedJob = openJobs.find((j) => j._id === values.jobId)
       await submitJobApplication({
+        jobId: values.jobId,
+        applyFor: selectedJob?.title || '',
         applicantName: `${values.firstName} ${values.secondName}`,
         gender: values.gender,
         dob: values.dob,
@@ -150,7 +166,6 @@ export default function CareersList() {
         email: values.email,
         phone: values.phone,
         education: values.education,
-        applyFor: values.applyFor,
         experience: values.experience,
         remoteJob: values.remoteJob,
         about: values.about,
@@ -158,6 +173,10 @@ export default function CareersList() {
       })
       setSubmitted(true)
       reset()
+      setResumeFile(null)
+    } catch (err) {
+      console.error('Application submit failed:', err.response?.data || err.message)
+      alert(err.response?.data?.message || 'Something went wrong. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -167,16 +186,11 @@ export default function CareersList() {
     <>
       <Seo title="Careers" description="Open roles at Nexbyte." />
 
-      {/* ANNOUNCEMENT BAR — cycles through open vacancies */}
       <AnnouncementBar jobs={openJobs} />
-
-      {/* PAGE BANNER — dark hero with breadcrumb */}
       <CareersBanner />
 
-      {/* HERO — cards left, message / apply form right */}
       <section className="container-page py-20">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
-          {/* LEFT: contact card + apply card */}
           <div className="flex flex-col gap-6 lg:col-span-2">
             <div className="card-surface animate-fadeUp p-8 text-center">
               <h2 className="font-display text-2xl font-semibold">Careers at {COMPANY.name}</h2>
@@ -191,13 +205,22 @@ export default function CareersList() {
 
             <div className="card-surface animate-fadeUp p-8 text-center" style={{ animationDelay: '0.15s' }}>
               <h2 className="font-display text-2xl font-semibold">Join Us Today!</h2>
-              <Button variant="outline" onClick={openForm} className="mt-6">
+              <Button
+                variant="outline"
+                onClick={openForm}
+                className="mt-6"
+                disabled={jobs.status === 'success' && openJobs.length === 0}
+              >
                 Apply Now
               </Button>
+              {jobs.status === 'success' && openJobs.length === 0 && (
+                <p className="mt-3 text-xs text-body/60 dark:text-body-dark/60">
+                  No open positions right now — check back soon.
+                </p>
+              )}
             </div>
           </div>
 
-          {/* RIGHT: message by default, application form after Apply Now */}
           <div ref={rightPanelRef} className="lg:col-span-3 scroll-mt-24">
             {!showForm ? (
               <div key="message" className="animate-fadeUp">
@@ -246,7 +269,6 @@ export default function CareersList() {
                       <Input id="secondName" label="Second name" placeholder="Malik" error={errors.secondName?.message} {...register('secondName')} />
                     </div>
 
-                    {/* Gender */}
                     <div className="flex flex-col gap-1.5">
                       <span className="text-sm font-medium text-heading-light dark:text-heading-dark">Gender</span>
                       <div className="flex gap-6">
@@ -270,7 +292,12 @@ export default function CareersList() {
                     <Input id="education" label="Education" placeholder="e.g. BS Computer Science" error={errors.education?.message} {...register('education')} />
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <Input id="applyFor" label="Apply for" placeholder="e.g. Frontend Developer" error={errors.applyFor?.message} {...register('applyFor')} />
+                      <Select id="jobId" label="Apply for" error={errors.jobId?.message} defaultValue="" {...register('jobId')}>
+                        <option value="" disabled>Select a role…</option>
+                        {openJobs.map((j) => (
+                          <option key={j._id} value={j._id}>{j.title}</option>
+                        ))}
+                      </Select>
                       <Input id="experience" label="Experience" placeholder="e.g. 2 years" error={errors.experience?.message} {...register('experience')} />
                     </div>
 
@@ -283,16 +310,29 @@ export default function CareersList() {
 
                     <Textarea id="about" label="Tell about yourself" placeholder="A few lines about you and your work…" error={errors.about?.message} {...register('about')} />
 
-                    {/* Resume upload */}
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="resume" className="text-sm font-medium text-heading-light dark:text-heading-dark">Resume</label>
                       <label
                         htmlFor="resume"
                         className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 dark:border-slate-600 px-4 py-6 text-sm hover:border-accent dark:hover:border-accent-dark"
                       >
-                        <UploadCloud size={16} /> PDF or DOCX, up to 5MB
+                        <UploadCloud size={16} />
+                        {resumeFile ? resumeFile.name : 'PDF or DOCX, up to 5MB'}
                       </label>
-                      <input id="resume" type="file" accept=".pdf,.doc,.docx" className="hidden" {...register('resume')} />
+                      <input
+                        id="resume"
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        className="hidden"
+                        {...register('resume', {
+                          onChange: (e) => setResumeFile(e.target.files?.[0] || null),
+                        })}
+                      />
+                      {resumeFile && (
+                        <p className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400">
+                          <CheckCircle2 size={13} /> {resumeFile.name} uploaded
+                        </p>
+                      )}
                       {errors.resume && <p className="text-xs text-rose-500">{errors.resume.message}</p>}
                     </div>
 
@@ -307,7 +347,6 @@ export default function CareersList() {
         </div>
       </section>
 
-      {/* EXPLORE OPPORTUNITIES — replaces the inline openings list */}
       <section className="container-page pb-20">
         <div className="card-surface flex flex-col items-center gap-5 px-6 py-14 text-center sm:px-14">
           <SectionHeading

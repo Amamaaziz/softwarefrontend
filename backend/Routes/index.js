@@ -21,6 +21,10 @@ router.use("/services", require("./service.routes"));
 router.use("/admin/services", require("./admin.service"));
 router.use("/blogs", require("./blog.routes"));
 router.use("/admin/blogs", require("./admin.blog"));
+router.use("/jobs", require("./job.routes"));
+router.use("/applications", require("./application.routes"));
+router.use("/admin/jobs", require("./admin.job"));
+router.use("/admin/applications", require("./admin.application"));
 
 // As you replicate the pattern for the remaining resources, mount them here:
 // router.use("/services", require("./service.routes"));

@@ -62,13 +62,18 @@ export async function getTestimonials() {
 }
 
 export async function getJobs() {
-  await delay(400);
-  return readDb().jobs || [];
+  const { data } = await http.get('/jobs');
+  return data.data || [];
 }
 
 export async function getJobBySlug(slug) {
-  await delay(400);
-  return (readDb().jobs || []).find((j) => j.slug === slug) || null;
+  try {
+    const { data } = await http.get(`/jobs/${slug}`);
+    return data.data;
+  } catch (err) {
+    if (err.response?.status === 404) return null;
+    throw err;
+  }
 }
 
 export async function getSettings() {
@@ -100,36 +105,10 @@ export async function submitContactForm(payload) {
 }
 
 export async function submitJobApplication(payload) {
-  await delay(600);
-  const db = readDb();
-  const jobs = db.jobs || [];
-
-  const matched =
-    jobs.find((j) => j.slug === payload.job) ||
-    jobs.find((j) => j._id === payload.job) ||
-    jobs.find((j) => j.title === payload.applyFor) ||
-    jobs.find((j) => j.title === payload.job) ||
-    null;
-
-  const { job, applyFor, resume, ...rest } = payload;
-
-  db.applications = [
-    {
-      _id: uid('app'),
-      job: matched
-        ? { _id: matched._id, title: matched.title }
-        : { _id: '', title: applyFor || job || 'General application' },
-      ...rest,
-      resumeUrl: '',
-      status: 'new',
-      createdAt: new Date().toISOString(),
-    },
-    ...(db.applications || []),
-  ];
-  writeDb(db);
-  return { success: true };
+  const { data } = await http.post('/applications', payload);
+  return data;
 }
-
+  
 export async function submitNewsletter(email) {
   await delay(400);
   const db = readDb();
