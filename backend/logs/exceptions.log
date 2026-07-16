@@ -448,3 +448,357 @@ Read more at https://pris.ly/d/client-constructor
     at Module.load (node:internal/modules/cjs/loader:1577:32)
     at Module._load (node:internal/modules/cjs/loader:1379:12)
     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+10:50:35 [31merror[39m: uncaughtException: Cannot find module '@prisma/adapter-pg'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\lib\prisma.js
+- C:\Users\DELL\softwarefrontend\backend\Controller\portfolio.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\portfolio.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '@prisma/adapter-pg'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\lib\prisma.js
+- C:\Users\DELL\softwarefrontend\backend\Controller\portfolio.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\portfolio.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\lib\prisma.js:3:22)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\lib\\prisma.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\portfolio.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\portfolio.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 10:50:35 GMT+0500 (Pakistan Standard Time)","process":{"pid":16024,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":63016960,"heapTotal":22302720,"heapUsed":16167584,"external":2293748,"arrayBuffers":18927}},"os":{"loadavg":[0,0,0],"uptime":131143.828},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":22,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\lib\\prisma.js","function":null,"line":3,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '@prisma/adapter-pg'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\lib\prisma.js
+- C:\Users\DELL\softwarefrontend\backend\Controller\portfolio.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\portfolio.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\lib\prisma.js:3:22)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:09:06 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:09:06 GMT+0500 (Pakistan Standard Time)","process":{"pid":16516,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":77164544,"heapTotal":35074048,"heapUsed":23985288,"external":2516325,"arrayBuffers":72641}},"os":{"loadavg":[0,0,0],"uptime":132254.296},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:12:09 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:12:09 GMT+0500 (Pakistan Standard Time)","process":{"pid":13664,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":72736768,"heapTotal":34549760,"heapUsed":23984200,"external":2516325,"arrayBuffers":72641}},"os":{"loadavg":[0,0,0],"uptime":132437.64},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:14:04 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:14:04 GMT+0500 (Pakistan Standard Time)","process":{"pid":17720,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":72540160,"heapTotal":34549760,"heapUsed":23992408,"external":2516325,"arrayBuffers":72641}},"os":{"loadavg":[0,0,0],"uptime":132553.031},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:16:32 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:16:32 GMT+0500 (Pakistan Standard Time)","process":{"pid":16252,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":72462336,"heapTotal":34811904,"heapUsed":24280640,"external":2565694,"arrayBuffers":122010}},"os":{"loadavg":[0,0,0],"uptime":132700.984},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:17:33 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:17:33 GMT+0500 (Pakistan Standard Time)","process":{"pid":11000,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":73129984,"heapTotal":35336192,"heapUsed":23982856,"external":2516325,"arrayBuffers":72641}},"os":{"loadavg":[0,0,0],"uptime":132761.687},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:19:02 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:19:02 GMT+0500 (Pakistan Standard Time)","process":{"pid":11540,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":73060352,"heapTotal":35336192,"heapUsed":23981448,"external":2516325,"arrayBuffers":72641}},"os":{"loadavg":[0,0,0],"uptime":132850.953},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+11:19:29 [31merror[39m: uncaughtException: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\service.routes.js","C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\index.js","C:\\Users\\DELL\\softwarefrontend\\backend\\app.js","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"]},"exception":true,"date":"Thu Jul 16 2026 11:19:29 GMT+0500 (Pakistan Standard Time)","process":{"pid":18328,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":72368128,"heapTotal":34549760,"heapUsed":24522664,"external":2575320,"arrayBuffers":131636}},"os":{"loadavg":[0,0,0],"uptime":132878.25},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1456,"method":"_resolveFilename","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"defaultResolveImpl","line":1066,"method":null,"native":false},{"column":22,"file":"node:internal/modules/cjs/loader","function":"resolveForCJSWithHooks","line":1071,"method":null,"native":false},{"column":25,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1242,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":50,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\service.controller.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false}],"service":"nexbyte-backend"}
+Error: Cannot find module '../utils/service.util'
+Require stack:
+- C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\service.routes.js
+- C:\Users\DELL\softwarefrontend\backend\Routes\index.js
+- C:\Users\DELL\softwarefrontend\backend\app.js
+- C:\Users\DELL\softwarefrontend\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:6:50)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+12:52:38 [31merror[39m: uncaughtException: asyncHandler is not defined
+ReferenceError: asyncHandler is not defined
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\auth.controller.js:3:15)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Routes\auth.routes.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14) {"error":{},"exception":true,"date":"Thu Jul 16 2026 12:52:38 GMT+0500 (Pakistan Standard Time)","process":{"pid":17840,"uid":null,"gid":null,"cwd":"C:\\Users\\DELL\\softwarefrontend\\backend","execPath":"C:\\Program Files\\nodejs\\node.exe","version":"v24.14.1","argv":["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\DELL\\softwarefrontend\\backend\\server.js"],"memoryUsage":{"rss":70713344,"heapTotal":35074048,"heapUsed":24357400,"external":2635496,"arrayBuffers":191812}},"os":{"loadavg":[0,0,0],"uptime":138466.328},"trace":[{"column":15,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Controller\\auth.controller.js","function":null,"line":3,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Object..js","line":1943,"method":".js","native":false},{"column":32,"file":"node:internal/modules/cjs/loader","function":"Module.load","line":1533,"method":"load","native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1335,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"wrapModuleLoad","line":255,"method":null,"native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1556,"method":"require","native":false},{"column":16,"file":"node:internal/modules/helpers","function":"require","line":152,"method":null,"native":false},{"column":5,"file":"C:\\Users\\DELL\\softwarefrontend\\backend\\Routes\\auth.routes.js","function":null,"line":18,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1812,"method":"_compile","native":false}],"service":"nexbyte-backend"}
+ReferenceError: asyncHandler is not defined
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Controller\auth.controller.js:3:15)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1556:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\DELL\softwarefrontend\backend\Routes\auth.routes.js:18:5)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)

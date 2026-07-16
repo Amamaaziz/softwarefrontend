@@ -35,9 +35,6 @@ const envSchema = z.object({
   ACCESS_TOKEN_EXPIRY: z.string().default("15m"),
   REFRESH_TOKEN_EXPIRY: z.string().default("7d"),
 
-  // Single hardcoded admin (bcrypt hashes, never plaintext).
-  ADMIN_EMAIL: z.string().email("ADMIN_EMAIL must be a valid email"),
-  ADMIN_PASSWORD_HASH: z.string().min(1, "ADMIN_PASSWORD_HASH is required"),
   DUMMY_PASSWORD_HASH: z.string().min(1, "DUMMY_PASSWORD_HASH is required"),
 
   // Comma-separated allowlist of browser origins for CORS. Example:

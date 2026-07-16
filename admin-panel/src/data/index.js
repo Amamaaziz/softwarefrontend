@@ -1,19 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Single entry point for all data access in the admin panel.
-//
-// No axios, no fetch, no backend. Every store below is backed by the shared
-// localStorage database in mockDb.js — the SAME database the public website
-// reads from. Publish a service here and it appears on the site.
-//
-// Method names (list / getOne / create / update / remove / publish) match what
-// a real REST client would expose, so swapping in a live API later means
-// editing mockDb.js only — no page component has to change.
-//
-// No user management, no activity logging, no admin-editable settings — this
-// panel has a single fixed admin account (see AuthContext.jsx) and site
-// settings are fixed config seeded in seed.js.
-// ─────────────────────────────────────────────────────────────────────────────
-
+import { http } from '../lib/http.js';
 import {
   createCollection,
   readDb,
@@ -22,9 +7,6 @@ import {
   resetDb,
 } from './mockDb.js';
 
-// ── Slugs: the forms don't ask for one, so derive it from the title ─────────
-// Without this, anything created in the admin panel would have no slug and the
-// public site's /services/:slug routes could never find it.
 function ensureUniqueSlug(collection, item) {
   const base = slugify(item.slug || item.title || 'untitled') || 'untitled';
   const taken = (readDb()[collection] || [])
@@ -40,18 +22,19 @@ function ensureUniqueSlug(collection, item) {
   return slug;
 }
 
-// ── Collections ─────────────────────────────────────────────────────────────
+// ── Services — now backed by the real API, not mockDb ───────────────────────
+export const servicesApi = {
+  list: () => http.get('/admin/services').then((r) => r.data),
+  getOne: (id) => http.get(`/admin/services/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/admin/services', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/services/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/services/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/services/${id}`).then((r) => r.data),
+  publish: (id, isPublished) =>
+    http.patch(`/admin/services/${id}/publish`, { isPublished }).then((r) => r.data),
+};
 
-export const servicesApi = createCollection('services', {
-  idPrefix: 'svc',
-  beforeWrite: (item) => ({
-    ...item,
-    slug: ensureUniqueSlug('services', item),
-    subServices: item.subServices || [],
-    images: item.images || [],
-    isPublished: item.isPublished ?? false,
-  }),
-});
+// ── Everything else — still mock, unchanged ──────────────────────────────────
 
 export const portfolioApi = createCollection('portfolio', {
   idPrefix: 'proj',
@@ -74,8 +57,6 @@ export const blogApi = createCollection('blogs', {
       author: item.author || 'Admin',
       seoMeta: item.seoMeta || { metaTitle: '', metaDescription: '' },
     };
-    // Stamp the publish date the first time it goes live; clear it if it
-    // returns to draft, so the site never shows a phantom date.
     if (next.status === 'published' && !next.publishedAt) {
       next.publishedAt = new Date().toISOString();
     }
@@ -102,6 +83,4 @@ export const applicationsApi = createCollection('applications', { publishField: 
 
 export const leadsApi = createCollection('leads', { publishField: 'status', idPrefix: 'lead' });
 
-// resetDb() wipes local changes and restores the seed. Also available in the
-// browser console as resetDemoData().
 export { resetDb, subscribe, readDb };
