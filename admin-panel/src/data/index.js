@@ -57,14 +57,12 @@ export const portfolioApi = {
 };
 
 // ── Blog — real API ──────────────────────────────────────────────────────
-// No .publish() — BlogForm.jsx sets `status` directly via its own <Select>,
-// and update() already accepts a partial payload, so there's no separate
-// publish endpoint (unlike Services/Portfolio's dedicated toggle).
 export const blogApi = {
   list: () =>
     http.get('/admin/blogs').then((r) => ({
       ...r.data,
-      total: r.data.data.length,
+      data: r.data.data.data,
+      total: r.data.data.total,
     })),
 
   getOne: (id) => http.get(`/admin/blogs/${id}`).then((r) => r.data),
@@ -73,7 +71,6 @@ export const blogApi = {
   remove: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
   delete: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
 };
-
 // ── Jobs — real API ───────────────────────────────────────────────────────
 // No .publish() — JobsList.jsx toggles status directly via update(), same
 // pattern as blogApi.
@@ -101,6 +98,12 @@ export const applicationsApi = {
 
 export const testimonialsApi = createCollection('testimonials', { idPrefix: 'test' });
 
-export const leadsApi = createCollection('leads', { publishField: 'status', idPrefix: 'lead' });
+export const leadsApi = {
+  list: () => http.get('/admin/leads').then((r) => r.data),
+  getOne: (id) => http.get(`/admin/leads/${id}`).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/leads/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/leads/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/leads/${id}`).then((r) => r.data),
+};
 
 export { resetDb, subscribe, readDb };

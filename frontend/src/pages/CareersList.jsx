@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  Eye,
 } from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import SectionHeading from '../components/ui/SectionHeading.jsx'
@@ -122,6 +123,8 @@ export default function CareersList() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [resumeFile, setResumeFile] = useState(null)
+  const [resumePreviewUrl, setResumePreviewUrl] = useState(null)
+  const [submittedResumeUrl, setSubmittedResumeUrl] = useState(null)
   const rightPanelRef = useRef(null)
 
   const {
@@ -131,6 +134,14 @@ export default function CareersList() {
     reset,
     setValue,
   } = useForm({ resolver: zodResolver(applySchema) })
+
+  // Clean up the blob URL whenever it's replaced or the component unmounts,
+  // so we don't leak memory across repeated file selections.
+  useEffect(() => {
+    return () => {
+      if (resumePreviewUrl) URL.revokeObjectURL(resumePreviewUrl)
+    }
+  }, [resumePreviewUrl])
 
   const openForm = () => {
     setSubmitted(false)
@@ -152,11 +163,18 @@ export default function CareersList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs.status])
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files?.[0] || null
+    setResumeFile(file)
+    if (resumePreviewUrl) URL.revokeObjectURL(resumePreviewUrl)
+    setResumePreviewUrl(file ? URL.createObjectURL(file) : null)
+  }
+
   const onSubmit = async (values) => {
     setSubmitting(true)
     try {
       const selectedJob = openJobs.find((j) => j._id === values.jobId)
-      await submitJobApplication({
+      const res = await submitJobApplication({
         jobId: values.jobId,
         applyFor: selectedJob?.title || '',
         applicantName: `${values.firstName} ${values.secondName}`,
@@ -169,11 +187,14 @@ export default function CareersList() {
         experience: values.experience,
         remoteJob: values.remoteJob,
         about: values.about,
-        resumeName: values.resume?.[0]?.name,
+        resumeFile: values.resume?.[0],
       })
+      setSubmittedResumeUrl(res?.data?.resumeUrl || null)
       setSubmitted(true)
       reset()
+      if (resumePreviewUrl) URL.revokeObjectURL(resumePreviewUrl)
       setResumeFile(null)
+      setResumePreviewUrl(null)
     } catch (err) {
       console.error('Application submit failed:', err.response?.data || err.message)
       alert(err.response?.data?.message || 'Something went wrong. Please try again.')
@@ -247,6 +268,17 @@ export default function CareersList() {
                     <CheckCircle2 size={36} className="text-accent-hoverLight dark:text-accent-dark" />
                     <h3 className="font-display text-xl font-semibold">Application received</h3>
                     <p className="max-w-sm text-sm">We&rsquo;ll review it and reach out within a week if it&rsquo;s a fit.</p>
+                    {submittedResumeUrl && (
+  <a
+    href={submittedResumeUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="mt-1 flex items-center gap-1.5 text-sm font-medium text-accent-hoverLight underline dark:text-accent-dark"
+  >
+    <Eye size={14} />
+    View submitted resume
+  </a>
+)}
                     <Button variant="outline" onClick={() => setShowForm(false)} className="mt-3">
                       Back
                     </Button>
@@ -325,12 +357,23 @@ export default function CareersList() {
                         accept=".pdf,.doc,.docx"
                         className="hidden"
                         {...register('resume', {
-                          onChange: (e) => setResumeFile(e.target.files?.[0] || null),
+                          onChange: handleResumeChange,
                         })}
                       />
                       {resumeFile && (
                         <p className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400">
                           <CheckCircle2 size={13} /> {resumeFile.name} uploaded
+                          {resumePreviewUrl && (
+  <a
+    href={resumePreviewUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="ml-1 flex items-center gap-1 font-medium underline"
+  >
+    <Eye size={12} />
+    Preview
+  </a>
+)}
                         </p>
                       )}
                       {errors.resume && <p className="text-xs text-rose-500">{errors.resume.message}</p>}

@@ -32,27 +32,45 @@ export default function DataTable({
   const [sortDir, setSortDir] = useState('asc');
   const [page, setPage] = useState(1);
 
-  const filtered = useMemo(() => {
-    if (!search || searchKeys.length === 0) return data;
-    const q = search.toLowerCase();
-    return data.filter((row) =>
-      searchKeys.some((key) => String(row[key] ?? '').toLowerCase().includes(q))
-    );
-  }, [data, search, searchKeys]);
+ const safeData = Array.isArray(data) ? data : [];
 
-  const sorted = useMemo(() => {
-    if (!sortKey) return filtered;
-    const copy = [...filtered];
-    copy.sort((a, b) => {
-      const av = a[sortKey];
-      const bv = b[sortKey];
-      if (av == null) return 1;
-      if (bv == null) return -1;
-      if (typeof av === 'string') return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
-      return sortDir === 'asc' ? av - bv : bv - av;
-    });
-    return copy;
-  }, [filtered, sortKey, sortDir]);
+const filtered = useMemo(() => {
+  if (!search || searchKeys.length === 0) return safeData;
+
+  const q = search.toLowerCase();
+
+  return safeData.filter((row) =>
+    searchKeys.some((key) =>
+      String(row[key] ?? '').toLowerCase().includes(q)
+    )
+  );
+}, [safeData, search, searchKeys]);
+
+const sorted = useMemo(() => {
+  if (!Array.isArray(filtered)) return [];
+
+  if (!sortKey) return filtered;
+
+  const copy = [...filtered];
+
+  copy.sort((a, b) => {
+    const av = a?.[sortKey];
+    const bv = b?.[sortKey];
+
+    if (av == null) return 1;
+    if (bv == null) return -1;
+
+    if (typeof av === 'string') {
+      return sortDir === 'asc'
+        ? av.localeCompare(bv)
+        : bv.localeCompare(av);
+    }
+
+    return sortDir === 'asc' ? av - bv : bv - av;
+  });
+
+  return copy;
+}, [filtered, sortKey, sortDir]);
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   const paginated = sorted.slice((page - 1) * pageSize, page * pageSize);

@@ -26,6 +26,11 @@ const submitApplication = asyncHandler(async (req, res) => {
     if (!matchedJob) throw new ApiError(400, "Selected job posting does not exist");
   }
 
+  let resumeUrl = null;
+  if (req.file) {
+    resumeUrl = `${req.protocol}://${req.get("host")}/uploads/resumes/${req.file.filename}`;
+  }
+
   const application = await prisma.application.create({
     data: {
       jobId: matchedJob?.id ?? null,
@@ -40,12 +45,14 @@ const submitApplication = asyncHandler(async (req, res) => {
       experience: body.experience ? sanitizeText(body.experience) : null,
       remoteJob: body.remoteJob ? sanitizeText(body.remoteJob) : null,
       about: body.about ? sanitizeText(body.about) : null,
-      resumeUrl: null,
+      resumeUrl,
       status: "NEW",
     },
   });
 
-  return res.status(201).json(new ApiResponse(201, { success: true, id: application.id }, "Application submitted"));
+  return res
+    .status(201)
+    .json(new ApiResponse(201, { success: true, id: application.id, resumeUrl }, "Application submitted"));
 });
 
 // ---------------------------------------------------------------------------
@@ -78,9 +85,6 @@ const updateApplication = asyncHandler(async (req, res) => {
 
   const body = req.body;
 
-  // firstName/lastName re-joined into the schema's single applicantName —
-  // if only one is sent, fall back to splitting the existing name for the
-  // other half so a partial edit doesn't blank out part of it.
   let applicantName;
   if (body.firstName !== undefined || body.lastName !== undefined) {
     const currentFirst = existing.applicantName?.split(/\s+/)[0] || "";

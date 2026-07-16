@@ -82,30 +82,25 @@ export async function getSettings() {
 }
 
 // ── Writes (unchanged — still mock) ─────────────────────────────────────────
-
 export async function submitContactForm(payload) {
-  await delay(600);
-  const db = readDb();
-  db.leads = [
-    {
-      _id: uid('lead'),
-      name: payload.name,
-      email: payload.email,
-      phone: payload.phone || '',
-      category: payload.category || '',
-      message: payload.message,
-      source: 'contact',
-      status: 'new',
-      createdAt: new Date().toISOString(),
-    },
-    ...(db.leads || []),
-  ];
-  writeDb(db);
-  return { success: true };
+  const { data } = await http.post('/leads', payload);
+  return data;
 }
-
 export async function submitJobApplication(payload) {
-  const { data } = await http.post('/applications', payload);
+  const formData = new FormData();
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (key === 'resumeFile') return;
+    if (value !== undefined && value !== null) formData.append(key, value);
+  });
+
+  if (payload.resumeFile) {
+    formData.append('resume', payload.resumeFile);
+  }
+
+  // Do NOT set Content-Type manually — axios needs to set the multipart
+  // boundary itself based on the FormData instance.
+  const { data } = await http.post('/applications', formData);
   return data;
 }
   
