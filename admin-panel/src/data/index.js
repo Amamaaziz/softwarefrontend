@@ -22,7 +22,7 @@ function ensureUniqueSlug(collection, item) {
   return slug;
 }
 
-// ── Services — now backed by the real API, not mockDb ───────────────────────
+// ── Services — real API ──────────────────────────────────────────────────
 export const servicesApi = {
   list: () =>
     http.get('/admin/services').then((r) => ({
@@ -37,8 +37,11 @@ export const servicesApi = {
   publish: (id, isPublished) =>
     http.patch(`/admin/services/${id}/publish`, { isPublished }).then((r) => r.data),
 };
-// ── Everything else — still mock, unchanged ──────────────────────────────────
 
+// ── Portfolio — real API ──────────────────────────────────────────────────
+// NOTE: getOne currently points at /portfolios/id/:id, which has no
+// matching backend route yet — see flag above. Needs a backend fix before
+// editing an existing portfolio item will work.
 export const portfolioApi = {
   list: () =>
     http.get('/portfolios', { params: { all: 'true', limit: 50 } }).then((r) => ({
@@ -52,23 +55,20 @@ export const portfolioApi = {
   publish: (id, isPublished) => http.patch(`/portfolios/${id}`, { isPublished }).then((r) => r.data),
 };
 
-export const blogApi = createCollection('blogs', {
-  publishField: 'status',
-  idPrefix: 'blog',
-  beforeWrite: (item) => {
-    const next = {
-      ...item,
-      slug: ensureUniqueSlug('blogs', item),
-      author: item.author || 'Admin',
-      seoMeta: item.seoMeta || { metaTitle: '', metaDescription: '' },
-    };
-    if (next.status === 'published' && !next.publishedAt) {
-      next.publishedAt = new Date().toISOString();
-    }
-    if (next.status !== 'published') next.publishedAt = null;
-    return next;
-  },
-});
+// ── Blog — real API ──────────────────────────────────────────────────────
+// No .publish() — BlogForm.jsx sets `status` directly via its own <Select>,
+// and update() already accepts a partial payload, so there's no separate
+// publish endpoint (unlike Services/Portfolio's dedicated toggle).
+export const blogApi = {
+  list: () => http.get('/admin/blogs').then((r) => r.data),
+  getOne: (id) => http.get(`/admin/blogs/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/admin/blogs', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/blogs/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
+};
+
+// ── Everything else — still mock, unchanged ──────────────────────────────
 
 export const testimonialsApi = createCollection('testimonials', { idPrefix: 'test' });
 

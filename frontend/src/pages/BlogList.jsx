@@ -104,7 +104,7 @@ export default function BlogList() {
                       <p className="eyebrow mb-2">{post.category}</p>
                       <h3 className="font-display text-base font-semibold leading-snug">{post.title}</h3>
                       <p className="mt-2 text-sm leading-relaxed line-clamp-2">{post.excerpt}</p>
-                      <p className="mt-4 text-xs">{post.author} · {new Date(post.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                      <p className="mt-4 text-xs">{post.authorName} · {new Date(post.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</p>
                       </div>
                     </Link>
                   </Reveal>

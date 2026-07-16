@@ -19,6 +19,8 @@ router.use("/auth", authRoutes);
 router.use("/portfolios", portfolioRoutes);
 router.use("/services", require("./service.routes"));
 router.use("/admin/services", require("./admin.service"));
+router.use("/blogs", require("./blog.routes"));
+router.use("/admin/blogs", require("./admin.blog"));
 
 // As you replicate the pattern for the remaining resources, mount them here:
 // router.use("/services", require("./service.routes"));

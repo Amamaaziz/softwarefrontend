@@ -47,13 +47,13 @@ export async function getPortfolioBySlug(slug) {
 }
 
 export async function getBlogs() {
-  await delay(400);
-  return (readDb().blogs || []).filter((b) => b.status === 'published').sort(byNewest);
+  const { data } = await http.get('/blogs');
+  return data.data || [];
 }
 
 export async function getBlogBySlug(slug) {
-  await delay(400);
-  return (readDb().blogs || []).find((b) => b.slug === slug && b.status === 'published') || null;
+  const { data } = await http.get(`/blogs/${slug}`);
+  return data.data;
 }
 
 export async function getTestimonials() {
