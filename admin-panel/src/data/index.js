@@ -47,6 +47,7 @@ export const portfolioApi = {
     http.get('/portfolios', { params: { all: 'true', limit: 50 } }).then((r) => ({
       ...r.data,
       data: r.data.data.items,
+      total: r.data.data.pagination.total,
     })),
   getOne: (id) => http.get(`/portfolios/id/${id}`).then((r) => r.data),
   create: (payload) => http.post('/portfolios', payload).then((r) => r.data),
