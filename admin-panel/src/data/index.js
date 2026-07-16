@@ -24,7 +24,11 @@ function ensureUniqueSlug(collection, item) {
 
 // ── Services — now backed by the real API, not mockDb ───────────────────────
 export const servicesApi = {
-  list: () => http.get('/admin/services').then((r) => r.data),
+  list: () =>
+    http.get('/admin/services').then((r) => ({
+      ...r.data,
+      total: r.data.data.length,
+    })),
   getOne: (id) => http.get(`/admin/services/${id}`).then((r) => r.data),
   create: (payload) => http.post('/admin/services', payload).then((r) => r.data),
   update: (id, payload) => http.patch(`/admin/services/${id}`, payload).then((r) => r.data),
@@ -33,7 +37,6 @@ export const servicesApi = {
   publish: (id, isPublished) =>
     http.patch(`/admin/services/${id}/publish`, { isPublished }).then((r) => r.data),
 };
-
 // ── Everything else — still mock, unchanged ──────────────────────────────────
 
 export const portfolioApi = {
