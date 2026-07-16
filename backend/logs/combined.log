@@ -146,3 +146,4 @@ Please make sure your database server is running at `aws-1-ap-south-1.pooler.sup
 13:45:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":1303,"ip":"::1"}
 13:45:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":358,"ip":"::1"}
 13:46:03 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services/9cf67516-e605-48d8-88ab-f5a129a1ff21","statusCode":304,"durationMs":1265,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+13:55:05 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
