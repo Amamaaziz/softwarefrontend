@@ -135,11 +135,7 @@ export default function Login() {
             </div>
           </form>
 
-          {/* No backend, no real account — this is the demo login. */}
-          <div className="mt-6 rounded-xl border border-dashed border-border p-4 text-xs leading-relaxed text-body dark:border-border-dark dark:text-body-dark">
-            <p className="font-semibold text-heading dark:text-heading-dark">Demo account</p>
-            <p className="mt-1 font-mono">admin@demo.com / demo1234</p>
-          </div>
+        
         </div>
       </div>
     </div>

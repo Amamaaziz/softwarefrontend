@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import{ useEffect } from 'react';
 
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -124,7 +124,13 @@ export default function ServiceForm() {
               />
             </FormField>
 
-            <FormField label="Full description" htmlFor="description" error={errors.description?.message} required>
+            <FormField
+              label="Full description"
+              htmlFor="description"
+              error={errors.description?.message}
+              hint="Start a line with '- ' to make it a bullet point."
+              required
+            >
               <Textarea id="description" rows={6} error={!!errors.description} {...register('description')} />
             </FormField>
 
@@ -174,6 +180,7 @@ export default function ServiceForm() {
                   <FormField
                     label="Description"
                     error={errors.subServices?.[index]?.description?.message}
+                    hint="Start a line with '- ' to make it a bullet point."
                     required
                   >
                     <Textarea rows={2} {...register(`subServices.${index}.description`)} />

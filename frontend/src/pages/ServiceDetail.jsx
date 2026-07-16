@@ -9,6 +9,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getServiceBySlug } from '../lib/api.js'
+import { textToHtml } from '../lib/textToHtml.js'
 import RichText from '../components/ui/RichText.jsx'
 
 export default function ServiceDetail() {
@@ -40,7 +41,7 @@ export default function ServiceDetail() {
               Discuss this service <ArrowUpRight size={16} />
             </Button>
           </div>
-          <RichText html={s.description} className="mt-6 max-w-2xl text-base leading-relaxed" />
+          <RichText html={textToHtml(s.description)} className="mt-6 max-w-2xl text-base leading-relaxed" />
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -49,7 +50,7 @@ export default function ServiceDetail() {
               <Card className="h-full">
                 <Check size={18} className="text-accent-hoverLight dark:text-accent-dark" />
                 <h3 className="mt-3 font-display font-semibold">{sub.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed">{sub.description}</p>
+                <RichText html={textToHtml(sub.description)} className="mt-2 text-sm leading-relaxed" />
               </Card>
             </Reveal>
           ))}

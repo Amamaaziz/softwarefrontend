@@ -7,7 +7,7 @@ export default defineConfig({
   // up on the same origin (see frontend/vite.config.js).
   base: '/admin/',
   server: {
-    port: 5173,
+    port: 5174,
     strictPort: true,
     // Let the HMR socket talk to this server directly instead of going back
     // through the site's proxy.

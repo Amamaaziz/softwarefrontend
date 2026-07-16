@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Menu, X, Sun, Moon, ArrowUpRight, ChevronDown } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext.jsx'
-import { COMPANY, SERVICES } from '../data/mockData.js'
+import { COMPANY } from '../data/mockData.js'
+import { getServices } from '../lib/api.js'
 import Button from './ui/Button.jsx'
 
 const LINKS = [
@@ -19,9 +20,24 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)       // desktop dropdown
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false) // mobile submenu
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [services, setServices] = useState([])
   const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    let cancelled = false
+    getServices()
+      .then((data) => {
+        if (!cancelled) setServices(data)
+      })
+      .catch(() => {
+        if (!cancelled) setServices([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -29,7 +45,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close the desktop dropdown when clicking outside it
   useEffect(() => {
     const onClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -48,7 +63,6 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-3 sm:px-6">
-      {/* Floating rounded bar — narrower than the page container */}
       <div
         className={`mx-auto flex h-14 max-w-5xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 sm:px-5 ${
           scrolled
@@ -63,7 +77,6 @@ export default function Navbar() {
           {COMPANY.name}
         </NavLink>
 
-        {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {LINKS.map((link) =>
             link.dropdown ? (
@@ -95,7 +108,7 @@ export default function Navbar() {
                 {servicesOpen && (
                   <div className="absolute left-0 top-full w-64 pt-2">
                     <div className="card-surface flex flex-col overflow-hidden p-2">
-                      {SERVICES.filter((s) => s.isPublished).map((service) => (
+                      {services.map((service) => (
                         <Link
                           key={service.slug}
                           to={`/services/${service.slug}`}
@@ -158,7 +171,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile nav — floating rounded card below the bar */}
       {open && (
         <nav className="mx-auto mt-2 flex max-w-5xl flex-col gap-1 rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-canvas-light/95 dark:bg-canvas-dark/95 backdrop-blur px-4 py-4 shadow-card lg:hidden">
           {LINKS.map((link) =>
@@ -177,7 +189,7 @@ export default function Navbar() {
                 </button>
                 {mobileServicesOpen && (
                   <div className="ml-3 flex flex-col gap-1 border-l border-slate-200/70 dark:border-slate-700/60 pl-3">
-                    {SERVICES.filter((s) => s.isPublished).map((service) => (
+                    {services.map((service) => (
                       <Link
                         key={service.slug}
                         to={`/services/${service.slug}`}

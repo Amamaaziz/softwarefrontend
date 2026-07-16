@@ -11,19 +11,20 @@
     "build:into-site": "vite build --outDir ../frontend/dist/admin --emptyOutDir"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@tanstack/react-query": "^5.51.1",
+    "axios": "^1.18.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "jodit-react": "^4.1.2",
+    "lucide-react": "^0.408.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.0",
-    "@tanstack/react-query": "^5.51.1",
     "react-hook-form": "^7.52.1",
-    "@hookform/resolvers": "^3.9.0",
-    "zod": "^3.23.8",
-    "lucide-react": "^0.408.0",
-    "recharts": "^2.12.7",
     "react-hot-toast": "^2.4.1",
-    "jodit-react": "^4.1.2",
-    "clsx": "^2.1.1",
-    "date-fns": "^3.6.0"
+    "react-router-dom": "^6.26.0",
+    "recharts": "^2.12.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

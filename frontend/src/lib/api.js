@@ -1,18 +1,15 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // The public website's "API".
 //
-// There is no backend. These functions read from the shared localStorage
-// database (src/data/mockDb.js) that the admin panel writes to. Anything the
-// admin publishes shows up here; anything a visitor submits (contact form,
-// job application, newsletter) is written back and appears in the admin panel
-// under Leads / Applications.
-//
-// Every function returns a Promise and simulates latency, so loading states
-// stay visible. To go live later, keep these names and swap the bodies:
-//   export const getServices = () => axios.get('/api/services').then(r => r.data)
+// Services now come from the real backend (see lib/http.js). Everything else
+// still reads from the shared localStorage database (src/data/mockDb.js) until
+// those modules get the same treatment.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import axios from 'axios';
 import { readDb, writeDb, uid, delay } from '../data/mockDb.js';
+
+const http = axios.create({ baseURL: 'http://localhost:5000/api/v1' });
 
 const byOrder = (a, b) => (a.order ?? 0) - (b.order ?? 0);
 const byNewest = (a, b) => new Date(b.publishedAt || b.createdAt || 0) - new Date(a.publishedAt || a.createdAt || 0);
@@ -20,13 +17,13 @@ const byNewest = (a, b) => new Date(b.publishedAt || b.createdAt || 0) - new Dat
 // ── Reads ───────────────────────────────────────────────────────────────────
 
 export async function getServices() {
-  await delay(400);
-  return (readDb().services || []).filter((s) => s.isPublished).sort(byOrder);
+  const { data } = await http.get('/services');
+  return (data.data || []).sort(byOrder);
 }
 
 export async function getServiceBySlug(slug) {
-  await delay(400);
-  return (readDb().services || []).find((s) => s.slug === slug && s.isPublished) || null;
+  const { data } = await http.get(`/services/${slug}`);
+  return data.data; // null if not found — see note below
 }
 
 export async function getPortfolio() {
@@ -61,7 +58,6 @@ export async function getTestimonials() {
 
 export async function getJobs() {
   await delay(400);
-  // The careers page shows closed roles too (greyed out), so return everything.
   return readDb().jobs || [];
 }
 
@@ -75,9 +71,8 @@ export async function getSettings() {
   return readDb().settings;
 }
 
-// ── Writes (these are what make the admin panel's Leads / Applications real) ─
+// ── Writes (unchanged — still mock) ─────────────────────────────────────────
 
-/** Contact form → a new lead in the admin panel. */
 export async function submitContactForm(payload) {
   await delay(600);
   const db = readDb();
@@ -99,12 +94,6 @@ export async function submitContactForm(payload) {
   return { success: true };
 }
 
-/**
- * Careers form → a new application in the admin panel.
- * The two forms on the site send different shapes: the job detail page sends
- * `job` (a slug), the careers page sends `applyFor` (a job title). Resolve
- * either into the { _id, title } object the admin Applications page expects.
- */
 export async function submitJobApplication(payload) {
   await delay(600);
   const db = readDb();
@@ -126,7 +115,7 @@ export async function submitJobApplication(payload) {
         ? { _id: matched._id, title: matched.title }
         : { _id: '', title: applyFor || job || 'General application' },
       ...rest,
-      resumeUrl: '', // no file storage without a backend — we keep the filename
+      resumeUrl: '',
       status: 'new',
       createdAt: new Date().toISOString(),
     },
@@ -136,7 +125,6 @@ export async function submitJobApplication(payload) {
   return { success: true };
 }
 
-/** Newsletter signup → a lead tagged with source: 'newsletter'. */
 export async function submitNewsletter(email) {
   await delay(400);
   const db = readDb();

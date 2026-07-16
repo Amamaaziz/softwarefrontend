@@ -3,28 +3,20 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const prisma = require("../lib/prisma");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const asyncHandler = require("../utils/asyncHandler");
 const env = require("../config/env");
 
 /**
- * Single hardcoded admin account model.
+ * Single admin account, now backed by the `users` table in Postgres
+ * instead of .env values. There is still no roles table — every row in
+ * `users` is implicitly "admin", so the token payload hardcodes
+ * role: "admin" rather than reading a column that doesn't exist.
  *
- * Critical security point: "hardcoded" does NOT mean the password is a
- * plaintext string sitting in this file or in git. The email and a
- * bcrypt HASH of the password live in environment variables (.env,
- * never committed — confirm .gitignore covers it). This file only ever
- * compares against the hash, never stores or logs the raw password.
- *
- * To generate the hash once, run in a Node REPL or a one-off script:
- *   const bcrypt = require("bcryptjs");
- *   bcrypt.hashSync("your-real-password", 12);
- * Then put the output in ADMIN_PASSWORD_HASH in .env.
- *
- * This structure also means moving to a real multi-admin DB table later
- * only requires changing where these two values come from — the rest of
- * this controller (JWT issuance, cookie handling) stays identical.
+ * DUMMY_PASSWORD_HASH in .env is still used below as a timing-attack
+ * decoy when the email doesn't match any user.
  */
 
 const ACCESS_TOKEN_EXPIRY = "15m";
@@ -33,10 +25,8 @@ const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
 
 // In-memory store mapping refresh token hash -> expiry, so refresh tokens
 // can be invalidated on logout even though JWTs are normally stateless.
-// NOTE: this resets on server restart and won't scale across multiple
-// instances — fine for a single-admin app on one process, but if you
-// deploy with multiple instances/replicas later, move this to Redis or
-// a DB table. Flagging now so it's not a surprise later.
+// Resets on server restart — fine for a single-process app; move to
+// Redis/DB if you ever run multiple instances.
 const activeRefreshTokens = new Map(); // tokenHash -> expiresAt
 
 function hashToken(token) {
@@ -57,15 +47,11 @@ function generateRefreshToken(user) {
   return token;
 }
 
-// Cookie options shared by both tokens. secure:true means the cookie is
-// only ever sent over HTTPS — this MUST stay true in production; if
-// you're testing locally over plain http, NODE_ENV won't be "production"
-// so this correctly relaxes only in dev.
 function cookieOptions(maxAgeMs) {
   return {
-    httpOnly: true, // inaccessible to client-side JS — primary XSS mitigation
+    httpOnly: true,
     secure: env.NODE_ENV === "production",
-    sameSite: "strict", // blocks the cookie being sent on cross-site requests (CSRF mitigation)
+    sameSite: "strict",
     maxAge: maxAgeMs,
     path: "/",
   };
@@ -74,16 +60,9 @@ function cookieOptions(maxAgeMs) {
 /**
  * POST /api/auth/login
  * Body: { email, password }
- *
- * Deliberately generic error message ("Invalid credentials") for both
- * "email doesn't match" and "password doesn't match" cases — never
- * reveal which one was wrong, since that lets an attacker enumerate
- * valid emails.
- *
- * Rate limiting on this route is handled at the route level via
- * rateLimiter.middleware.js (a stricter limiter than the general API
- * limiter) — this controller doesn't rate-limit itself, since that's a
- * cross-cutting concern that belongs in middleware, not business logic.
+ * Looks up the user by email in Postgres. Always runs bcrypt.compare
+ * against SOME hash — the user's real hash if found, DUMMY_PASSWORD_HASH
+ * otherwise — so response timing never reveals whether an email exists.
  */
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -93,24 +72,19 @@ const login = asyncHandler(async (req, res) => {
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
+  const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
 
-  // Constant-time-safe comparison happens via bcrypt.compare regardless
-  // of whether the email matches, to avoid timing differences that could
-  // leak whether an email is valid. We always run bcrypt.compare against
-  // SOME hash, even on email mismatch, using a dummy hash as a decoy.
-  const emailMatches = normalizedEmail === env.ADMIN_EMAIL.toLowerCase();
-  const hashToCompare = emailMatches ? env.ADMIN_PASSWORD_HASH : env.DUMMY_PASSWORD_HASH;
-
+  const hashToCompare = user?.passwordHash || env.DUMMY_PASSWORD_HASH;
   const passwordMatches = await bcrypt.compare(String(password), hashToCompare);
 
-  if (!emailMatches || !passwordMatches) {
+  if (!user || !user.isActive || !passwordMatches) {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  const user = { id: "admin", role: "admin" };
+  const tokenUser = { id: user.id, role: "admin" };
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const accessToken = generateAccessToken(tokenUser);
+  const refreshToken = generateRefreshToken(tokenUser);
 
   res
     .cookie("accessToken", accessToken, cookieOptions(15 * 60 * 1000))
@@ -119,7 +93,7 @@ const login = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { user: { id: user.id, role: user.role } }, // never return tokens in the body — cookies only
+        { user: { id: user.id, name: user.name, email: user.email, role: "admin" } },
         "Logged in successfully"
       )
     );
@@ -127,9 +101,8 @@ const login = asyncHandler(async (req, res) => {
 
 /**
  * POST /api/auth/refresh
- * Reads refreshToken from cookie, issues a new accessToken (and rotates
- * the refresh token — "refresh token rotation" limits the damage window
- * if a refresh token is ever stolen, since each one is single-use).
+ * Unchanged from before — operates purely on the JWT/cookie layer,
+ * never touched the admin's identity source directly.
  */
 const refresh = asyncHandler(async (req, res) => {
   const token = req.cookies?.refreshToken;
@@ -152,7 +125,6 @@ const refresh = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Refresh token has been revoked or expired");
   }
 
-  // Rotate: invalidate the old refresh token immediately, issue a new one.
   activeRefreshTokens.delete(tokenHash);
 
   const user = { id: decoded.id, role: "admin" };
@@ -168,9 +140,7 @@ const refresh = asyncHandler(async (req, res) => {
 
 /**
  * POST /api/auth/logout
- * Clears cookies AND revokes the refresh token server-side, so a stolen
- * refresh token can't be used again even after "logout" — clearing the
- * cookie alone only affects this browser, not a copied token.
+ * Unchanged — clears cookies and revokes the refresh token server-side.
  */
 const logout = asyncHandler(async (req, res) => {
   const token = req.cookies?.refreshToken;
@@ -188,16 +158,18 @@ const logout = asyncHandler(async (req, res) => {
 
 /**
  * GET /api/auth/me
- * Returns the currently authenticated admin's identity. Requires
- * isAdmin/verifyJWT middleware to have already run (req.user populated).
- * Useful for the admin panel to check session validity on app load.
+ * Now checks the database instead of trusting the JWT payload alone —
+ * confirms the user still exists and is active before responding.
  */
 const getMe = asyncHandler(async (req, res) => {
-  if (!req.user) {
-    throw new ApiError(401, "Not authenticated");
-  }
+  if (!req.user) throw new ApiError(401, "Not authenticated");
 
-  return res.status(200).json(new ApiResponse(200, { user: req.user }));
+  const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+  if (!user || !user.isActive) throw new ApiError(401, "Not authenticated");
+
+  return res.status(200).json(
+    new ApiResponse(200, { user: { id: user.id, name: user.name, email: user.email, role: "admin" } })
+  );
 });
 
 module.exports = {
