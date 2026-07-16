@@ -19,19 +19,19 @@ const daysAgo = (n) => new Date(Date.now() - n * 24 * 60 * 60 * 1000).toISOStrin
 
 // ── Site settings (drives the public site's header, footer, contact page) ────
 export const seedSettings = {
-  companyName: 'Nexbyte',
+  companyName: 'DevInt.Tech',
   tagline: 'We build the software behind growing businesses.',
   foundedYear: 2016,
   logo: '',
-  contactEmail: 'hello@nexbyte.dev',
+  contactEmail: 'hello@devint.tech',
   contactPhone: '+92 300 1234567',
   officeAddress: 'Suite 4B, Gulgasht Colony, Multan, Punjab, Pakistan',
   social: {
-    linkedin: 'https://linkedin.com/company/nexbyte',
-    twitter: 'https://x.com/nexbyte',
-    facebook: 'https://facebook.com/nexbyte',
-    instagram: 'https://instagram.com/nexbyte',
-    github: 'https://github.com/nexbyte',
+    linkedin: 'https://linkedin.com/company/devint-tech',
+    twitter: 'https://x.com/devinttech',
+    facebook: 'https://facebook.com/devinttech',
+    instagram: 'https://instagram.com/devinttech',
+    github: 'https://github.com/devint-tech',
   },
   stats: [
     { label: 'Years shipping software', value: '9+' },

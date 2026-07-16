@@ -12,11 +12,11 @@ import { useEffect } from 'react'
 //   <Seo title="Portfolio" description="..." />
 //   <Seo title={post.title} description={post.excerpt} image={post.coverImage} type="article" />
 
-const SITE_NAME = 'Nexbyte'
-const DEFAULT_TITLE = 'Nexbyte — Software House'
+const SITE_NAME = 'DevInt.Tech'
+const DEFAULT_TITLE = 'DevInt.Tech — Custom Software, Web & Mobile Development'
 const DEFAULT_DESCRIPTION =
-  'Nexbyte builds web, mobile, and custom software products for startups and businesses worldwide.'
-// Set this to your production origin before launch, e.g. 'https://nexbyte.dev'.
+  'DevInt.Tech builds modern web, mobile, and SaaS products for startups and growing businesses.'
+// Set this to your production origin before launch, e.g. 'https://devint.tech'.
 // Falls back to the current origin so it also works in dev/preview.
 const SITE_URL = typeof window !== 'undefined' ? window.location.origin : ''
 // Default share image — put an og-image (1200×630) in /public and update the path.

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ImageOff } from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import Card from '../components/ui/Card.jsx'
 import SectionHeading from '../components/ui/SectionHeading.jsx'
@@ -67,25 +67,42 @@ export default function ServicesList() {
           )}
           {services.status === 'success' && services.data.length > 0 && (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {services.data.map((service, i) => (
-                <Reveal key={service._id} delay={(i % 2) * 100} className="h-full">
-                  <Card className="group flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/60 dark:hover:border-accent-dark/60 hover:shadow-lg hover:shadow-accent/10 dark:hover:shadow-accent-dark/10">
-                  <div>
-                    <span className="font-mono text-xs text-accent-hoverLight dark:text-accent-dark transition-transform duration-300 inline-block group-hover:scale-125 group-hover:translate-x-0.5">{String(i + 1).padStart(2, '0')}</span>
-                    <h3 className="mt-3 font-display text-xl font-semibold transition-colors duration-300 group-hover:text-accent-hoverLight dark:group-hover:text-accent-dark">{service.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed">{service.shortDescription}</p>
-                    <ul className="mt-4 flex flex-col gap-1.5">
-                      {service.subServices.slice(0, 3).map((sub) => (
-                        <li key={sub.title} className="text-xs">— {sub.title}</li>
-                      ))}
-                    </ul>
-                  </div>
-                    <Button to={`/services/${service.slug}`} variant="outline" className="mt-6 self-start group-hover:border-accent dark:group-hover:border-accent-dark">
-                      View details <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Button>
-                  </Card>
-                </Reveal>
-              ))}
+              {services.data.map((service, i) => {
+                const thumbnail = service.images?.[0]
+                return (
+                  <Reveal key={service._id} delay={(i % 2) * 100} className="h-full">
+                    <Card className="group flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/60 dark:hover:border-accent-dark/60 hover:shadow-lg hover:shadow-accent/10 dark:hover:shadow-accent-dark/10">
+                      <div>
+                        <div className="mb-4 aspect-video w-full overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark">
+                          {thumbnail ? (
+                            <img
+                              src={thumbnail}
+                              alt={service.title}
+                              loading="lazy"
+                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center text-body/30 dark:text-body-dark/30">
+                              <ImageOff size={22} />
+                            </div>
+                          )}
+                        </div>
+                        <span className="font-mono text-xs text-accent-hoverLight dark:text-accent-dark transition-transform duration-300 inline-block group-hover:scale-125 group-hover:translate-x-0.5">{String(i + 1).padStart(2, '0')}</span>
+                        <h3 className="mt-3 font-display text-xl font-semibold transition-colors duration-300 group-hover:text-accent-hoverLight dark:group-hover:text-accent-dark">{service.title}</h3>
+                        <p className="mt-2 text-sm leading-relaxed">{service.shortDescription}</p>
+                        <ul className="mt-4 flex flex-col gap-1.5">
+                          {service.subServices.slice(0, 3).map((sub) => (
+                            <li key={sub.title} className="text-xs">— {sub.title}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <Button to={`/services/${service.slug}`} variant="outline" className="mt-6 self-start group-hover:border-accent dark:group-hover:border-accent-dark">
+                        View details <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </Button>
+                    </Card>
+                  </Reveal>
+                )
+              })}
             </div>
           )}
         </div>
