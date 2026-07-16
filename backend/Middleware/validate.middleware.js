@@ -43,17 +43,16 @@ const validate = (schema) => (req, res, next) => {
     return next();
   } catch (err) {
     if (err instanceof ZodError) {
-      // Flatten Zod's nested issue format into a clean, predictable
-      // { field, message } list. This avoids exposing Zod's internal
-      // error shape (which can include schema paths, codes, etc.)
-      // directly to API consumers.
-      const errors = err.errors.map((issue) => ({
-        field: issue.path.join(".") || "(root)",
-        message: issue.message,
-      }));
+  const issues = err.issues || err.errors;
+  const errors = issues.map((issue) => ({
+    field: issue.path.join(".") || "(root)",
+    message: issue.message,
+  }));
 
-      return next(new ApiError(400, "Validation failed", errors));
-    }
+  return next(new ApiError(400, "Validation failed", errors));
+}
+
+      
 
     // Any non-Zod error here is unexpected (e.g. a bug in a schema
     // definition) — pass it to the central error handler rather than

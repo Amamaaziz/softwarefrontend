@@ -36,16 +36,18 @@ export const servicesApi = {
 
 // ── Everything else — still mock, unchanged ──────────────────────────────────
 
-export const portfolioApi = createCollection('portfolio', {
-  idPrefix: 'proj',
-  beforeWrite: (item) => ({
-    ...item,
-    slug: ensureUniqueSlug('portfolio', item),
-    technologies: item.technologies || [],
-    isPublished: item.isPublished ?? false,
-    isFeatured: item.isFeatured ?? false,
-  }),
-});
+export const portfolioApi = {
+  list: () =>
+    http.get('/portfolios', { params: { all: 'true', limit: 50 } }).then((r) => ({
+      ...r.data,
+      data: r.data.data.items,
+    })),
+  getOne: (id) => http.get(`/portfolios/id/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/portfolios', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/portfolios/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/portfolios/${id}`).then((r) => r.data),
+  publish: (id, isPublished) => http.patch(`/portfolios/${id}`, { isPublished }).then((r) => r.data),
+};
 
 export const blogApi = createCollection('blogs', {
   publishField: 'status',

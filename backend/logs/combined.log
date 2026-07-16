@@ -146,3 +146,249 @@ Please make sure your database server is running at `aws-1-ap-south-1.pooler.sup
 13:45:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":1303,"ip":"::1"}
 13:45:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":358,"ip":"::1"}
 13:46:03 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services/9cf67516-e605-48d8-88ab-f5a129a1ff21","statusCode":304,"durationMs":1265,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+13:52:56 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":1418,"ip":"::1"}
+13:52:56 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services/web-development","statusCode":304,"durationMs":142,"ip":"::1"}
+14:18:20 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
+14:18:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/auth/login","statusCode":200,"durationMs":994,"ip":"::1"}
+14:18:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":259,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:18:48 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":238,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:19:16 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":1221,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:25:29 [33mwarn[39m: Unhandled Prisma error code: P1001 {"service":"nexbyte-backend"}
+14:25:29 [31merror[39m: Unhandled/internal error 
+Invalid `prisma.service.findMany()` invocation:
+
+
+Can't reach database server at `aws-1-ap-south-1.pooler.supabase.com`
+
+Please make sure your database server is running at `aws-1-ap-south-1.pooler.supabase.com`. {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+PrismaClientKnownRequestError: 
+Invalid `prisma.service.findMany()` invocation:
+
+
+Can't reach database server at `aws-1-ap-south-1.pooler.supabase.com`
+
+Please make sure your database server is running at `aws-1-ap-south-1.pooler.supabase.com`.
+    at ei.handleRequestError (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:67:20
+14:25:29 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":500,"durationMs":5833,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:26:13 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":200,"durationMs":541,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:40 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:27:40 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":8,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:41 [33mwarn[39m: Unhandled Prisma error code: P1001 {"service":"nexbyte-backend"}
+14:27:41 [31merror[39m: Unhandled/internal error 
+Invalid `prisma.service.findMany()` invocation:
+
+
+Can't reach database server at `aws-1-ap-south-1.pooler.supabase.com`
+
+Please make sure your database server is running at `aws-1-ap-south-1.pooler.supabase.com`. {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+PrismaClientKnownRequestError: 
+Invalid `prisma.service.findMany()` invocation:
+
+
+Can't reach database server at `aws-1-ap-south-1.pooler.supabase.com`
+
+Please make sure your database server is running at `aws-1-ap-south-1.pooler.supabase.com`.
+    at ei.handleRequestError (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\DELL\softwarefrontend\backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async C:\Users\DELL\softwarefrontend\backend\Controller\service.controller.js:67:20
+14:27:41 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":500,"durationMs":5778,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:41 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:27:41 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:42 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:27:42 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":4,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:43 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":200,"durationMs":822,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:27:55 [32minfo[39m: SIGINT received — closing HTTP server... {"service":"nexbyte-backend"}
+14:28:17 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
+14:28:24 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:28:24 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":28,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:28:37 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:28:37 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":8,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:28:39 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":200,"durationMs":1031,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:28:42 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":200,"durationMs":131,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:29:41 [32minfo[39m: SIGINT received — closing HTTP server... {"service":"nexbyte-backend"}
+14:34:04 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
+14:34:22 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/auth/login","statusCode":200,"durationMs":1323,"ip":"::1"}
+14:34:23 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":170,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:34:23 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":304,"durationMs":486,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:34:29 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":143,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:34:31 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":304,"durationMs":89,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:34:35 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":137,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:35:34 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:35:34 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":13,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:35:36 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:35:36 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:35:36 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:35:36 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":5,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:35:37 [31merror[39m: Unhandled/internal error Cannot read properties of undefined (reading 'map') {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+TypeError: Cannot read properties of undefined (reading 'map')
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\validate.middleware.js:50:33
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:104:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\DELL\softwarefrontend\backend\Middleware\auth.middleware.js:72:3
+    at C:\Users\DELL\softwarefrontend\backend\utils\asyncHandler.js:31:21
+    at Layer.handleRequest (C:\Users\DELL\softwarefrontend\backend\node_modules\router\lib\layer.js:152:17)
+14:35:37 [31merror[39m: Request completed with server error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":500,"durationMs":7,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:38:28 [32minfo[39m: SIGINT received — closing HTTP server... {"service":"nexbyte-backend"}
+14:39:23 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
+14:39:30 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:39:30 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":25,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:40:45 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:40:45 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":9,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:46:38 [32minfo[39m: SIGINT received — closing HTTP server... {"service":"nexbyte-backend"}
+14:46:46 [32minfo[39m: Server listening on port 5000 [development] {"service":"nexbyte-backend"}
+14:48:10 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":854,"ip":"::1"}
+14:48:11 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?featured=true&limit=50","statusCode":200,"durationMs":645,"ip":"::1"}
+14:48:11 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":679,"ip":"::1"}
+14:48:11 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?featured=true&limit=50","statusCode":304,"durationMs":120,"ip":"::1"}
+14:48:11 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":155,"ip":"::1"}
+14:48:11 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":139,"ip":"::1"}
+14:48:54 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/auth/login","statusCode":200,"durationMs":986,"ip":"::1"}
+14:48:54 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":136,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:48:54 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":304,"durationMs":329,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:49:06 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":304,"durationMs":405,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:49:10 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/admin/services","statusCode":304,"durationMs":170,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:17 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:17 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":11,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:18 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:18 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":5,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:18 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:18 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:18 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:18 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":8,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:19 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:19 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":5,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:19 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:19 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":4,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:19 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:19 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":3,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:20 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:20 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:20 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:20 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:20 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:20 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":4,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:21 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:21 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":6,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:21 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:21 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":4,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:21 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:21 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":4,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:22 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:22 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":3,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:22 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:22 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":3,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:22 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:22 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":7,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+14:59:23 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+14:59:23 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":5,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+15:00:32 [32minfo[39m: Handled request error Validation failed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0","ip":"::1"}
+15:00:32 [33mwarn[39m: Request completed with client error {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":400,"durationMs":9,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+15:01:32 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"POST","path":"/api/v1/portfolios","statusCode":201,"durationMs":749,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+15:01:33 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?all=true&limit=50","statusCode":200,"durationMs":349,"ip":"::1","userId":"1fe642dc-aa6c-45ba-944d-d9c0946479d0"}
+15:01:58 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?limit=50","statusCode":200,"durationMs":440,"ip":"::1"}
+15:01:58 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?limit=50","statusCode":304,"durationMs":134,"ip":"::1"}
+15:02:03 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios/e-commerce-website-development","statusCode":200,"durationMs":208,"ip":"::1"}
+15:02:03 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios/e-commerce-website-development","statusCode":304,"durationMs":176,"ip":"::1"}
+15:02:26 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":2019,"ip":"::1"}
+15:02:26 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/services","statusCode":304,"durationMs":201,"ip":"::1"}
+15:02:26 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?limit=50","statusCode":304,"durationMs":759,"ip":"::1"}
+15:02:27 [32minfo[39m: Request completed {"service":"nexbyte-backend","method":"GET","path":"/api/v1/portfolios?limit=50","statusCode":304,"durationMs":190,"ip":"::1"}
+15:03:47 [32minfo[39m: SIGINT received — closing HTTP server... {"service":"nexbyte-backend"}

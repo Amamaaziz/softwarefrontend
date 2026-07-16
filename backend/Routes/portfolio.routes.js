@@ -2,7 +2,12 @@
 // -----------------------------------------------------------------------------
 // Wires HTTP verbs/paths to portfolio controllers, attaching the correct
 // middleware stack per route following the project's request lifecycle:
-//   rateLimiter → auth → (upload) → validate → controller → (errorHandler)
+//   rateLimiter → auth → validate → controller → (errorHandler)
+//
+// NOTE: coverImage is a plain URL string submitted by ImageUploader.jsx (no
+// file upload involved), so this route file does NOT use uploadSingle/
+// uploadLimiter — that was leftover from an earlier file-upload design and
+// never matched what the frontend actually sends.
 // -----------------------------------------------------------------------------
 
 const express = require("express");
@@ -11,6 +16,7 @@ const router = express.Router();
 const {
   getAllPortfolios,
   getPortfolioBySlug,
+  getPortfolioById,
   createPortfolio,
   updatePortfolio,
   deletePortfolio,
@@ -22,6 +28,7 @@ const {
   deletePortfolioSchema,
   getPortfolioBySlugSchema,
   getAllPortfoliosQuerySchema,
+  idParamSchema,
 } = require("../validators/portfolio.validator");
 
 const {
@@ -30,11 +37,7 @@ const {
   optionalAuth,
 } = require("../Middleware/auth.middleware");
 const validate = require("../Middleware/validate.middleware");
-const { uploadSingle } = require("../Middleware/upload.middleware");
-const {
-  generalApiLimiter,
-  uploadLimiter,
-} = require("../Middleware/rateLimiter.middleware");
+const { generalApiLimiter } = require("../Middleware/rateLimiter.middleware");
 
 // ---------------------------------------------------------------------------
 // Public reads
@@ -50,6 +53,17 @@ router.get(
   getAllPortfolios
 );
 
+// Admin-only id-based lookup, used by PortfolioForm.jsx's edit page.
+// Placed BEFORE "/:slug" so "id" isn't swallowed as a slug value.
+router.get(
+  "/id/:id",
+  generalApiLimiter,
+  verifyJWT,
+  isAdmin,
+  validate({ params: idParamSchema }),
+  getPortfolioById
+);
+
 router.get(
   "/:slug",
   generalApiLimiter,
@@ -61,32 +75,20 @@ router.get(
 // ---------------------------------------------------------------------------
 // Admin writes
 // ---------------------------------------------------------------------------
-// Order matters: uploadSingle() runs BEFORE validate() so that multipart text
-// fields are parsed onto req.body by the time Zod inspects them, and the file
-// lands on req.file.
-//
-// NOTE on coverImage: coverImage arrives as an uploaded FILE (req.file), not a
-// body text field. If createPortfolioSchema requires `coverImage` as a body
-// string, either (a) drop it from the schema and let the controller set it from
-// req.file.filename, or (b) inject `req.body.coverImage = req.file?.filename`
-// before validate() runs. The controller is the natural place to map req.file →
-// the stored path.
 router.post(
   "/",
-  uploadLimiter,
+  generalApiLimiter,
   verifyJWT,
   isAdmin,
-  uploadSingle("coverImage"),
   validate(createPortfolioSchema),
   createPortfolio
 );
 
 router.patch(
   "/:id",
-  uploadLimiter,
+  generalApiLimiter,
   verifyJWT,
   isAdmin,
-  uploadSingle("coverImage"), // optional on update; controller keeps existing if no file
   validate(updatePortfolioSchema),
   updatePortfolio
 );

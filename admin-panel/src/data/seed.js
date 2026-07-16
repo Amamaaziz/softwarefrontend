@@ -46,13 +46,7 @@ export const seedSettings = {
   },
 };
 
-// ── Admin users. Any of these can log in with the password `demo1234`. ───────
-export const seedUsers = [
-  { _id: 'user-1', name: 'Ayesha Khan', email: 'ayesha@nexbyte.dev', role: 'super_admin', image: '', isActive: true, createdAt: daysAgo(120) },
-  { _id: 'user-2', name: 'Bilal Ahmed', email: 'bilal@nexbyte.dev', role: 'content_editor', image: '', isActive: true, createdAt: daysAgo(80) },
-  { _id: 'user-3', name: 'Sara Malik', email: 'sara@nexbyte.dev', role: 'hr_manager', image: '', isActive: true, createdAt: daysAgo(45) },
-  { _id: 'user-4', name: 'Usman Tariq', email: 'usman@nexbyte.dev', role: 'content_editor', image: '', isActive: false, createdAt: daysAgo(200) },
-];
+
 
 // ── Services ────────────────────────────────────────────────────────────────
 export const seedServices = [

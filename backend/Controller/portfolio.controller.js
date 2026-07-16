@@ -5,16 +5,20 @@ const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const asyncHandler = require("../utils/asyncHandler");
 const { sanitizeHtml, sanitizeText } = require("../utils/sanitize");
+const {
+  generateUniqueSlug,
+  serializePortfolio,
+  serializePortfolioList,
+} = require("../utils/portfolio.util");
 
 /**
- * Allowlist matches the real Portfolio model exactly. No `status`,
- * `images[]`, `tags[]`, `category`, `order`, or `description` fields —
- * those don't exist on this schema. Never spread req.body directly into
- * Prisma regardless — this allowlist is what blocks mass assignment.
+ * Allowlist matches the real Portfolio model exactly. `slug` deliberately
+ * excluded — it's server-generated from `title` (see portfolio.util.js),
+ * matching the Services module's convention. Admin-supplied slug values
+ * are always ignored.
  */
 const ALLOWED_FIELDS = [
   "title",
-  "slug",
   "client",
   "serviceId",
   "coverImage",
@@ -35,26 +39,10 @@ function pickAllowedFields(body) {
   return data;
 }
 
-/**
- * Sanitize free-text / rich-text fields before they hit the DB.
- * challenge/solution/result are @db.Text in the schema — likely rendered
- * as rich text on the public case-study page, so they go through
- * sanitizeHtml (not sanitizeText) to preserve safe formatting while
- * stripping XSS vectors.
- */
 function sanitizePayload(data) {
   const clean = { ...data };
 
   if (clean.title) clean.title = sanitizeText(clean.title).slice(0, 200);
-
-  if (clean.slug) {
-    clean.slug = sanitizeText(clean.slug)
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]/g, "-")
-      .replace(/-+/g, "-");
-  }
-
   if (clean.client) clean.client = sanitizeText(clean.client).slice(0, 120);
 
   if (clean.coverImage) {
@@ -75,7 +63,7 @@ function sanitizePayload(data) {
       throw new ApiError(400, "technologies must be an array of strings");
     }
     clean.technologies = clean.technologies
-      .map((t) => sanitizeText(String(t)).slice(0, 40))
+      .map((t) => sanitizeText(String(t)).slice(0, 100))
       .filter(Boolean)
       .slice(0, 30);
   }
@@ -131,7 +119,7 @@ const getAllPortfolios = asyncHandler(async (req, res) => {
 
   return res.status(200).json(
     new ApiResponse(200, {
-      items,
+      items: serializePortfolioList(items),
       pagination: {
         page,
         limit,
@@ -161,15 +149,34 @@ const getPortfolioBySlug = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Portfolio item not found");
   }
 
-  return res.status(200).json(new ApiResponse(200, item));
+  return res.status(200).json(new ApiResponse(200, serializePortfolio(item)));
+});
+
+/**
+ * GET /api/portfolio/id/:id
+ * Admin only — used by PortfolioForm.jsx's edit page, which has a DB id
+ * from the URL, not a slug.
+ */
+const getPortfolioById = asyncHandler(async (req, res) => {
+  if (req.user?.role !== "admin") {
+    throw new ApiError(403, "Not authorized to perform this action");
+  }
+
+  const { id } = req.params;
+  const item = await prisma.portfolio.findUnique({
+    where: { id },
+    include: { service: { select: { id: true, title: true, slug: true } } },
+  });
+  if (!item) throw new ApiError(404, "Portfolio item not found");
+
+  return res.status(200).json(new ApiResponse(200, serializePortfolio(item)));
 });
 
 /**
  * POST /api/portfolio
- * Admin only. If serviceId is provided, we verify the Service actually
- * exists BEFORE attempting the insert — this turns a possible Prisma
- * P2003 foreign-key error into a clean, specific 400 instead of a
- * generic normalizeError() fallback.
+ * Admin only. Slug is always server-generated from `title` — never
+ * accepted from the client. If serviceId is provided, we verify the
+ * Service actually exists BEFORE attempting the insert.
  */
 const createPortfolio = asyncHandler(async (req, res) => {
   if (req.user?.role !== "admin") {
@@ -177,16 +184,14 @@ const createPortfolio = asyncHandler(async (req, res) => {
   }
 
   const picked = pickAllowedFields(req.body);
-  const required = ["title", "slug", "client", "coverImage", "challenge", "solution", "result"];
+  const required = ["title", "client", "coverImage", "challenge", "solution", "result"];
   const missing = required.filter((f) => !picked[f]);
   if (missing.length) {
     throw new ApiError(400, `Missing required field(s): ${missing.join(", ")}`);
   }
 
   const data = sanitizePayload(picked);
-
-  const existingSlug = await prisma.portfolio.findUnique({ where: { slug: data.slug } });
-  if (existingSlug) throw new ApiError(409, "A portfolio item with this slug already exists");
+  data.slug = await generateUniqueSlug(data.title);
 
   if (data.serviceId) {
     const service = await prisma.service.findUnique({ where: { id: data.serviceId } });
@@ -195,11 +200,13 @@ const createPortfolio = asyncHandler(async (req, res) => {
 
   const created = await prisma.portfolio.create({ data });
 
-  return res.status(201).json(new ApiResponse(201, created, "Portfolio item created"));
+  return res.status(201).json(new ApiResponse(201, serializePortfolio(created), "Portfolio item created"));
 });
 
 /**
  * PATCH /api/portfolio/:id
+ * Slug regenerates only if title changes, and checks for collisions
+ * against every other item (excluding itself).
  */
 const updatePortfolio = asyncHandler(async (req, res) => {
   if (req.user?.role !== "admin") {
@@ -213,9 +220,8 @@ const updatePortfolio = asyncHandler(async (req, res) => {
   const picked = pickAllowedFields(req.body);
   const data = sanitizePayload(picked);
 
-  if (data.slug && data.slug !== existing.slug) {
-    const conflict = await prisma.portfolio.findUnique({ where: { slug: data.slug } });
-    if (conflict) throw new ApiError(409, "A portfolio item with this slug already exists");
+  if (data.title && data.title !== existing.title) {
+    data.slug = await generateUniqueSlug(data.title, id);
   }
 
   if (data.serviceId) {
@@ -225,7 +231,7 @@ const updatePortfolio = asyncHandler(async (req, res) => {
 
   const updated = await prisma.portfolio.update({ where: { id }, data });
 
-  return res.status(200).json(new ApiResponse(200, updated, "Portfolio item updated"));
+  return res.status(200).json(new ApiResponse(200, serializePortfolio(updated), "Portfolio item updated"));
 });
 
 /**
@@ -248,6 +254,7 @@ const deletePortfolio = asyncHandler(async (req, res) => {
 module.exports = {
   getAllPortfolios,
   getPortfolioBySlug,
+  getPortfolioById,
   createPortfolio,
   updatePortfolio,
   deletePortfolio,

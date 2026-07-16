@@ -20,7 +20,7 @@ import Spinner from '../components/common/Spinner.jsx';
 const schema = z.object({
   title: z.string().min(2, 'Title is required'),
   client: z.string().min(1, 'Client name is required'),
-  service: z.string().optional().or(z.literal('')),
+  serviceId: z.string().optional().or(z.literal('')),
   coverImage: z.string().min(1, 'A cover image is required'),
   challenge: z.string().min(1, 'Describe the challenge'),
   solution: z.string().min(1, 'Describe the solution'),
@@ -59,7 +59,7 @@ export default function PortfolioForm() {
     defaultValues: {
       title: '',
       client: '',
-      service: '',
+      serviceId: '',
       coverImage: '',
       challenge: '',
       solution: '',
@@ -73,12 +73,18 @@ export default function PortfolioForm() {
 
   useEffect(() => {
     if (existing?.data) {
-      reset({ ...existing.data, service: existing.data.service?._id || existing.data.service || '' });
+      reset({
+        ...existing.data,
+        serviceId: existing.data.service?._id || existing.data.serviceId || '',
+      });
     }
   }, [existing, reset]);
 
   const mutation = useMutation({
-    mutationFn: (values) => (isEdit ? portfolioApi.update(id, values) : portfolioApi.create(values)),
+    mutationFn: (values) =>
+      isEdit
+        ? portfolioApi.update(id, { ...values, serviceId: values.serviceId || null })
+        : portfolioApi.create({ ...values, serviceId: values.serviceId || null }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['portfolio'] });
       toast.success(isEdit ? 'Project updated' : 'Project created');
@@ -117,8 +123,8 @@ export default function PortfolioForm() {
               </FormField>
             </div>
 
-            <FormField label="Related service" htmlFor="service" hint="Optional">
-              <Select id="service" {...register('service')}>
+            <FormField label="Related service" htmlFor="serviceId" hint="Optional">
+              <Select id="serviceId" {...register('serviceId')}>
                 <option value="">— None —</option>
                 {servicesData?.data?.map((s) => (
                   <option key={s._id} value={s._id}>

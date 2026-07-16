@@ -7,23 +7,19 @@ const { z } = require("zod");
  * fields (challenge/solution/result), single coverImage, technologies[],
  * boolean flags (isFeatured/isNewArrival/isPublished), and an optional
  * relation to Service via serviceId.
+ *
+ * `slug` is intentionally NOT part of either body schema below — it's
+ * server-generated from `title` in the controller (see portfolio.util.js),
+ * matching how the Services module already works. PortfolioForm.jsx never
+ * collects a slug, so requiring it here would always fail validation.
  */
 
-const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // Postgres uuid (v4-shaped, but gen_random_uuid() produces standard UUIDs
 // generally) — validate shape, not version, since dbgenerated() output
 // format can vary slightly by Postgres version/extension.
 const uuidSchema = z.string().uuid("Must be a valid UUID");
 
 const titleSchema = z.string().trim().min(3).max(200);
-
-const slugSchema = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .min(3)
-  .max(150)
-  .regex(slugRegex, "Slug may only contain lowercase letters, numbers, and hyphens");
 
 const clientSchema = z.string().trim().min(1, "Client is required").max(120);
 
@@ -40,8 +36,10 @@ const challengeSchema = z.string().trim().min(1).max(20000);
 const solutionSchema = z.string().trim().min(1).max(20000);
 const resultSchema = z.string().trim().min(1).max(20000);
 
+// Raised from 40 -> 100 chars per tag; 40 was too tight for real tech
+// names/phrases people actually type (e.g. "Next.js App Router + RSC").
 const technologiesSchema = z
-  .array(z.string().trim().min(1).max(40))
+  .array(z.string().trim().min(1).max(100))
   .max(30, "A maximum of 30 technologies is allowed")
   .optional();
 
@@ -61,15 +59,11 @@ const slugParamSchema = z.object({
 
 /**
  * POST /api/portfolio
- * All content fields are required at creation, matching the schema's
- * non-nullable columns (title, slug, client, coverImage, challenge,
- * solution, result all lack `?` in the Prisma model).
  */
 const createPortfolioSchema = {
   body: z
     .object({
       title: titleSchema,
-      slug: slugSchema,
       client: clientSchema,
       serviceId: serviceIdSchema,
       coverImage: coverImageSchema,
@@ -93,7 +87,6 @@ const updatePortfolioSchema = {
   body: z
     .object({
       title: titleSchema.optional(),
-      slug: slugSchema.optional(),
       client: clientSchema.optional(),
       serviceId: serviceIdSchema,
       coverImage: coverImageSchema.optional(),
@@ -121,9 +114,6 @@ const getPortfolioBySlugSchema = {
 
 /**
  * GET /api/portfolio
- * Query params — note: no `category` filter anymore (doesn't exist on
- * this schema); replaced with `serviceId` filter, and `featured`/`newArrival`
- * map to the boolean flags.
  */
 const getAllPortfoliosQuerySchema = {
   query: z
@@ -144,4 +134,5 @@ module.exports = {
   deletePortfolioSchema,
   getPortfolioBySlugSchema,
   getAllPortfoliosQuerySchema,
+  idParamSchema,
 };

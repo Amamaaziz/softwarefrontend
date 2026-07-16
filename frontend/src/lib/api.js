@@ -27,18 +27,23 @@ export async function getServiceBySlug(slug) {
 }
 
 export async function getPortfolio() {
-  await delay(400);
-  return (readDb().portfolio || []).filter((p) => p.isPublished);
+  const { data } = await http.get('/portfolios', { params: { limit: 50 } });
+  return data.data.items;
 }
 
 export async function getFeaturedPortfolio() {
-  await delay(300);
-  return (readDb().portfolio || []).filter((p) => p.isPublished && p.isFeatured);
+  const { data } = await http.get('/portfolios', { params: { featured: 'true', limit: 50 } });
+  return data.data.items;
 }
 
 export async function getPortfolioBySlug(slug) {
-  await delay(400);
-  return (readDb().portfolio || []).find((p) => p.slug === slug && p.isPublished) || null;
+  try {
+    const { data } = await http.get(`/portfolios/${slug}`);
+    return data.data;
+  } catch (err) {
+    if (err.response?.status === 404) return null;
+    throw err;
+  }
 }
 
 export async function getBlogs() {
