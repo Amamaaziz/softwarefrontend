@@ -61,14 +61,18 @@ export const portfolioApi = {
 // and update() already accepts a partial payload, so there's no separate
 // publish endpoint (unlike Services/Portfolio's dedicated toggle).
 export const blogApi = {
-  list: () => http.get('/admin/blogs').then((r) => r.data),
+  list: () =>
+    http.get('/admin/blogs').then((r) => ({
+      ...r.data,
+      total: r.data.data.length,
+    })),
+
   getOne: (id) => http.get(`/admin/blogs/${id}`).then((r) => r.data),
   create: (payload) => http.post('/admin/blogs', payload).then((r) => r.data),
   update: (id, payload) => http.patch(`/admin/blogs/${id}`, payload).then((r) => r.data),
   remove: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
   delete: (id) => http.delete(`/admin/blogs/${id}`).then((r) => r.data),
 };
-
 // ── Everything else — still mock, unchanged ──────────────────────────────
 
 export const testimonialsApi = createCollection('testimonials', { idPrefix: 'test' });
