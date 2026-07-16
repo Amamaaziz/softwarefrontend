@@ -36,12 +36,12 @@ function sanitizePayload(data) {
 // Public
 // ---------------------------------------------------------------------------
 
-const getPublicBlogs = asyncHandler(async (req, res) => {
-  const blogs = await prisma.blog.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { publishedAt: "desc" },
-  });
-  return res.status(200).json(new ApiResponse(200, serializeBlogList(blogs)));
+const getAdminBlogs = asyncHandler(async (req, res) => {
+  const blogs = await prisma.blog.findMany({ orderBy: { createdAt: "desc" } });
+  const serialized = serializeBlogList(blogs);
+  return res.status(200).json(
+    new ApiResponse(200, { data: serialized, total: serialized.length })
+  );
 });
 
 const getPublicBlogBySlug = asyncHandler(async (req, res) => {
