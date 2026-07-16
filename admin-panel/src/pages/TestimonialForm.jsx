@@ -35,7 +35,6 @@ function RatingPicker({ value, onChange }) {
   );
 }
 
-/** Simple "paste a URL" photo field with a small live preview — replaces the file uploader. */
 function PhotoUrlField({ value, onChange }) {
   return (
     <div className="flex items-start gap-4">

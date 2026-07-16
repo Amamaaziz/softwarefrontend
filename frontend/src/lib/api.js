@@ -48,17 +48,16 @@ export async function getPortfolioBySlug(slug) {
 
 export async function getBlogs() {
   const { data } = await http.get('/blogs');
-  return data.data || [];
+  return data.data?.data || [];
 }
-
 export async function getBlogBySlug(slug) {
   const { data } = await http.get(`/blogs/${slug}`);
   return data.data;
 }
 
 export async function getTestimonials() {
-  await delay(300);
-  return (readDb().testimonials || []).filter((t) => t.isPublished);
+  const { data } = await http.get('/testimonials');
+  return data.data || [];
 }
 
 export async function getJobs() {

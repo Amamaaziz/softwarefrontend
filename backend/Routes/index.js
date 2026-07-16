@@ -20,5 +20,7 @@ router.use("/admin/jobs", require("./admin.job"));
 router.use("/admin/applications", require("./admin.application"));
 router.use("/leads", require("./lead.routes"));
 router.use("/admin/leads", require("./admin.leads"));
+router.use("/testimonials", require("./testimonial.routes"));
+router.use("/admin/testimonials", require("./admin.testimonials"));
 
 module.exports = router;

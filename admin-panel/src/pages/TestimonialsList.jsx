@@ -80,7 +80,7 @@ export default function TestimonialsList() {
       render: (row) => (
         <ToggleSwitch
           checked={row.isPublished}
-          onChange={(val) => publishMutation.mutate({ id: row._id, isPublished: val })}
+          onChange={(val) => publishMutation.mutate({ id: row.id, isPublished: val })}
           label={row.isPublished ? 'Published' : 'Draft'}
         />
       ),
@@ -120,7 +120,7 @@ export default function TestimonialsList() {
           }
           rowActions={(row) => (
             <>
-              <Link to={`/testimonials/${row._id}/edit`}>
+              <Link to={`/testimonials/${row.id}/edit`}>
                 <Button variant="ghost" size="icon" aria-label="Edit">
                   <Pencil size={15} />
                 </Button>
@@ -138,7 +138,7 @@ export default function TestimonialsList() {
         title={`Delete testimonial from "${deleteTarget?.clientName}"?`}
         message="This will permanently remove the testimonial from the site. This cannot be undone."
         isLoading={deleteMutation.isPending}
-        onConfirm={() => deleteMutation.mutate(deleteTarget._id)}
+        onConfirm={() => deleteMutation.mutate(deleteTarget.id)}
         onCancel={() => setDeleteTarget(null)}
       />
     </div>

@@ -96,7 +96,19 @@ export const applicationsApi = {
 
 // ── Everything else — still mock, unchanged ──────────────────────────────
 
-export const testimonialsApi = createCollection('testimonials', { idPrefix: 'test' });
+export const testimonialsApi = {
+  list: () => http.get('/admin/testimonials').then((r) => ({
+    ...r.data,
+    total: r.data.data.length,
+  })),
+  getOne: (id) => http.get(`/admin/testimonials/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/admin/testimonials', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/testimonials/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/testimonials/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/testimonials/${id}`).then((r) => r.data),
+  publish: (id, isPublished) =>
+    http.patch(`/admin/testimonials/${id}/publish`, { isPublished }).then((r) => r.data),
+};
 
 export const leadsApi = {
   list: () => http.get('/admin/leads').then((r) => r.data),

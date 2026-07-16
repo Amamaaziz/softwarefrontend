@@ -95,7 +95,7 @@ export default function BlogList() {
             <>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
                 {paged.map((post, i) => (
-                  <Reveal key={post._id} delay={(i % 3) * 100}>
+                  <Reveal key={post.id} delay={(i % 3) * 100}>
                     <Link to={`/blog/${post.slug}`} className="group card-surface block overflow-hidden">
                     <div className="overflow-hidden">
                       <img src={post.coverImage} alt={post.title} loading="lazy" className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105" />

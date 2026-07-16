@@ -42,7 +42,7 @@ export default function BlogList() {
           {row.coverImage && <img src={row.coverImage} alt="" className="h-9 w-9 rounded-md object-cover" />}
           <div className="max-w-xs">
             <p className="truncate font-medium text-heading dark:text-heading-dark">{row.title}</p>
-            <p className="truncate text-xs text-body/70 dark:text-body-dark/70">{row.author?.name}</p>
+            <p className="truncate text-xs text-body/70 dark:text-body-dark/70">{row.authorName}</p>
           </div>
         </div>
       ),
@@ -52,7 +52,7 @@ export default function BlogList() {
       key: 'status',
       header: 'Status',
       sortable: true,
-      render: (row) => <Badge tone={row.status === 'published' ? 'success' : 'warning'}>{row.status}</Badge>,
+      render: (row) => <Badge tone={row.status === 'PUBLISHED' ? 'success' : 'warning'}>{row.status}</Badge>,
     },
     {
       key: 'publishedAt',
@@ -95,7 +95,7 @@ export default function BlogList() {
           }
           rowActions={(row) => (
             <>
-              <Link to={`/blog/${row._id}/edit`}>
+              <Link to={`/blog/${row.id}/edit`}>
                 <Button variant="ghost" size="icon" aria-label="Edit">
                   <Pencil size={15} />
                 </Button>
@@ -113,7 +113,7 @@ export default function BlogList() {
         title={`Delete "${deleteTarget?.title}"?`}
         message="This will permanently remove the post from the site. This cannot be undone."
         isLoading={deleteMutation.isPending}
-        onConfirm={() => deleteMutation.mutate(deleteTarget._id)}
+        onConfirm={() => deleteMutation.mutate(deleteTarget.id)}
         onCancel={() => setDeleteTarget(null)}
       />
     </div>

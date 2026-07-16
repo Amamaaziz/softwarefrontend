@@ -1,4 +1,4 @@
-// backend/routes/admin.leads.js  (protected)
+// backend/Routes/admin.leads.js  (protected)
 const express = require('express');
 const router = express.Router();
 const { isAdmin } = require('../middleware/auth.middleware');
