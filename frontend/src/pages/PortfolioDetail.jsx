@@ -110,7 +110,7 @@ export default function PortfolioDetail() {
               </div>
 
               <p className="mt-8 max-w-md font-mono text-xs leading-relaxed text-slate-400">
-                Simplified data flow derived from this project's stack. Every Nexbyte hand-off ships
+                Simplified data flow derived from this project's stack. Every DevInt hand-off ships
                 with full architecture docs — no black boxes.
               </p>
             </div>

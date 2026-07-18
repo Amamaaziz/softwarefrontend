@@ -105,7 +105,7 @@ const prodFormat = winston.format.combine(
 const logger = winston.createLogger({
   level: isProduction ? "info" : "debug",
   format: isProduction ? prodFormat : devFormat,
-  defaultMeta: { service: "nexbyte-backend" },
+  defaultMeta: { service: "DevInt-backend" },
   transports: [
     new winston.transports.Console({
       silent: process.env.NODE_ENV === "test", // keep test output clean

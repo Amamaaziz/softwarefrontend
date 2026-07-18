@@ -9,6 +9,7 @@ import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getPortfolio } from '../lib/api.js'
 
+
 export default function PortfolioList() {
   const portfolio = useAsync(getPortfolio, [])
   const [filter, setFilter] = useState('All')
@@ -26,7 +27,7 @@ export default function PortfolioList() {
 
   return (
     <>
-      <Seo title="Portfolio" description="Case studies from products Nexbyte has designed and built." />
+      <Seo title="Portfolio" description="Case studies from products DevInt has designed and built." />
 
       {/* BANNER — full-bleed "case study cover": image across the whole banner,
           dark gradient overlay, title anchored bottom-left */}
