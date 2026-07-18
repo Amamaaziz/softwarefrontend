@@ -40,7 +40,7 @@ export const seedSettings = {
     { label: 'Engineers on the team', value: '24' },
   ],
   seoDefaults: {
-    metaTitle: 'Nexbyte — Custom Software, Web & Mobile Development',
+    metaTitle: 'DevInt.Tech — Custom Software, Web & Mobile Development',
     metaDescription:
       'We build modern web, mobile, and SaaS products for startups and growing businesses.',
   },
