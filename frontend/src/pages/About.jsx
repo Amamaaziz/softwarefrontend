@@ -6,6 +6,11 @@ import Button from '../components/ui/Button.jsx'
 import SectionHeading from '../components/ui/SectionHeading.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import TiltCard from '../components/ui/TiltCard.jsx'
+import Spinner from '../components/ui/Spinner.jsx'
+import ErrorState from '../components/ui/ErrorState.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
+import { useAsync } from '../lib/useAsync.js'
+import { getTeam } from '../lib/api.js'
 import { COMPANY } from '../data/mockData.js'
 
 const VALUES = [
@@ -21,27 +26,17 @@ const HIGHLIGHTS = [
   'Proven track record of success',
 ]
 
-const CEO = {
-  name: 'Sara Ahmed',
-  role: 'CEO & Founder',
-  photo: 'https://i.pravatar.cc/300?img=47',
-  message:
-    'Real innovation begins when you stop showcasing technology and start solving human problems. That\u2019s the standard we hold every project to.',
-}
-
-const TEAM = [
-  { name: 'Bilal Raza', role: 'Head of Design', photo: 'https://i.pravatar.cc/200?img=13' },
-  { name: 'Hamza Iqbal', role: 'Mobile Lead', photo: 'https://i.pravatar.cc/200?img=14' },
-  { name: 'Ayesha Malik', role: 'QA Lead', photo: 'https://i.pravatar.cc/200?img=48' },
-]
-
 export default function About() {
+  const team = useAsync(getTeam, [])
+
+  const featured = team.status === 'success' ? team.data.find((m) => m.isFeatured) : null
+  const rest = team.status === 'success' ? team.data.filter((m) => !m.isFeatured) : []
+
   return (
     <>
       <Seo title="About Us" description="The story, mission, and team behind Nexbyte." />
 
-      {/* BANNER — "story" style: vertical accent rule beside the title,
-          "est. {foundedYear}" mono stamp, team image fading in from the top-right */}
+      {/* BANNER */}
       <section className="relative overflow-hidden bg-[#0a1c1b]">
         <img
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=70"
@@ -50,7 +45,6 @@ export default function About() {
           loading="lazy"
           className="absolute right-0 top-0 h-full w-2/3 object-cover opacity-30 [mask-image:linear-gradient(215deg,black_20%,transparent_70%)]"
         />
-        {/* accent glow bottom-left */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"
@@ -72,7 +66,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* HERO — story left, image + CEO message card right */}
+      {/* HERO — story left, image + featured member message card right */}
       <section className="container-page py-20">
         <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2">
           <Reveal>
@@ -104,25 +98,35 @@ export default function About() {
             </div>
           </Reveal>
 
-          {/* Image with floating CEO message card */}
           <Reveal delay={150} className="relative pb-24">
-            <img
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=70"
-              alt="The Nexbyte team at work"
-              className="h-80 w-full rounded-2xl object-cover sm:h-[420px]"
-              loading="lazy"
-            />
-            <div className="absolute -bottom-0 left-0 right-6 sm:left-[-2rem] sm:right-16 rounded-2xl bg-accent dark:bg-accent-dark p-6 shadow-lg">
-              <div className="flex items-start gap-4">
-                <img src={CEO.photo} alt={CEO.name} className="h-16 w-16 shrink-0 rounded-full object-cover" loading="lazy" />
-                <div>
-                  <p className="text-sm leading-relaxed text-slate-900">
-                    &ldquo;{CEO.message}&rdquo;
-                  </p>
-                  <p className="mt-3 text-sm font-semibold text-slate-900">{CEO.name} — {CEO.role}</p>
+            {featured ? (
+              <>
+                <img
+                  src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=70"
+                  alt="The Nexbyte team at work"
+                  className="h-80 w-full rounded-2xl object-cover sm:h-[420px]"
+                  loading="lazy"
+                />
+                <div className="absolute -bottom-0 left-0 right-6 sm:left-[-2rem] sm:right-16 rounded-2xl bg-accent dark:bg-accent-dark p-6 shadow-lg">
+                  <div className="flex items-start gap-4">
+                    <img src={featured.photo} alt={featured.name} className="h-16 w-16 shrink-0 rounded-full object-cover" loading="lazy" />
+                    <div>
+                      {featured.message && (
+                        <p className="text-sm leading-relaxed text-slate-900">&ldquo;{featured.message}&rdquo;</p>
+                      )}
+                      <p className="mt-3 text-sm font-semibold text-slate-900">{featured.name} — {featured.role}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : (
+              <img
+                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=70"
+                alt="The Nexbyte team at work"
+                className="h-80 w-full rounded-2xl object-cover sm:h-[420px]"
+                loading="lazy"
+              />
+            )}
           </Reveal>
         </div>
       </section>
@@ -142,7 +146,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* TEAM — intro left, featured CEO card right, members below */}
+      {/* TEAM — intro left, featured member card right, rest of team below */}
       <section className="container-page py-20">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <Reveal>
@@ -156,40 +160,49 @@ export default function About() {
             </Button>
           </Reveal>
 
-          {/* Featured CEO card */}
-          <Reveal delay={150} className="mx-auto w-full max-w-sm">
-            <TiltCard className="rounded-2xl">
-              <img src={CEO.photo} alt={CEO.name} className="h-96 w-full rounded-2xl object-cover" loading="lazy" />
-              <div className="absolute bottom-6 left-0 rounded-r-2xl bg-accent dark:bg-accent-dark px-6 py-4 shadow-lg">
-                <p className="font-display text-xl font-semibold text-slate-900">{CEO.name}</p>
-                <p className="text-sm text-slate-900">{CEO.role}</p>
-              </div>
-            </TiltCard>
-          </Reveal>
-        </div>
-
-        {/* Rest of the team */}
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {TEAM.map((member, i) => (
-            <Reveal key={member.name} delay={i * 100}>
-              <TiltCard max={8} className="rounded-2xl">
-              <div className="group card-surface overflow-hidden p-0">
-              <div className="overflow-hidden">
-                <img
-                  src={member.photo}
-                  alt={member.name}
-                  className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-5">
-                <p className="font-display text-lg font-semibold">{member.name}</p>
-                <p className="text-sm">{member.role}</p>
-              </div>
-              </div>
+          {featured && (
+            <Reveal delay={150} className="mx-auto w-full max-w-sm">
+              <TiltCard className="rounded-2xl">
+                <img src={featured.photo} alt={featured.name} className="h-96 w-full rounded-2xl object-cover" loading="lazy" />
+                <div className="absolute bottom-6 left-0 rounded-r-2xl bg-accent dark:bg-accent-dark px-6 py-4 shadow-lg">
+                  <p className="font-display text-xl font-semibold text-slate-900">{featured.name}</p>
+                  <p className="text-sm text-slate-900">{featured.role}</p>
+                </div>
               </TiltCard>
             </Reveal>
-          ))}
+          )}
+        </div>
+
+        <div className="mt-16">
+          {team.status === 'loading' && <Spinner />}
+          {team.status === 'error' && <ErrorState onRetry={team.retry} />}
+          {team.status === 'success' && rest.length === 0 && (
+            <EmptyState title="No team members published yet" />
+          )}
+          {team.status === 'success' && rest.length > 0 && (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {rest.map((member, i) => (
+                <Reveal key={member.id} delay={i * 100}>
+                  <TiltCard max={8} className="rounded-2xl">
+                    <div className="group card-surface overflow-hidden p-0">
+                      <div className="overflow-hidden">
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="p-5">
+                        <p className="font-display text-lg font-semibold">{member.name}</p>
+                        <p className="text-sm">{member.role}</p>
+                      </div>
+                    </div>
+                  </TiltCard>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>

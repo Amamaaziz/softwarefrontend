@@ -20,6 +20,9 @@ import BlogForm from './pages/BlogForm.jsx';
 import TestimonialsList from './pages/TestimonialsList.jsx';
 import TestimonialForm from './pages/TestimonialForm.jsx';
 
+import TeamList from './pages/TeamList.jsx';
+import TeamForm from './pages/TeamForm.jsx';
+
 import JobsList from './pages/JobsList.jsx';
 import JobForm from './pages/JobForm.jsx';
 import Applications from './pages/Applications.jsx';
@@ -64,6 +67,10 @@ export default function App() {
         <Route path="testimonials" element={<TestimonialsList />} />
         <Route path="testimonials/new" element={<TestimonialForm />} />
         <Route path="testimonials/:id/edit" element={<TestimonialForm />} />
+
+        <Route path="team" element={<TeamList />} />
+        <Route path="team/new" element={<TeamForm />} />
+        <Route path="team/:id/edit" element={<TeamForm />} />
 
         <Route path="careers/jobs" element={<JobsList />} />
         <Route path="careers/jobs/new" element={<JobForm />} />

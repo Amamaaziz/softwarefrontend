@@ -6,6 +6,7 @@ import {
   FolderKanban,
   Newspaper,
   MessageSquareQuote,
+  Users,
   Inbox,
   ShieldCheck,
   X,
@@ -24,6 +25,7 @@ const navSections = [
       { to: '/portfolio', label: 'Portfolio', icon: FolderKanban },
       { to: '/blog', label: 'Blog', icon: Newspaper },
       { to: '/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+      { to: '/team', label: 'Team', icon: Users },
     ],
   },
   {
@@ -44,7 +46,6 @@ export default function Sidebar({ open, onClose }) {
 
   return (
     <>
-      {/* Mobile overlay */}
       {open && (
         <div className="fixed inset-0 z-30 bg-slate-900/40 lg:hidden" onClick={onClose} />
       )}
