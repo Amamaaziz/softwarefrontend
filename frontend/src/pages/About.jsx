@@ -27,18 +27,18 @@ const HIGHLIGHTS = [
 ]
 
 const CEO = {
-  name: 'Sara Ahmed',
+  name: 'Hassan Ishtiaq',
   role: 'CEO & Founder',
-  photo: 'https://i.pravatar.cc/300?img=47',
+  photo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784374657/WhatsApp_Image_2026-07-16_at_5.13.14_PM_mzyxtt.jpg',
   message:
     'Real innovation begins when you stop showcasing technology and start solving human problems. That\u2019s the standard we hold every project to.',
 }
 
-const TEAM = [
-  { name: 'Bilal Raza', role: 'Head of Design', photo: 'https://i.pravatar.cc/200?img=13' },
-  { name: 'Hamza Iqbal', role: 'Mobile Lead', photo: 'https://i.pravatar.cc/200?img=14' },
-  { name: 'Ayesha Malik', role: 'QA Lead', photo: 'https://i.pravatar.cc/200?img=48' },
-]
+// const TEAM = [
+//   { name: 'Bilal Raza', role: 'Head of Design', photo: 'https://i.pravatar.cc/200?img=13' },
+//   { name: 'Hamza Iqbal', role: 'Mobile Lead', photo: 'https://i.pravatar.cc/200?img=14' },
+//   { name: 'Ayesha Malik', role: 'QA Lead', photo: 'https://i.pravatar.cc/200?img=48' },
+// ]
 
 // Small row of social/contact icons — only renders the ones that are actually set.
 // stopPropagation keeps clicks from being swallowed by the TiltCard's own handlers.

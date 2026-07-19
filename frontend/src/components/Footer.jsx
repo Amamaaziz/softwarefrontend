@@ -39,20 +39,7 @@ export default function Footer() {
               {COMPANY.name}
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed">{COMPANY.tagline}</p>
-            <div className="mt-5 flex gap-3">
-              <a href={COMPANY.social.linkedin} aria-label="LinkedIn" className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 hover:border-accent dark:hover:border-accent-dark transition-colors">
-                <Linkedin size={16} />
-              </a>
-              <a href={COMPANY.social.twitter} aria-label="Twitter / X" className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 hover:border-accent dark:hover:border-accent-dark transition-colors">
-                <Twitter size={16} />
-              </a>
-              <a href={COMPANY.social.github} aria-label="GitHub" className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 hover:border-accent dark:hover:border-accent-dark transition-colors">
-                <Github size={16} />
-              </a>
-              <a href={COMPANY.social.instagram} aria-label="Instagram" className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 hover:border-accent dark:hover:border-accent-dark transition-colors">
-                <Instagram size={16} />
-              </a>
-            </div>
+            
           </div>
 
           {COLUMNS.map((col) => (

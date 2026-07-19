@@ -34,9 +34,9 @@ const HIGHLIGHTS = [
 ]
 
 const CEO = {
-  name: 'Sara Ahmed',
+  name: 'Hassan Ishtiaq',
   role: 'CEO',
-  photo: 'https://i.pravatar.cc/300?img=47',
+  photo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784374657/WhatsApp_Image_2026-07-16_at_5.13.14_PM_mzyxtt.jpg',
   message:
     'As CEO, Hassan Ishtiaq leads DevInt with a passion for innovation, combining technology, creativity, and strategy to build meaningful digital experiences that help businesses thrive in a rapidly evolving world.',
 }
