@@ -249,3 +249,22 @@ model Settings {
 
   @@map("settings")
 }
+<<<<<<< HEAD
+model TeamMember {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  role        String
+  photo       String
+  bio         String?  @db.Text   // short description under VALUES-style cards, optional
+  message     String?  @db.Text   // quote shown on the featured/CEO card, optional
+  isFeatured  Boolean  @default(false) // true = shows in the big spotlight card
+  order       Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, order])
+  @@map("team_members")
+}
+=======
+>>>>>>> d73920ea628b35f98fed3c8edd34c40792e1fdc8

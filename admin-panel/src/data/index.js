@@ -121,4 +121,18 @@ export const leadsApi = {
   delete: (id) => http.delete(`/admin/leads/${id}`).then((r) => r.data),
 };
 
+export const teamApi = {
+  list: () => http.get('/admin/team').then((r) => ({
+    ...r.data,
+    total: r.data.data.length,
+  })),
+  getOne: (id) => http.get(`/admin/team/${id}`).then((r) => r.data),
+  create: (payload) => http.post('/admin/team', payload).then((r) => r.data),
+  update: (id, payload) => http.patch(`/admin/team/${id}`, payload).then((r) => r.data),
+  remove: (id) => http.delete(`/admin/team/${id}`).then((r) => r.data),
+  delete: (id) => http.delete(`/admin/team/${id}`).then((r) => r.data),
+  publish: (id, isPublished) =>
+    http.patch(`/admin/team/${id}/publish`, { isPublished }).then((r) => r.data),
+};
+
 export { resetDb, subscribe, readDb };

@@ -80,6 +80,11 @@ export async function getSettings() {
   return readDb().settings;
 }
 
+export async function getTeam() {
+  const { data } = await http.get('/team');
+  return data.data || [];
+}
+
 // ── Writes (unchanged — still mock) ─────────────────────────────────────────
 export async function submitContactForm(payload) {
   const { data } = await http.post('/leads', payload);
