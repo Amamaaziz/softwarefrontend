@@ -1,27 +1,14 @@
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-const crypto = require("crypto");
-
-const resumeDir = path.join(__dirname, "..", "uploads", "resumes");
-if (!fs.existsSync(resumeDir)) {
-  fs.mkdirSync(resumeDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, resumeDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const unique = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
-    cb(null, unique);
-  },
-});
+const streamifier = require("streamifier");
+const cloudinary = require("../config/cloudinary");
 
 const ALLOWED_MIME = new Set([
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ]);
+
+const storage = multer.memoryStorage();
 
 const uploadResume = multer({
   storage,
@@ -34,4 +21,22 @@ const uploadResume = multer({
   },
 });
 
-module.exports = { uploadResume };
+/**
+ * Uploads a buffer to Cloudinary as a raw resource (non-image files like
+ * PDF/DOCX use resource_type "raw"). Call this AFTER multer has run, from
+ * inside the route or a wrapping middleware — req.file.buffer must exist.
+ */
+function uploadResumeBufferToCloudinary(buffer, originalname) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "nexbyte/resumes", resource_type: "raw", filename_override: originalname, use_filename: true },
+      (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      }
+    );
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+}
+
+module.exports = { uploadResume, uploadResumeBufferToCloudinary };

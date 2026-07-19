@@ -135,4 +135,12 @@ export const teamApi = {
     http.patch(`/admin/team/${id}/publish`, { isPublished }).then((r) => r.data),
 };
 
+export const uploadApi = {
+  image: (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    return http.post('/admin/uploads/image', formData).then((r) => r.data);
+  },
+};
+
 export { resetDb, subscribe, readDb };

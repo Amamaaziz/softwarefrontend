@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Save, ImageOff } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { teamApi } from '../data/index.js';
 import PageHeader from '../components/common/PageHeader.jsx';
@@ -13,49 +13,18 @@ import { FormField, Input, Textarea } from '../components/common/FormField.jsx';
 import Button from '../components/common/Button.jsx';
 import ToggleSwitch from '../components/common/ToggleSwitch.jsx';
 import Spinner from '../components/common/Spinner.jsx';
+import ImageUploader from '../components/common/ImageUploader.jsx';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   role: z.string().min(2, 'Role is required'),
-  photo: z.string().min(1, 'Photo URL is required'),
+  photo: z.string().min(1, 'Photo is required'),
   bio: z.string().optional().or(z.literal('')),
   message: z.string().optional().or(z.literal('')),
   isFeatured: z.boolean(),
   order: z.coerce.number().int().min(0),
   isPublished: z.boolean(),
 });
-
-function PhotoUrlField({ value, onChange }) {
-  return (
-    <div className="flex items-start gap-4">
-      <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
-        {value ? (
-          <img
-            src={value}
-            alt="Photo preview"
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-        ) : (
-          <ImageOff size={20} className="text-body/40 dark:text-body-dark/40" />
-        )}
-      </div>
-      <div className="flex-1">
-        <Input
-          type="url"
-          placeholder="https://example.com/photo.jpg"
-          value={value || ''}
-          onChange={(e) => onChange(e.target.value)}
-        />
-        <p className="mt-1.5 text-xs text-body/60 dark:text-body-dark/60">
-          Paste a direct link to their photo.
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default function TeamForm() {
   const { id } = useParams();
@@ -133,11 +102,11 @@ export default function TeamForm() {
               </FormField>
             </div>
 
-            <FormField label="Photo URL" error={errors.photo?.message} required>
+            <FormField label="Photo" error={errors.photo?.message} required>
               <Controller
                 name="photo"
                 control={control}
-                render={({ field }) => <PhotoUrlField value={field.value} onChange={field.onChange} />}
+                render={({ field }) => <ImageUploader value={field.value} onChange={field.onChange} label="Photo" />}
               />
             </FormField>
 

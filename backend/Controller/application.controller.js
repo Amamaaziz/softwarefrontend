@@ -16,7 +16,6 @@ const jobSelect = { job: { select: { id: true, title: true } } };
 // ---------------------------------------------------------------------------
 // Public — submission only, no read access
 // ---------------------------------------------------------------------------
-
 const submitApplication = asyncHandler(async (req, res) => {
   const body = req.body;
 
@@ -26,10 +25,9 @@ const submitApplication = asyncHandler(async (req, res) => {
     if (!matchedJob) throw new ApiError(400, "Selected job posting does not exist");
   }
 
-  let resumeUrl = null;
-  if (req.file) {
-    resumeUrl = `${req.protocol}://${req.get("host")}/uploads/resumes/${req.file.filename}`;
-  }
+  // req.file.cloudinaryUrl is set by pushResumeToCloudinary middleware —
+  // no local disk path is ever constructed here.
+  const resumeUrl = req.file?.cloudinaryUrl ?? null;
 
   const application = await prisma.application.create({
     data: {
@@ -54,7 +52,6 @@ const submitApplication = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(201, { success: true, id: application.id, resumeUrl }, "Application submitted"));
 });
-
 // ---------------------------------------------------------------------------
 // Admin
 // ---------------------------------------------------------------------------

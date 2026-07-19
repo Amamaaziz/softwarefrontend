@@ -1,35 +1,39 @@
-import { X, ImageIcon } from 'lucide-react';
+import { useState } from 'react';
+import { X, ImageIcon, Loader2, Upload } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { Input } from './FormField.jsx';
+import { uploadApi } from '../../data/index.js';
 
 /**
- * Image field driven entirely by URL — no file upload.
+ * Image field driven by real file upload (Cloudinary) instead of pasted URLs.
  * value: string URL (single mode) or string[] (multiple mode)
  * onChange: (newValue) => void
  */
-export default function ImageUploader({ value, onChange, multiple = false, label = 'Image URL' }) {
+export default function ImageUploader({ value, onChange, multiple = false, label = 'Image' }) {
+  const [uploading, setUploading] = useState(false);
   const urls = multiple ? value || [] : value ? [value] : [];
 
-  const handleUrlChange = (newUrl) => {
-    if (!newUrl) {
-      onChange(multiple ? [] : '');
-      return;
-    }
-    onChange(newUrl);
-  };
+  const handleFiles = async (fileList) => {
+    const files = Array.from(fileList || []);
+    if (files.length === 0) return;
 
-  const handleAddUrl = (newUrl) => {
-    const trimmed = newUrl.trim();
-    if (!trimmed) return;
-
+    setUploading(true);
     try {
-      new URL(trimmed);
-    } catch {
-      toast.error('Enter a valid image URL (starting with http:// or https://).');
-      return;
-    }
+      const uploaded = [];
+      for (const file of files) {
+        const res = await uploadApi.image(file);
+        uploaded.push(res.data.url);
+      }
 
-    onChange([...(value || []), trimmed]);
+      if (multiple) {
+        onChange([...(value || []), ...uploaded]);
+      } else {
+        onChange(uploaded[0]);
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Upload failed');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const removeAt = (idx) => {
@@ -59,8 +63,27 @@ export default function ImageUploader({ value, onChange, multiple = false, label
               </button>
             </div>
           ))}
+          {uploading && (
+            <div className="flex h-24 w-24 items-center justify-center rounded-lg border border-dashed border-border dark:border-border-dark">
+              <Loader2 size={18} className="animate-spin text-body/50 dark:text-body-dark/50" />
+            </div>
+          )}
         </div>
-        <UrlAddRow onAdd={handleAddUrl} placeholder="https://example.com/image.jpg" />
+        <label className="flex w-full max-w-xs cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border px-3.5 py-2.5 text-sm text-body hover:border-cta hover:text-cta-hover dark:border-border-dark dark:text-body-dark dark:hover:text-cta-dark">
+          <Upload size={15} />
+          {uploading ? 'Uploading…' : `Add ${label.toLowerCase()}${multiple ? 's' : ''}`}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              handleFiles(e.target.files);
+              e.target.value = '';
+            }}
+            disabled={uploading}
+          />
+        </label>
       </div>
     );
   }
@@ -72,7 +95,7 @@ export default function ImageUploader({ value, onChange, multiple = false, label
           <img src={value} alt="" className="h-full w-full object-cover" />
           <button
             type="button"
-            onClick={() => handleUrlChange('')}
+            onClick={() => onChange('')}
             className="absolute right-1.5 top-1.5 rounded-full bg-slate-900/70 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
             aria-label="Remove image"
           >
@@ -81,42 +104,23 @@ export default function ImageUploader({ value, onChange, multiple = false, label
         </div>
       ) : (
         <div className="mb-3 flex h-32 w-full max-w-xs items-center justify-center rounded-lg border-2 border-dashed border-border text-body/40 dark:border-border-dark dark:text-body-dark/40">
-          <ImageIcon size={22} />
+          {uploading ? <Loader2 size={20} className="animate-spin" /> : <ImageIcon size={22} />}
         </div>
       )}
-      <Input
-        type="url"
-        value={value || ''}
-        onChange={(e) => handleUrlChange(e.target.value)}
-        placeholder="https://example.com/image.jpg"
-      />
-    </div>
-  );
-}
-
-function UrlAddRow({ onAdd, placeholder }) {
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onAdd(e.target.value);
-      e.target.value = '';
-    }
-  };
-
-  return (
-    <div className="flex items-center gap-2">
-      <Input type="url" placeholder={placeholder} className="flex-1" onKeyDown={handleKeyDown} />
-      <button
-        type="button"
-        onClick={(e) => {
-          const input = e.currentTarget.previousElementSibling;
-          onAdd(input.value);
-          input.value = '';
-        }}
-        className="shrink-0 rounded-lg bg-cta px-3 py-2.5 text-xs font-semibold text-slate-900 hover:bg-cta-hover"
-      >
-        Add
-      </button>
+      <label className="flex w-full max-w-xs cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border px-3.5 py-2.5 text-sm text-body hover:border-cta hover:text-cta-hover dark:border-border-dark dark:text-body-dark dark:hover:text-cta-dark">
+        <Upload size={15} />
+        {uploading ? 'Uploading…' : value ? `Change ${label.toLowerCase()}` : `Upload ${label.toLowerCase()}`}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            handleFiles(e.target.files);
+            e.target.value = '';
+          }}
+          disabled={uploading}
+        />
+      </label>
     </div>
   );
 }

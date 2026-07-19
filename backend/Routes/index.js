@@ -24,5 +24,6 @@ router.use("/testimonials", require("./testimonial.routes"));
 router.use("/admin/testimonials", require("./admin.testimonials"));
 router.use("/team", require("./team.routes"));
 router.use("/admin/team", require("./admin.team"));
+router.use("/admin/uploads", require("./admin.upload"));
 
 module.exports = router;

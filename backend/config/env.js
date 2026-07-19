@@ -10,8 +10,6 @@
 //   const config = require("../config/env"); config.JWT_SECRET;
 // -----------------------------------------------------------------------------
 
-// Load a .env file if dotenv is present. Guarded so this module still works if
-// you inject env vars through the host/runtime instead of a file.
 try {
   require("dotenv").config();
 } catch {
@@ -31,22 +29,23 @@ const envSchema = z.object({
     .string()
     .min(32, "JWT_REFRESH_SECRET must be at least 32 characters"),
 
-  // Token lifetimes — rename these if auth.controller.js expects different keys.
   ACCESS_TOKEN_EXPIRY: z.string().default("15m"),
   REFRESH_TOKEN_EXPIRY: z.string().default("7d"),
 
   DUMMY_PASSWORD_HASH: z.string().min(1, "DUMMY_PASSWORD_HASH is required"),
 
-  // Comma-separated allowlist of browser origins for CORS. Example:
-  //   CORS_ORIGINS="https://nexbyte.com,https://www.nexbyte.com,https://admin.nexbyte.com"
   CORS_ORIGINS: z.string().default(""),
 
-  // Set this if the admin panel and API live on different subdomains and you
-  // need cookies shared across them, e.g. ".nexbyte.com".
   COOKIE_DOMAIN: z.string().optional(),
 
-  // Directory (relative to project root) where uploads are written/served.
   UPLOAD_DIR: z.string().default("uploads"),
+
+  // Cloudinary — required, since uploads (team photos, service/portfolio
+  // images, testimonials, resumes) now go through Cloudinary instead of
+  // local disk.
+  CLOUDINARY_CLOUD_NAME: z.string().min(1, "CLOUDINARY_CLOUD_NAME is required"),
+  CLOUDINARY_API_KEY: z.string().min(1, "CLOUDINARY_API_KEY is required"),
+  CLOUDINARY_API_SECRET: z.string().min(1, "CLOUDINARY_API_SECRET is required"),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -67,7 +66,6 @@ const config = {
   isProd: env.NODE_ENV === "production",
   isDev: env.NODE_ENV === "development",
   isTest: env.NODE_ENV === "test",
-  // Parsed list form of CORS_ORIGINS, ready to hand to the cors middleware.
   corsOrigins: env.CORS_ORIGINS
     ? env.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
     : [],
