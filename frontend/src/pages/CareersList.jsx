@@ -205,7 +205,7 @@ export default function CareersList() {
 
   return (
     <>
-      <Seo title="Careers" description="Open roles at Nexbyte." />
+      <Seo title="Careers" description="Open roles at DevInt." />
 
       <AnnouncementBar jobs={openJobs} />
       <CareersBanner />

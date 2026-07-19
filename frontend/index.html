@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nexbyte — Software House</title>
+    <title>DevInt — Software House</title>
     <!--
       Pre-paint theme script: runs before any rendering so dark-mode users
       never see a white flash. Must stay inline and synchronous.
-      Uses the same 'nexbyte-theme' key as ThemeContext.jsx.
+      Uses the same 'devint-theme' key as ThemeContext.jsx.
     -->
     <script>
       ;(function () {
         try {
-          var stored = localStorage.getItem('nexbyte-theme')
+          var stored = localStorage.getItem('devint-theme')
           var dark = stored
             ? stored === 'dark'
             : window.matchMedia('(prefers-color-scheme: dark)').matches

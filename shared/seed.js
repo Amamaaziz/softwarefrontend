@@ -19,19 +19,19 @@ const daysAgo = (n) => new Date(Date.now() - n * 24 * 60 * 60 * 1000).toISOStrin
 
 // ── Site settings (drives the public site's header, footer, contact page) ────
 export const seedSettings = {
-  companyName: 'Nexbyte',
+  companyName: 'DevInt',
   tagline: 'We build the software behind growing businesses.',
   foundedYear: 2016,
   logo: '',
-  contactEmail: 'hello@nexbyte.dev',
+  contactEmail: 'hello@devint.dev',
   contactPhone: '+92 300 1234567',
   officeAddress: 'Suite 4B, Gulgasht Colony, Multan, Punjab, Pakistan',
   social: {
-    linkedin: 'https://linkedin.com/company/nexbyte',
-    twitter: 'https://x.com/nexbyte',
-    facebook: 'https://facebook.com/nexbyte',
-    instagram: 'https://instagram.com/nexbyte',
-    github: 'https://github.com/nexbyte',
+    linkedin: 'https://linkedin.com/company/devint',
+    twitter: 'https://x.com/devint',
+    facebook: 'https://facebook.com/devint',
+    instagram: 'https://instagram.com/devint',
+    github: 'https://github.com/devint',
   },
   stats: [
     { label: 'Years shipping software', value: '9+' },
@@ -40,7 +40,7 @@ export const seedSettings = {
     { label: 'Engineers on the team', value: '24' },
   ],
   seoDefaults: {
-    metaTitle: 'Nexbyte — Custom Software, Web & Mobile Development',
+    metaTitle: 'DevInt — Custom Software, Web & Mobile Development',
     metaDescription:
       'We build modern web, mobile, and SaaS products for startups and growing businesses.',
   },
@@ -374,7 +374,7 @@ export const seedBlogs = [
 
 // ── Testimonials ────────────────────────────────────────────────────────────
 export const seedTestimonials = [
-  { _id: 'test-1', clientName: 'Amina Farooq', company: 'FinTrack Inc.', photo: 'https://i.pravatar.cc/150?img=32', message: 'Nexbyte rebuilt our approval workflow from scratch and it just works. Our finance team stopped complaining about the software within the first week of launch.', rating: 5, isPublished: true, createdAt: daysAgo(60), updatedAt: daysAgo(60) },
+  { _id: 'test-1', clientName: 'Amina Farooq', company: 'FinTrack Inc.', photo: 'https://i.pravatar.cc/150?img=32', message: 'DevInt rebuilt our approval workflow from scratch and it just works. Our finance team stopped complaining about the software within the first week of launch.', rating: 5, isPublished: true, createdAt: daysAgo(60), updatedAt: daysAgo(60) },
   { _id: 'test-2', clientName: 'David Chen', company: 'Loop Logistics', photo: 'https://i.pravatar.cc/150?img=12', message: 'We had a hard launch date across three cities and no room for slippage. The team hit every milestone and the app has not had a major incident since.', rating: 5, isPublished: true, createdAt: daysAgo(45), updatedAt: daysAgo(45) },
   { _id: 'test-3', clientName: 'Priya Nair', company: 'Harbor Health Clinics', photo: 'https://i.pravatar.cc/150?img=45', message: 'They actually talked to our patients before redesigning anything. That research work is the reason the new booking flow performs so much better.', rating: 4, isPublished: true, createdAt: daysAgo(30), updatedAt: daysAgo(30) },
   { _id: 'test-4', clientName: 'Omar Sheikh', company: 'Cartly Retail Group', photo: 'https://i.pravatar.cc/150?img=51', message: 'Our storefront used to fall over every Black Friday. It has now handled two peak seasons without a single alert firing overnight.', rating: 5, isPublished: true, createdAt: daysAgo(20), updatedAt: daysAgo(20) },

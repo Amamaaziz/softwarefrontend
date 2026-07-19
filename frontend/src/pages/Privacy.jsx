@@ -5,7 +5,7 @@ import { COMPANY } from '../data/mockData.js'
 export default function Privacy() {
   return (
     <>
-      <Seo title="Privacy Policy" description="How Nexbyte collects, uses, and protects your data." />
+      <Seo title="Privacy Policy" description="How DevInt collects, uses, and protects your data." />
       <article className="container-page max-w-3xl py-20">
         <Reveal>
           <p className="eyebrow mb-4">legal</p>
