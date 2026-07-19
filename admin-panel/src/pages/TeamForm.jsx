@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Linkedin, Mail, Github } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { teamApi } from '../data/index.js';
 import PageHeader from '../components/common/PageHeader.jsx';
@@ -15,6 +15,26 @@ import ToggleSwitch from '../components/common/ToggleSwitch.jsx';
 import Spinner from '../components/common/Spinner.jsx';
 import ImageUploader from '../components/common/ImageUploader.jsx';
 
+// Optional URL field: empty string is valid, but if something is typed it must look like a URL
+const optionalUrl = z
+  .string()
+  .trim()
+  .optional()
+  .or(z.literal(''))
+  .refine((val) => !val || /^https?:\/\/.+/i.test(val), {
+    message: 'Enter a valid URL starting with http:// or https://',
+  });
+
+// Optional email field: empty string is valid, but if something is typed it must be a valid email
+const optionalEmail = z
+  .string()
+  .trim()
+  .optional()
+  .or(z.literal(''))
+  .refine((val) => !val || z.string().email().safeParse(val).success, {
+    message: 'Enter a valid email address',
+  });
+
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   role: z.string().min(2, 'Role is required'),
@@ -24,7 +44,16 @@ const schema = z.object({
   isFeatured: z.boolean(),
   order: z.coerce.number().int().min(0),
   isPublished: z.boolean(),
+  links: z
+    .object({
+      linkedin: optionalUrl,
+      email: optionalEmail,
+      github: optionalUrl,
+    })
+    .optional(),
 });
+
+const emptyLinks = { linkedin: '', email: '', github: '' };
 
 export default function TeamForm() {
   const { id } = useParams();
@@ -55,11 +84,18 @@ export default function TeamForm() {
       isFeatured: false,
       order: 0,
       isPublished: false,
+      links: emptyLinks,
     },
   });
 
   useEffect(() => {
-    if (existing?.data) reset(existing.data);
+    if (existing?.data) {
+      // Merge in case older records don't have a `links` object yet
+      reset({
+        ...existing.data,
+        links: { ...emptyLinks, ...(existing.data.links || {}) },
+      });
+    }
   }, [existing, reset]);
 
   const mutation = useMutation({
@@ -150,6 +186,47 @@ export default function TeamForm() {
                 <ToggleSwitch checked={field.value} onChange={field.onChange} label={field.value ? 'Published' : 'Draft'} />
               )}
             />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardBody className="space-y-5">
+            <div>
+              <h3 className="text-sm font-semibold text-heading dark:text-heading-dark">Links (optional)</h3>
+              <p className="mt-0.5 text-xs text-body/70 dark:text-body-dark/70">
+                Leave any of these blank — they won't show on the About page unless filled in.
+              </p>
+            </div>
+
+            <FormField label="LinkedIn URL" htmlFor="links.linkedin" error={errors.links?.linkedin?.message}>
+              <Input
+                id="links.linkedin"
+                icon={<Linkedin size={15} />}
+                placeholder="https://linkedin.com/in/username"
+                error={!!errors.links?.linkedin}
+                {...register('links.linkedin')}
+              />
+            </FormField>
+
+            <FormField label="Email" htmlFor="links.email" error={errors.links?.email?.message}>
+              <Input
+                id="links.email"
+                icon={<Mail size={15} />}
+                placeholder="name@company.com"
+                error={!!errors.links?.email}
+                {...register('links.email')}
+              />
+            </FormField>
+
+            <FormField label="GitHub URL" htmlFor="links.github" error={errors.links?.github?.message}>
+              <Input
+                id="links.github"
+                icon={<Github size={15} />}
+                placeholder="https://github.com/username"
+                error={!!errors.links?.github}
+                {...register('links.github')}
+              />
+            </FormField>
           </CardBody>
         </Card>
 

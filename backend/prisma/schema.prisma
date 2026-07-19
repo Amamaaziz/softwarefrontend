@@ -2,7 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -252,18 +251,21 @@ model Settings {
 
   @@map("settings")
 }
+
 model TeamMember {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
   role        String
   photo       String
-  bio         String?  @db.Text
-  message     String?  @db.Text
-  isFeatured  Boolean  @default(false)
-  order       Int      @default(0)
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  bio         String? @db.Text
+  message     String? @db.Text
+  isFeatured  Boolean @default(false)
+  order       Int     @default(0)
+  isPublished Boolean @default(false)
+  links       Json? // { linkedin, email, github }
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([isPublished, order])
   @@map("team_members")

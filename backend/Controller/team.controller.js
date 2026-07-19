@@ -29,7 +29,7 @@ exports.getTeamMember = asyncHandler(async (req, res) => {
 
 // ADMIN — create
 exports.createTeamMember = asyncHandler(async (req, res) => {
-  const { name, role, photo, bio, message, isFeatured, order, isPublished } = req.body;
+  const { name, role, photo, bio, message, isFeatured, order, isPublished, links } = req.body;
 
   if (!name || !role || !photo) {
     throw new ApiError(400, "name, role and photo are required");
@@ -45,6 +45,7 @@ exports.createTeamMember = asyncHandler(async (req, res) => {
       isFeatured: !!isFeatured,
       order: order !== undefined ? Number(order) : 0,
       isPublished: !!isPublished,
+      links: links || null,
     },
   });
 
@@ -53,7 +54,7 @@ exports.createTeamMember = asyncHandler(async (req, res) => {
 
 // ADMIN — update
 exports.updateTeamMember = asyncHandler(async (req, res) => {
-  const { name, role, photo, bio, message, isFeatured, order, isPublished } = req.body;
+  const { name, role, photo, bio, message, isFeatured, order, isPublished, links } = req.body;
 
   try {
     const member = await prisma.teamMember.update({
@@ -67,6 +68,7 @@ exports.updateTeamMember = asyncHandler(async (req, res) => {
         ...(isFeatured !== undefined && { isFeatured: !!isFeatured }),
         ...(order !== undefined && { order: Number(order) }),
         ...(isPublished !== undefined && { isPublished: !!isPublished }),
+        ...(links !== undefined && { links }),
       },
     });
     return res.status(200).json(new ApiResponse(200, member, "Team member updated"));

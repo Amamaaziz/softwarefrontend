@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Target, Eye, Heart, CheckCircle2, ArrowUpRight } from 'lucide-react'
+import { Target, Eye, Heart, CheckCircle2, ArrowUpRight, Linkedin, Mail, Github } from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import Card from '../components/ui/Card.jsx'
 import Button from '../components/ui/Button.jsx'
@@ -39,6 +39,58 @@ const TEAM = [
   { name: 'Hamza Iqbal', role: 'Mobile Lead', photo: 'https://i.pravatar.cc/200?img=14' },
   { name: 'Ayesha Malik', role: 'QA Lead', photo: 'https://i.pravatar.cc/200?img=48' },
 ]
+
+// Small row of social/contact icons — only renders the ones that are actually set.
+// stopPropagation keeps clicks from being swallowed by the TiltCard's own handlers.
+function MemberLinks({ links, variant = 'light' }) {
+  if (!links) return null
+  const { linkedin, email, github } = links
+  if (!linkedin && !email && !github) return null
+
+  const base =
+    variant === 'light'
+      ? 'text-slate-900/70 hover:text-slate-900'
+      : 'text-body/60 hover:text-heading dark:text-body-dark/60 dark:hover:text-heading-dark'
+
+  return (
+    <div className="mt-2 flex items-center gap-3">
+      {linkedin && (
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          onClick={(e) => e.stopPropagation()}
+          className={`transition-colors ${base}`}
+        >
+          <Linkedin size={16} />
+        </a>
+      )}
+      {email && (
+        <a
+          href={`mailto:${email}`}
+          aria-label="Email"
+          onClick={(e) => e.stopPropagation()}
+          className={`transition-colors ${base}`}
+        >
+          <Mail size={16} />
+        </a>
+      )}
+      {github && (
+        <a
+          href={github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          onClick={(e) => e.stopPropagation()}
+          className={`transition-colors ${base}`}
+        >
+          <Github size={16} />
+        </a>
+      )}
+    </div>
+  )
+}
 
 export default function About() {
   const team = useAsync(getTeam, [])
@@ -173,6 +225,7 @@ export default function About() {
                 <div className="absolute bottom-6 left-0 rounded-r-2xl bg-accent dark:bg-accent-dark px-6 py-4 shadow-lg">
                   <p className="font-display text-xl font-semibold text-slate-900">{featured.name}</p>
                   <p className="text-sm text-slate-900">{featured.role}</p>
+                  <MemberLinks links={featured.links} variant="light" />
                 </div>
               </TiltCard>
             </Reveal>
@@ -195,13 +248,14 @@ export default function About() {
                         <img
                           src={member.photo}
                           alt={member.name}
-                          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="h-56 sm:h-72 lg:h-96 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
                       </div>
                       <div className="p-5">
                         <p className="font-display text-lg font-semibold">{member.name}</p>
                         <p className="text-sm">{member.role}</p>
+                        <MemberLinks links={member.links} variant="dark" />
                       </div>
                     </div>
                   </TiltCard>

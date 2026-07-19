@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Pencil, Trash2, Users, Star } from 'lucide-react';
+import { Plus, Pencil, Trash2, Users, Star, Linkedin, Mail, Github } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { teamApi } from '../data/index.js';
 import PageHeader from '../components/common/PageHeader.jsx';
@@ -74,6 +74,22 @@ export default function TeamList() {
         ) : (
           <span className="text-xs text-body/50 dark:text-body-dark/50">—</span>
         ),
+    },
+    {
+      key: 'links',
+      header: 'Links',
+      render: (row) => {
+        const links = row.links || {};
+        const hasAny = links.linkedin || links.email || links.github;
+        if (!hasAny) return <span className="text-xs text-body/50 dark:text-body-dark/50">—</span>;
+        return (
+          <div className="flex items-center gap-2 text-body/60 dark:text-body-dark/60">
+            {links.linkedin && <Linkedin size={14} aria-label="LinkedIn set" />}
+            {links.email && <Mail size={14} aria-label="Email set" />}
+            {links.github && <Github size={14} aria-label="GitHub set" />}
+          </div>
+        );
+      },
     },
     { key: 'order', header: 'Order', sortable: true },
     {
