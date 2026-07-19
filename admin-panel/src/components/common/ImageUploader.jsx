@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { X, ImageIcon, Loader2, Upload } from 'lucide-react';
+import { X, ImageIcon, Loader2, Upload, Link as LinkIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { uploadApi } from '../../data/index.js';
 
 /**
- * Image field driven by real file upload (Cloudinary) instead of pasted URLs.
+ * Image field driven by file upload (Cloudinary) or a pasted URL.
  * value: string URL (single mode) or string[] (multiple mode)
  * onChange: (newValue) => void
  */
 export default function ImageUploader({ value, onChange, multiple = false, label = 'Image' }) {
   const [uploading, setUploading] = useState(false);
+  const [urlInput, setUrlInput] = useState('');
   const urls = multiple ? value || [] : value ? [value] : [];
 
   const handleFiles = async (fileList) => {
@@ -36,6 +37,24 @@ export default function ImageUploader({ value, onChange, multiple = false, label
     }
   };
 
+  const isValidUrl = (str) => /^https?:\/\/.+/i.test(str.trim());
+
+  const handleAddUrl = () => {
+    const trimmed = urlInput.trim();
+    if (!trimmed) return;
+    if (!isValidUrl(trimmed)) {
+      toast.error('Enter a valid URL starting with http:// or https://');
+      return;
+    }
+
+    if (multiple) {
+      onChange([...(value || []), trimmed]);
+    } else {
+      onChange(trimmed);
+    }
+    setUrlInput('');
+  };
+
   const removeAt = (idx) => {
     if (multiple) {
       const next = [...value];
@@ -45,6 +64,36 @@ export default function ImageUploader({ value, onChange, multiple = false, label
       onChange('');
     }
   };
+
+  const urlRow = (
+    <div className="mt-2 flex w-full max-w-xs gap-2">
+      <div className="relative flex-1">
+        <LinkIcon size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-body/40 dark:text-body-dark/40" />
+        <input
+          type="text"
+          value={urlInput}
+          onChange={(e) => setUrlInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleAddUrl();
+            }
+          }}
+          placeholder="Paste image URL"
+          className="w-full rounded-lg border border-border py-2 pl-8 pr-2 text-sm text-heading placeholder:text-body/40 focus:border-cta focus:outline-none dark:border-border-dark dark:bg-transparent dark:text-heading-dark dark:placeholder:text-body-dark/40"
+          disabled={uploading}
+        />
+      </div>
+      <button
+        type="button"
+        onClick={handleAddUrl}
+        disabled={uploading || !urlInput.trim()}
+        className="shrink-0 rounded-lg border border-border px-3 text-sm text-body hover:border-cta hover:text-cta-hover disabled:cursor-not-allowed disabled:opacity-50 dark:border-border-dark dark:text-body-dark dark:hover:text-cta-dark"
+      >
+        Add
+      </button>
+    </div>
+  );
 
   if (multiple) {
     return (
@@ -84,6 +133,7 @@ export default function ImageUploader({ value, onChange, multiple = false, label
             disabled={uploading}
           />
         </label>
+        {urlRow}
       </div>
     );
   }
@@ -121,6 +171,7 @@ export default function ImageUploader({ value, onChange, multiple = false, label
           disabled={uploading}
         />
       </label>
+      {urlRow}
     </div>
   );
 }
