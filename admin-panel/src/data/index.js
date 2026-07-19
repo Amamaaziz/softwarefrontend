@@ -75,14 +75,17 @@ export const blogApi = {
 // No .publish() — JobsList.jsx toggles status directly via update(), same
 // pattern as blogApi.
 export const jobsApi = {
-  list: () => http.get('/admin/jobs').then((r) => r.data),
+  list: () =>
+    http.get('/admin/jobs').then((r) => ({
+      ...r.data,
+      total: r.data.data.length,
+    })),
   getOne: (id) => http.get(`/admin/jobs/${id}`).then((r) => r.data),
   create: (payload) => http.post('/admin/jobs', payload).then((r) => r.data),
   update: (id, payload) => http.patch(`/admin/jobs/${id}`, payload).then((r) => r.data),
   remove: (id) => http.delete(`/admin/jobs/${id}`).then((r) => r.data),
   delete: (id) => http.delete(`/admin/jobs/${id}`).then((r) => r.data),
 };
-
 // ── Applications — real API ────────────────────────────────────────────────
 // No .create() — applications are only ever created by the public
 // submitJobApplication() flow, never from the admin panel.

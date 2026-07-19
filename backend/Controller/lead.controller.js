@@ -1,7 +1,6 @@
-// backend/controllers/leadController.js
-const { PrismaClient } = require('@prisma/client');
+// backend/controllers/lead.controller.js
+const prisma = require('../lib/prisma');
 const { toLeadCategoryEnum } = require('../utils/leadCategoryMap');
-const prisma = new PrismaClient();
 
 // PUBLIC — contact form submit
 exports.createLead = async (req, res) => {

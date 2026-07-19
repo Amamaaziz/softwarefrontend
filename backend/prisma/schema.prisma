@@ -3,9 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 // ── Enums ─────────────────────────────────────────────────────────────────
@@ -251,6 +249,7 @@ model Settings {
 
   @@map("settings")
 }
+<<<<<<< HEAD
 model TeamMember {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
@@ -267,3 +266,5 @@ model TeamMember {
   @@index([isPublished, order])
   @@map("team_members")
 }
+=======
+>>>>>>> d73920ea628b35f98fed3c8edd34c40792e1fdc8
