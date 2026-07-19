@@ -5,7 +5,7 @@ const ThemeContext = createContext(null)
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'light'
-    const stored = window.localStorage.getItem('nexbyte-theme')
+    const stored = window.localStorage.getItem('devint-theme')
     if (stored) return stored
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
@@ -17,7 +17,7 @@ export function ThemeProvider({ children }) {
     } else {
       root.classList.remove('dark')
     }
-    window.localStorage.setItem('nexbyte-theme', theme)
+    window.localStorage.setItem('devint-theme', theme)
   }, [theme])
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))

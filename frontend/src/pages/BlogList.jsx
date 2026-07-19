@@ -32,7 +32,7 @@ export default function BlogList() {
 
   return (
     <>
-      <Seo title="Blog" description="Engineering, design, and product notes from the Nexbyte team." />
+      <Seo title="Blog" description="Engineering, design, and product notes from the DevInt team." />
 
       {/* BANNER — centered "magazine" style: image fading up from the bottom,
           twin accent glows, centered title + tagline */}

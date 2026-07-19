@@ -18,7 +18,7 @@ export default function ServicesList() {
 
   return (
     <>
-      <Seo title="Services" description="Web, mobile, design, SEO, SaaS, QA, and DevOps services from Nexbyte." />
+      <Seo title="Services" description="Web, mobile, design, SEO, SaaS, QA, and DevOps services from DevInt." />
 
       {/* BANNER — left-aligned "terminal" style: mono eyebrow, title + tagline, code image masked on the right */}
       <section className="relative overflow-hidden bg-[#0a1c1b]">

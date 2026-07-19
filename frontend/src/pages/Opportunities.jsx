@@ -16,7 +16,7 @@ export default function Opportunities() {
 
   return (
     <>
-      <Seo title="Open Opportunities" description="All current open positions at Nexbyte." />
+      <Seo title="Open Opportunities" description="All current open positions at DevInt." />
 
       {/* Dark banner with title + breadcrumb, matching the Careers page */}
       <section className="relative overflow-hidden bg-[#0a1c1b]">
@@ -62,7 +62,7 @@ export default function Opportunities() {
           {jobs.status === 'success' && openJobs.length === 0 && (
             <EmptyState
               title="No open roles right now"
-              description="Check back soon, or send your resume to hello@nexbyte.dev and we'll reach out when something opens."
+              description="Check back soon, or send your resume to hello@devint.dev and we'll reach out when something opens."
             />
           )}
           {jobs.status === 'success' && openJobs.length > 0 && (

@@ -19,8 +19,8 @@
 
 import { buildSeedDb } from './seed.js';
 
-const DB_KEY = 'nexbyte.db.v1';
-const CHANGE_EVENT = 'nexbyte:db-change';
+const DB_KEY = 'DevInt.db.v1';
+const CHANGE_EVENT = 'DevInt:db-change';
 
 // Artificial latency so loading spinners are visible. Not a network call.
 export const delay = (ms = 250) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -22,7 +22,7 @@ const HIGHLIGHTS = [
 ]
 
 const CEO = {
-  name: 'Sara Ahmed',
+  name: 'Hassan Ishtiaq Bukhari',
   role: 'CEO & Founder',
   photo: 'https://i.pravatar.cc/300?img=47',
   message:
@@ -38,7 +38,7 @@ const TEAM = [
 export default function About() {
   return (
     <>
-      <Seo title="About Us" description="The story, mission, and team behind Nexbyte." />
+      <Seo title="About Us" description="The story, mission, and team behind DevInt." />
 
       {/* BANNER — "story" style: vertical accent rule beside the title,
           "est. {foundedYear}" mono stamp, team image fading in from the top-right */}
@@ -61,7 +61,7 @@ export default function About() {
               About Us
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300">
-              From three freelancing engineers to a full studio — the people who scope your project are still the people who build it.
+              DevInt — Developing Innovation, Delivering Excellence.
             </p>
           </div>
           <p className="mt-8 text-sm text-slate-300">
@@ -79,12 +79,15 @@ export default function About() {
             <SectionHeading
               eyebrow="about us"
               title="Where vision meets technology"
-              description={`At ${COMPANY.name}, we're more than just a software house — we're a catalyst for digital evolution. Our mission is to craft powerful, intelligent solutions that fuel growth, drive innovation, and help businesses thrive.`}
+              description={<p>At <b>DevInt</b>, we're more than just a software house — we're a catalyst for digital evolution. Our mission is to craft powerful, intelligent solutions that fuel growth, drive innovation, and help businesses thrive.</p>}
             />
             <p className="mt-5 max-w-2xl text-base leading-relaxed">
-              {COMPANY.name} began as three engineers taking on freelance projects between day jobs in {COMPANY.foundedYear}.
-              Years later we&rsquo;re a full studio, but the rule hasn&rsquo;t changed: the people who scope your project are
-              the people who build it.
+              We transform ideas into innovative digital solutions that help businesses grow and succeed.
+              As a full-service software house, we specialize in Web Development, Mobile App Development, E Commerce solutions,
+               Etsy store services, UI/UX design, and Custom Software tailored to your unique goals.
+              We combine creativity, technical expertise, and a client-first approach to deliver high-quality, 
+              scalable, and user-friendly solutions. Whether you're launching a startup, expanding your online presence,
+               or modernizing your business, <b>DevInt</b> is committed to building technology that drives real results.
             </p>
 
             <ul className="mt-8 flex flex-col gap-3.5">
@@ -108,7 +111,7 @@ export default function About() {
           <Reveal delay={150} className="relative pb-24">
             <img
               src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=70"
-              alt="The Nexbyte team at work"
+              alt="The DevInt team at work"
               className="h-80 w-full rounded-2xl object-cover sm:h-[420px]"
               loading="lazy"
             />

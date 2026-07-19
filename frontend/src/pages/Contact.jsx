@@ -43,7 +43,7 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact Us" description="Get in touch with the Nexbyte team about your project." />
+      <Seo title="Contact Us" description="Get in touch with the DevInt team about your project." />
 
       {/* BANNER — "conversation" style: image masked on the LEFT (mirror of Services),
           right-aligned text block with quick email/phone links in mono */}

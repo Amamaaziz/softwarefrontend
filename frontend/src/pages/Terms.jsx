@@ -5,7 +5,7 @@ import { COMPANY } from '../data/mockData.js'
 export default function Terms() {
   return (
     <>
-      <Seo title="Terms & Conditions" description="Terms governing use of the Nexbyte website and services." />
+      <Seo title="Terms & Conditions" description="Terms governing use of the DevInt website and services." />
       <article className="container-page max-w-3xl py-20">
         <Reveal>
           <p className="eyebrow mb-4">legal</p>

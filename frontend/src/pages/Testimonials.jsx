@@ -14,7 +14,7 @@ export default function Testimonials() {
 
   return (
     <>
-      <Seo title="Testimonials" description="What clients say about working with Nexbyte." />
+      <Seo title="Testimonials" description="What clients say about working with DevInt." />
 
       <section className="container-page py-20">
         <Reveal>

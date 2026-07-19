@@ -38,7 +38,7 @@ const CEO = {
   role: 'CEO',
   photo: 'https://i.pravatar.cc/300?img=47',
   message:
-    'As CEO, Sara is a strategist and creative technologist who believes that real innovation begins when you stop showcasing technology and start solving human problems.',
+    'As CEO, Hassan Ishtiaq leads DevInt with a passion for innovation, combining technology, creativity, and strategy to build meaningful digital experiences that help businesses thrive in a rapidly evolving world.',
 }
 
 // Icons + accent colors cycled per card, in order
