@@ -22,7 +22,7 @@ export const seedSettings = {
   companyName: 'Nexbyte',
   tagline: 'We build the software behind growing businesses.',
   foundedYear: 2016,
-  logo: '',
+ logo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png',
   contactEmail: 'hello@nexbyte.dev',
   contactPhone: '+92 300 1234567',
   officeAddress: 'Suite 4B, Gulgasht Colony, Multan, Punjab, Pakistan',
