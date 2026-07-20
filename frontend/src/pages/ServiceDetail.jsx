@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { ArrowUpRight, Check, ImageOff } from 'lucide-react'
+import { ArrowUpRight, Check } from 'lucide-react'
 import Seo from '../components/ui/Seo.jsx'
 import Card from '../components/ui/Card.jsx'
 import Button from '../components/ui/Button.jsx'
@@ -42,21 +42,26 @@ export default function ServiceDetail() {
               Discuss this service <ArrowUpRight size={16} />
             </Button>
           </div>
-          <RichText html={textToHtml(s.description)} className="mt-6 max-w-2xl text-base leading-relaxed" />
         </Reveal>
 
-        {heroImage ? (
-          <Reveal delay={100}>
-            <div className="mt-10 aspect-[21/9] w-full overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark">
-              <img
-                src={heroImage}
-                alt={s.title}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-            </div>
+        <div className="mt-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+          <Reveal>
+            <RichText html={textToHtml(s.description)} className="text-base leading-relaxed" />
           </Reveal>
-        ) : null}
+
+          {heroImage ? (
+            <Reveal delay={100}>
+              <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark">
+                <img
+                  src={heroImage}
+                  alt={s.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </Reveal>
+          ) : null}
+        </div>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
           {s.subServices.map((sub, i) => (

@@ -18,9 +18,9 @@ export default {
           dark: '#F8FAFC',
         },
         body: {
-          light: '#475569',
-          dark: '#94A3B8',
-        },
+  light: '#000000',
+  dark: '#FFFFFF',
+},
         accent: {
           DEFAULT: '#00D2C4',
           dark: '#00E6D7',
