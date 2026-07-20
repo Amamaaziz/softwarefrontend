@@ -99,10 +99,14 @@ export default function PortfolioList() {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="eyebrow mb-2">{project.client}</p>
-                    <h3 className="font-display text-lg font-semibold">{project.title}</h3>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {project.technologies.map((t) => (
+                    <p className="eyebrow mb-2 text-xl font-semibold !text-heading-light dark:!text-heading-dark">
+                      {project.client}
+                    </p>
+                     <h3 className="font-display text-sm font-semibold text-accent dark:text-accent-dark">
+                       {project.title}
+                      </h3>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {project.technologies.map((t) => (
                         <span key={t} className="rounded-full bg-slate-100 dark:bg-slate-700/60 px-2.5 py-1 text-xs font-mono">
                           {t}
                         </span>
