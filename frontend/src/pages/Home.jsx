@@ -25,6 +25,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getServices, getFeaturedPortfolio, getTestimonials } from '../lib/api.js'
 import { COMPANY } from '../data/mockData.js'
+import { decodeCommonEntities } from '../lib/textToHtml.js'
 
 const HIGHLIGHTS = [
   'Cutting-edge technology products',
@@ -118,8 +119,6 @@ function ServiceCard({ service, index, visual }) {
               style={{ background: spotlightBackground }}
             />
 
-           
-
             <div
               style={{ transform: 'translateZ(40px)' }}
               className={`relative flex h-12 w-12 items-center justify-center rounded-xl ${visual.bg} ${visual.text} ring-1 ${visual.ring} transition-transform duration-300 group-hover:scale-110`}
@@ -128,7 +127,7 @@ function ServiceCard({ service, index, visual }) {
             </div>
 
             <h3 style={{ transform: 'translateZ(30px)' }} className="relative mt-5 font-display text-xl font-semibold">
-              {service.title}
+              {decodeCommonEntities(service.title)}
             </h3>
             <div className="relative mt-4 h-px w-full bg-gradient-to-r from-slate-200 via-slate-200 to-transparent dark:from-slate-600 dark:via-slate-600" />
             <p style={{ transform: 'translateZ(20px)' }} className="relative mt-4 text-sm leading-relaxed">
@@ -341,10 +340,10 @@ export default function Home() {
                     {featured.data.map((project) => (
                       <a key={project._id} href={`/portfolio/${project.slug}`} className="w-full shrink-0">
                         <div className="grid grid-cols-1 md:grid-cols-2 bg-surface-light dark:bg-surface-dark">
-                          <img src={project.coverImage} alt={project.title} className="h-64 w-full object-cover md:h-full" loading="lazy" />
+                          <img src={project.coverImage} alt={decodeCommonEntities(project.title)} className="h-64 w-full object-cover md:h-full" loading="lazy" />
                           <div className="flex flex-col justify-center p-8 sm:p-10">
-                            <p className="eyebrow mb-2">{project.client}</p>
-                            <h3 className="font-display text-2xl font-semibold">{project.title}</h3>
+                            <p className="eyebrow mb-2">{decodeCommonEntities(project.client)}</p>
+                            <h3 className="font-display text-2xl font-semibold">{decodeCommonEntities(project.title)}</h3>
                             <p className="mt-3 text-sm leading-relaxed line-clamp-3">{project.result}</p>
                             <div className="mt-5 flex flex-wrap gap-2">
                               {project.technologies.map((t) => (
