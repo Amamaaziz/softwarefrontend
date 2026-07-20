@@ -3,11 +3,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Eye, EyeOff, LogIn, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext.jsx';
 import { FormField, Input } from '../components/common/FormField.jsx';
 import Button from '../components/common/Button.jsx';
+
+const LOGO_URL =
+  'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png';
 
 const schema = z.object({
   email: z.string().min(1, 'Email is required').email('Enter a valid email address'),
@@ -61,15 +64,14 @@ export default function Login() {
 
       <div className="relative w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center animate-fade-up" style={{ animationDelay: '0ms' }}>
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-cta font-display text-xl font-bold text-slate-900 shadow-lg shadow-cta/30 animate-scale-in">
-            SH
-            <Sparkles size={14} className="absolute -right-1.5 -top-1.5 text-cta-hover animate-pulse-soft" />
-          </div>
+          <img
+            src={LOGO_URL}
+            alt="Admin logo"
+            className="h-14 w-14 rounded-2xl object-contain shadow-lg shadow-cta/30 animate-scale-in"
+          />
           <h1 className="mt-4 text-2xl font-semibold text-heading dark:text-heading-dark">Admin Panel</h1>
           <p className="mt-1 text-sm text-body dark:text-body-dark">Sign in to manage your site's content</p>
         </div>
-
-        
 
         <div
           className="rounded-xl border border-border bg-canvas/90 p-6 shadow-popover backdrop-blur-sm animate-fade-up dark:border-border-dark dark:bg-surface-dark/90"
@@ -134,8 +136,6 @@ export default function Login() {
               </Button>
             </div>
           </form>
-
-        
         </div>
       </div>
     </div>

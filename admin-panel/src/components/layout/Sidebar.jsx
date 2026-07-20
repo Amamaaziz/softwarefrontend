@@ -40,6 +40,8 @@ const navSections = [
     items: [{ to: '/leads', label: 'Contact Leads', icon: Inbox }],
   },
 ];
+const LOGO_URL =
+  'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png';
 
 export default function Sidebar({ open, onClose }) {
   const { user } = useAuth();
@@ -58,12 +60,14 @@ export default function Sidebar({ open, onClose }) {
       >
         <div className="flex items-center justify-between px-5 py-5">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cta font-display text-base font-bold text-slate-900">
-              SH
-            </div>
+            <img
+              src={LOGO_URL}
+              alt="DevInt.Tech logo"
+              className="h-9 w-9 rounded-lg object-contain"
+            />
             <div>
               <p className="text-sm font-semibold leading-tight text-heading dark:text-heading-dark">
-                Software House
+                DevInt.Tech
               </p>
               <p className="text-xs leading-tight text-body/70 dark:text-body-dark/70">Admin Panel</p>
             </div>
