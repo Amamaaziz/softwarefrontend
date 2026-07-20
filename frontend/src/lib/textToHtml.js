@@ -1,9 +1,23 @@
 // Converts plain text (with optional "- " or "* " bullets) into safe HTML.
 // Groups consecutive bullet lines into a <ul>, everything else into <p> tags.
 
-function escapeHtml(str) {
+// Some stored text already contains literal HTML entities (e.g. "&amp;"
+// typed directly into a form field). Exported so plain-text fields like
+// titles — which don't go through textToHtml() — can also be cleaned up
+// before rendering.
+export function decodeCommonEntities(str) {
+  if (!str) return str;
   return str
-    .replace(/&/g, '&amp;') 
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function escapeHtml(str) {
+  return decodeCommonEntities(str)
+    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')

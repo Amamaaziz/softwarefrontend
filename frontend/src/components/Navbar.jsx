@@ -4,6 +4,7 @@ import { Menu, X, Sun, Moon, ArrowUpRight, ChevronDown } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext.jsx'
 import { COMPANY } from '../data/mockData.js'
 import { getServices, getSettings } from '../lib/api.js'
+import { decodeCommonEntities } from '../lib/textToHtml.js'
 import Button from './ui/Button.jsx'
 
 const LINKS = [
@@ -134,7 +135,7 @@ export default function Navbar() {
                           onClick={() => setServicesOpen(false)}
                           className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-canvas-light dark:hover:bg-canvas-dark hover:text-accent-hoverLight dark:hover:text-accent-dark"
                         >
-                          {service.title}
+                          {decodeCommonEntities(service.title)}
                         </Link>
                       ))}
                       <Link
@@ -215,7 +216,7 @@ export default function Navbar() {
                         onClick={closeAll}
                         className="rounded-lg px-3 py-2 text-sm"
                       >
-                        {service.title}
+                        {decodeCommonEntities(service.title)}
                       </Link>
                     ))}
                     <Link

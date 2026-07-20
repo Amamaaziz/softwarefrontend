@@ -12,6 +12,7 @@ import TechStackSandbox from '../components/TechStackSandbox.jsx'
 import ScopeEstimator from '../components/ScopeEstimator.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getServices } from '../lib/api.js'
+import { decodeCommonEntities } from '../lib/textToHtml.js'
 
 export default function ServicesList() {
   const services = useAsync(getServices, [])
@@ -77,7 +78,7 @@ export default function ServicesList() {
                           {thumbnail ? (
                             <img
                               src={thumbnail}
-                              alt={service.title}
+                              alt={decodeCommonEntities(service.title)}
                               loading="lazy"
                               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                             />
@@ -88,11 +89,13 @@ export default function ServicesList() {
                           )}
                         </div>
                         <span className="font-mono text-xs text-accent-hoverLight dark:text-accent-dark transition-transform duration-300 inline-block group-hover:scale-125 group-hover:translate-x-0.5">{String(i + 1).padStart(2, '0')}</span>
-                        <h3 className="mt-3 font-display text-xl font-semibold transition-colors duration-300 group-hover:text-accent-hoverLight dark:group-hover:text-accent-dark">{service.title}</h3>
+                        <h3 className="mt-3 font-display text-xl font-semibold transition-colors duration-300 group-hover:text-accent-hoverLight dark:group-hover:text-accent-dark">
+                          {decodeCommonEntities(service.title)}
+                        </h3>
                         <p className="mt-2 text-sm leading-relaxed">{service.shortDescription}</p>
                         <ul className="mt-4 flex flex-col gap-1.5">
                           {service.subServices.slice(0, 3).map((sub) => (
-                            <li key={sub.title} className="text-xs">— {sub.title}</li>
+                            <li key={sub.title} className="text-xs">— {decodeCommonEntities(sub.title)}</li>
                           ))}
                         </ul>
                       </div>

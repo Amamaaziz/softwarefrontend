@@ -9,7 +9,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { useAsync } from '../lib/useAsync.js'
 import { getServiceBySlug } from '../lib/api.js'
-import { textToHtml } from '../lib/textToHtml.js'
+import { textToHtml, decodeCommonEntities } from '../lib/textToHtml.js'
 import RichText from '../components/ui/RichText.jsx'
 
 export default function ServiceDetail() {
@@ -37,21 +37,23 @@ export default function ServiceDetail() {
         <Reveal>
           <p className="eyebrow mb-4">// service</p>
           <div className="flex flex-wrap items-start justify-between gap-6">
-            <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">{s.title}</h1>
+            <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+              {decodeCommonEntities(s.title)}
+            </h1>
             <Button to="/contact" className="whitespace-nowrap">
               Discuss this service <ArrowUpRight size={16} />
             </Button>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-[3fr_2fr]">
           <Reveal>
             <RichText html={textToHtml(s.description)} className="text-base leading-relaxed" />
           </Reveal>
 
           {heroImage ? (
             <Reveal delay={100}>
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark">
+              <div className="aspect-[4/3] w-full max-w-sm mx-auto lg:mx-0 overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark">
                 <img
                   src={heroImage}
                   alt={s.title}
@@ -68,7 +70,9 @@ export default function ServiceDetail() {
             <Reveal key={sub.title} delay={(i % 3) * 100} className="h-full">
               <Card className="h-full">
                 <Check size={18} className="text-accent-hoverLight dark:text-accent-dark" />
-                <h3 className="mt-3 font-display font-semibold">{sub.title}</h3>
+                <h3 className="mt-3 font-display font-semibold">
+                  {decodeCommonEntities(sub.title)}
+                </h3>
                 <RichText html={textToHtml(sub.description)} className="mt-2 text-sm leading-relaxed" />
               </Card>
             </Reveal>
