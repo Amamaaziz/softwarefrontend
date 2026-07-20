@@ -16,8 +16,8 @@ const config = require("./config/env");
 const logger = require("./lib/logger");
 const requestLogger = logger.requestLogger;
 const routes = require("./Routes");
-const notFound = require("./Middleware/notFound.middleware");
-const errorHandler = require("./Middleware/errorHandler.middleware");
+const notFound = require("./middleware/notFound.middleware");
+const errorHandler = require("./middleware/errorHandler.middleware");
 
 const app = express();
 

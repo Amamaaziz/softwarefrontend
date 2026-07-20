@@ -15,9 +15,9 @@ const {
   refresh,
   logout,
   getMe,
-} = require("../Controller/auth.controller");
-const { verifyJWT } = require("../Middleware/auth.middleware");
-const { authLimiter } = require("../Middleware/rateLimiter.middleware");
+} = require("../controller/auth.controller");
+const { verifyJWT } = require("../middleware/auth.middleware");
+const { authLimiter } = require("../middleware/rateLimiter.middleware");
 
 // If you add validators/auth.validator.js with a loginSchema, wire it in:
 // const validate = require("../Middleware/validate.middleware");

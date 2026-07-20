@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isAdmin } = require("../Middleware/auth.middleware");
+const { isAdmin } = require("../middleware/auth.middleware");
 const {
   listTestimonials,
   getTestimonial,
@@ -8,7 +8,7 @@ const {
   updateTestimonial,
   publishTestimonial,
   deleteTestimonial,
-} = require("../Controller/testimonial.controller");
+} = require("../controller/testimonial.controller");
 
 router.use(isAdmin);
 router.get("/", listTestimonials);

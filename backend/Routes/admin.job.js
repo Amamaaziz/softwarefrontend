@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { getAdminJobs, getJobById, createJob, updateJob, deleteJob } = require("../Controller/job.controller");
+const { getAdminJobs, getJobById, createJob, updateJob, deleteJob } = require("../controller/job.controller");
 const { createJobSchema, updateJobSchema, deleteJobSchema, getJobByIdSchema } = require("../validators/job.validator");
-const { verifyJWT, isAdmin } = require("../Middleware/auth.middleware");
-const validate = require("../Middleware/validate.middleware");
-const { generalApiLimiter } = require("../Middleware/rateLimiter.middleware");
+const { verifyJWT, isAdmin } = require("../middleware/auth.middleware");
+const validate = require("../middleware/validate.middleware");
+const { generalApiLimiter } = require("../middleware/rateLimiter.middleware");
 
 router.use(verifyJWT, isAdmin);
 

@@ -6,15 +6,15 @@ const {
   getApplicationById,
   updateApplication,
   deleteApplication,
-} = require("../Controller/application.controller");
+} = require("../controller/application.controller");
 const {
   updateApplicationSchema,
   deleteApplicationSchema,
   getApplicationByIdSchema,
 } = require("../validators/application.validator");
-const { isAdmin } = require("../Middleware/auth.middleware");
-const validate = require("../Middleware/validate.middleware");
-const { generalApiLimiter } = require("../Middleware/rateLimiter.middleware");
+const { isAdmin } = require("../middleware/auth.middleware");
+const validate = require("../middleware/validate.middleware");
+const { generalApiLimiter } = require("../middleware/rateLimiter.middleware");
 
 router.use(isAdmin);
 

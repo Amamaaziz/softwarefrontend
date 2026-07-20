@@ -20,7 +20,7 @@ const {
   createPortfolio,
   updatePortfolio,
   deletePortfolio,
-} = require("../Controller/portfolio.controller");
+} = require("../controller/portfolio.controller");
 
 const {
   createPortfolioSchema,
@@ -35,9 +35,9 @@ const {
   verifyJWT,
   isAdmin,
   optionalAuth,
-} = require("../Middleware/auth.middleware");
-const validate = require("../Middleware/validate.middleware");
-const { generalApiLimiter } = require("../Middleware/rateLimiter.middleware");
+} = require("../middleware/auth.middleware");
+const validate = require("../middleware/validate.middleware");
+const { generalApiLimiter } = require("../middleware/rateLimiter.middleware");
 
 // ---------------------------------------------------------------------------
 // Public reads

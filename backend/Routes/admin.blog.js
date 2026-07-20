@@ -7,7 +7,7 @@ const {
   createBlog,
   updateBlog,
   deleteBlog,
-} = require("../Controller/blog.controller");
+} = require("../controller/blog.controller");
 
 const {
   createBlogSchema,
@@ -16,9 +16,9 @@ const {
   idParamSchema,
 } = require("../validators/blog.validator");
 
-const { isAdmin } = require("../Middleware/auth.middleware");
-const validate = require("../Middleware/validate.middleware");
-const { generalApiLimiter } = require("../Middleware/rateLimiter.middleware");
+const { isAdmin } = require("../middleware/auth.middleware");
+const validate = require("../middleware/validate.middleware");
+const { generalApiLimiter } = require("../middleware/rateLimiter.middleware");
 
 router.use(isAdmin);
 
