@@ -159,7 +159,7 @@ export default function Home() {
 
   return (
     <>
-      <Seo title="Software Development Studio" description={COMPANY.tagline} />
+      <Seo title="DevInt.Tech--Software Development Studio"  />
 
       {/* ============ HERO — centered, video background ============ */}
       <section className="relative overflow-hidden">

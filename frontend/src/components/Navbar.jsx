@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { Menu, X, Sun, Moon, ArrowUpRight, ChevronDown } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext.jsx'
 import { COMPANY } from '../data/mockData.js'
-import { getServices } from '../lib/api.js'
+import { getServices, getSettings } from '../lib/api.js'
 import { decodeCommonEntities } from '../lib/textToHtml.js'
 import Button from './ui/Button.jsx'
 
@@ -24,6 +24,7 @@ export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [services, setServices] = useState([])
+  const [settings, setSettings] = useState(null)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
@@ -34,6 +35,20 @@ export default function Navbar() {
       })
       .catch(() => {
         if (!cancelled) setServices([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    getSettings()
+      .then((data) => {
+        if (!cancelled) setSettings(data)
+      })
+      .catch(() => {
+        if (!cancelled) setSettings(null)
       })
     return () => {
       cancelled = true
@@ -72,9 +87,13 @@ export default function Navbar() {
         }`}
       >
         <NavLink to="/" className="flex items-center gap-2 font-display text-lg font-semibold" onClick={closeAll}>
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-heading-light dark:bg-accent-dark font-mono text-sm text-white dark:text-slate-900">
-            &lt;/&gt;
-          </span>
+          {settings?.logo ? (
+            <img src={settings.logo} alt={COMPANY.name} className="h-12 w-auto object-contain" />
+          ) : (
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-heading-light dark:bg-accent-dark font-mono text-sm text-white dark:text-slate-900">
+              &lt;/&gt;
+            </span>
+          )}
           {COMPANY.name}
         </NavLink>
 
