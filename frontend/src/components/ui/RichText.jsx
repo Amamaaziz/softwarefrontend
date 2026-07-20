@@ -20,14 +20,19 @@ function sanitize(html) {
     .replace(/<\s*(script|style|iframe|object|embed)[^>]*\/?>/gi, '')
     .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
     .replace(/javascript:/gi, '')
+    .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*')/gi, '')
 }
 
 export default function RichText({ html, className = '' }) {
   if (!html) return null
 
-  if (!looksLikeHtml(html)) {
-    return <p className={className}>{html}</p>
-  }
+ if (!looksLikeHtml(html)) {
+  return (
+    <div className={`rich-text ${className}`}>
+      <p>{html}</p>
+    </div>
+  )
+}
 
   return (
     <div

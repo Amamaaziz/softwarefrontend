@@ -23,7 +23,7 @@ const subServiceSchema = z.object({
 
 const schema = z.object({
   title: z.string().min(2, 'Title is required'),
-  shortDescription: z.string().min(1, 'Short description is required').max(200, 'Keep it under 200 characters'),
+  shortDescription: z.string().min(1, 'Short description is required').max(1000),
   description: z.string().min(1, 'Full description is required'),
   subServices: z.array(subServiceSchema),
   images: z.array(z.string()),
