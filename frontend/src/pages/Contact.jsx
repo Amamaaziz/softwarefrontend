@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,7 +10,19 @@ import { Input, Textarea, Select } from '../components/ui/Input.jsx'
 import Button from '../components/ui/Button.jsx'
 import Reveal from '../components/ui/Reveal.jsx'
 import { COMPANY } from '../data/mockData.js'
-import { submitContactForm } from '../lib/api.js'
+import { submitContactForm, getServices } from '../lib/api.js'
+
+// Category dropdown values are a fixed backend enum (LeadCategory), not
+// individual services — but we want the *labels* to reflect whatever the
+// admin has actually named these services. No hardcoded fallback: if a
+// service isn't found (renamed/removed, or the fetch failed), that option
+// simply doesn't render.
+const SERVICE_CATEGORY_OPTIONS = [
+  { value: 'web-development', slug: 'web-development' },
+  { value: 'mobile-app-development', slug: 'app-development' },
+  { value: 'ui-ux-design', slug: 'ui-ux-design' },
+  { value: 'custom-software', slug: 'custom-software' },
+]
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Enter your name'),
@@ -23,12 +35,33 @@ const contactSchema = z.object({
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [services, setServices] = useState([])
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm({ resolver: zodResolver(contactSchema) })
+
+  useEffect(() => {
+    let cancelled = false
+    getServices()
+      .then((data) => {
+        if (!cancelled) setServices(data)
+      })
+      .catch(() => {
+        // Silently fall back to hardcoded labels below — this dropdown
+        // shouldn't block the whole contact form if the services call fails.
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const resolvedServiceOptions = SERVICE_CATEGORY_OPTIONS.map((opt) => ({
+    ...opt,
+    label: services.find((s) => s.slug === opt.slug)?.title,
+  })).filter((opt) => opt.label)
 
   const onSubmit = async (values) => {
     setSubmitting(true)
@@ -109,10 +142,11 @@ export default function Contact() {
                 <Select id="category" label="Category" error={errors.category?.message} defaultValue="" {...register('category')}>
                   <option value="" disabled>Select a category…</option>
                   <optgroup label="Services">
-                    <option value="web-development">Web Development</option>
-                    <option value="mobile-app-development">Mobile App Development</option>
-                    <option value="ui-ux-design">UI/UX Design</option>
-                    <option value="custom-software">Custom Software</option>
+                    {resolvedServiceOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
                     <option value="other-service">Other service</option>
                   </optgroup>
                   <optgroup label="Portfolio">

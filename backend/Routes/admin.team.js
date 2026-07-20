@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isAdmin } = require("../middleware/auth.middleware");
+const { isAdmin } = require("../Middleware/auth.middleware");
 const {
   listTeam,
   getTeamMember,
@@ -8,7 +8,7 @@ const {
   updateTeamMember,
   publishTeamMember,
   deleteTeamMember,
-} = require("../controller/team.controller");
+} = require("../Controller/team.controller");
 
 router.use(isAdmin);
 router.get("/", listTeam);

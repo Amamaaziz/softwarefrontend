@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5000:5000"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+      args:
+        # Change this to your real API URL when deploying — see note
+        # in frontend.Dockerfile about VITE_API_URL.
+        VITE_API_URL: http://localhost:5000
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

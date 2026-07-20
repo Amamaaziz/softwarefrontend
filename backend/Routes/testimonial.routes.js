@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getPublicTestimonials } = require("../controller/testimonial.controller");
+const { getPublicTestimonials } = require("../Controller/testimonial.controller");
 
 router.get("/", getPublicTestimonials);
 

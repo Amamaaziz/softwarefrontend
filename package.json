@@ -1,0 +1,10 @@
+{
+  "name": "softwarefrontend-root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Root-level convenience scripts for running the full stack via Docker.",
+  "scripts": {
+    "up": "docker compose up -d && docker compose ps && echo Site:  http://localhost:8080 && echo Admin: http://localhost:8080/admin && echo API:   http://localhost:5000/api/v1/services",
+    "down": "docker compose down"
+  }
+}
