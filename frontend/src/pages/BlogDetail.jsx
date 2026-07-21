@@ -31,7 +31,7 @@ export default function BlogDetail() {
 
       <article className="container-page max-w-3xl py-20">
         <Reveal>
-          <p className="eyebrow mb-4">{b.category}</p>
+          
           <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">{b.title}</h1>
           <p className="mt-4 text-sm">
             {b.authorName} · {new Date(b.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}

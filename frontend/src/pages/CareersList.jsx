@@ -393,7 +393,7 @@ export default function CareersList() {
       <section className="container-page pb-20">
         <div className="card-surface flex flex-col items-center gap-5 px-6 py-14 text-center sm:px-14">
           <SectionHeading
-            eyebrow="opportunities"
+            
             title="Find the role that fits you"
             align="center"
             description={

@@ -95,7 +95,7 @@ export default function Contact() {
         />
         <div className="relative container-page flex justify-start py-24 sm:justify-end sm:py-28">
           <div className="max-w-xl text-left sm:text-right">
-            <p className="font-mono text-xs uppercase tracking-wide text-accent">// say hello</p>
+            <p className="font-mono text-xs uppercase tracking-wide text-accent"></p>
             <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
               Contact Us
             </h1>
@@ -118,7 +118,7 @@ export default function Contact() {
 
       <section className="container-page py-20">
         <Reveal>
-          <SectionHeading eyebrow="contact" title="Feel free to contact us and join us" description="Fill in the form and we'll reply within one business day, usually sooner." />
+          <SectionHeading title="Feel free to contact us and join us" description="Fill in the form and we'll reply within one business day, usually sooner." />
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-5">

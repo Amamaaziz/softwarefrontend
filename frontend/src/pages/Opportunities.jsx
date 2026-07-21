@@ -44,7 +44,7 @@ export default function Opportunities() {
       <section className="container-page py-20">
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
-            eyebrow="open roles"
+            
             title="Current openings"
             description="Every role below is actively hiring. Click through to see the full description and apply."
           />

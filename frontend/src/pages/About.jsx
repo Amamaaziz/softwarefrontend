@@ -28,8 +28,8 @@ const HIGHLIGHTS = [
 
 const CEO = {
   name: 'Hassan Ishtiaq',
-  role: 'CEO & Founder',
-  photo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784374657/WhatsApp_Image_2026-07-16_at_5.13.14_PM_mzyxtt.jpg',
+  role: 'Chairman',
+  photo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784533140/sir_hassan.jpg',
   message:
     'Real innovation begins when you stop showcasing technology and start solving human problems. That\u2019s the standard we hold every project to.',
 }
@@ -137,7 +137,6 @@ export default function About() {
         <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2">
           <Reveal>
             <SectionHeading
-              eyebrow="about us"
               title="Where vision meets technology"
               description={<p>At <b>DevInt</b>, we're more than just a software house — we're a catalyst for digital evolution. Our mission is to craft powerful, intelligent solutions that fuel growth, drive innovation, and help businesses thrive.</p>}
             />
@@ -204,12 +203,45 @@ export default function About() {
         </div>
       </section>
 
+      {/* DIRECTOR MESSAGE */}
+      <section className="container-page py-20">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+          <Reveal>
+            <div className="relative">
+              <img
+                src={CEO.photo}
+                alt={CEO.name}
+                className="h-96 w-full rounded-2xl object-cover sm:h-[440px]"
+                loading="lazy"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-accent/10 blur-2xl"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <SectionHeading
+              title="A message from our chairman"
+            />
+            <blockquote className="mt-5 max-w-xl text-lg leading-relaxed text-body dark:text-body-dark">
+              &ldquo;{CEO.message}&rdquo;
+            </blockquote>
+            <div className="mt-6">
+              <p className="font-display text-lg font-semibold">{CEO.name}</p>
+              <p className="text-sm text-body/70 dark:text-body-dark/70">{CEO.role}</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* TEAM — intro left, featured member card right, rest of team below */}
       <section className="container-page py-20">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <Reveal>
             <SectionHeading
-              eyebrow="expert team"
+              
               title="Get to know our team"
               description="Our success is your success — together we help build software that makes work and life better."
             />

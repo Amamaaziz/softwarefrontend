@@ -34,7 +34,7 @@ export default function PortfolioDetail() {
 
       <section className="container-page py-20">
         <Reveal>
-          <p className="eyebrow mb-4">// case study — {p.client}</p>
+         
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">{p.title}</h1>
 
           <div className="mt-3 flex flex-wrap gap-2">

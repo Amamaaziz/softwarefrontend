@@ -36,7 +36,7 @@ export default function ServicesList() {
           className="pointer-events-none absolute -left-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl"
         />
         <div className="relative container-page py-24 sm:py-28">
-          <p className="font-mono text-xs uppercase tracking-wide text-accent">// what we do</p>
+          <p className="font-mono text-xs uppercase tracking-wide text-accent"></p>
           <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
             Services
           </h1>
@@ -54,7 +54,7 @@ export default function ServicesList() {
       <section className="container-page py-20">
         <Reveal>
           <SectionHeading
-            eyebrow="services"
+            
             title="Everything you need to ship, under one roof"
             description="Pick a single service or lean on the full team end to end — the same engineers stay on your project either way."
           />
@@ -116,7 +116,7 @@ export default function ServicesList() {
         <div className="container-page">
           <Reveal>
             <SectionHeading
-              eyebrow="stack sandbox"
+              
               title="See a stack assemble itself"
               description="Pick a service and watch the kind of architecture we'd reach for compile in real time."
             />
@@ -131,7 +131,7 @@ export default function ServicesList() {
       <section className="container-page py-20">
         <Reveal>
           <SectionHeading
-            eyebrow="scope estimator"
+            
             title="Sketch your project in 60 seconds"
             description="Answer three quick questions for a ballpark timeline — the more ambitious the scope, the more the border crackles."
           />

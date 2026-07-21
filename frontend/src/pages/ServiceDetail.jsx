@@ -35,7 +35,7 @@ export default function ServiceDetail() {
 
       <section className="container-page py-20">
         <Reveal>
-          <p className="eyebrow mb-4">// service</p>
+          
           <div className="flex flex-wrap items-start justify-between gap-6">
             <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
               {decodeCommonEntities(s.title)}

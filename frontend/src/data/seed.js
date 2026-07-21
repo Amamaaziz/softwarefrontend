@@ -22,9 +22,7 @@ export const seedSettings = {
   companyName: 'DevInt.Tech',
   tagline: 'We build the software behind growing businesses.',
   foundedYear: 2016,
- logo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png',
-
-  
+  logo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png',
   contactEmail: 'hello@devint.tech',
   contactPhone: '+92 300 1234567',
   officeAddress: 'Suite 4B, Gulgasht Colony, Multan, Punjab, Pakistan',
@@ -47,7 +45,6 @@ export const seedSettings = {
       'We build modern web, mobile, and SaaS products for startups and growing businesses.',
   },
 };
-
 
 // ── Services ────────────────────────────────────────────────────────────────
 export const seedServices = [
@@ -376,7 +373,7 @@ export const seedBlogs = [
 
 // ── Testimonials ────────────────────────────────────────────────────────────
 export const seedTestimonials = [
-  { _id: 'test-1', clientName: 'Amina Farooq', company: 'FinTrack Inc.', photo: 'https://i.pravatar.cc/150?img=32', message: 'DevInt.Tech  rebuilt our approval workflow from scratch and it just works. Our finance team stopped complaining about the software within the first week of launch.', rating: 5, isPublished: true, createdAt: daysAgo(60), updatedAt: daysAgo(60) },
+  { _id: 'test-1', clientName: 'Amina Farooq', company: 'FinTrack Inc.', photo: 'https://i.pravatar.cc/150?img=32', message: 'DevInt.Tech rebuilt our approval workflow from scratch and it just works. Our finance team stopped complaining about the software within the first week of launch.', rating: 5, isPublished: true, createdAt: daysAgo(60), updatedAt: daysAgo(60) },
   { _id: 'test-2', clientName: 'David Chen', company: 'Loop Logistics', photo: 'https://i.pravatar.cc/150?img=12', message: 'We had a hard launch date across three cities and no room for slippage. The team hit every milestone and the app has not had a major incident since.', rating: 5, isPublished: true, createdAt: daysAgo(45), updatedAt: daysAgo(45) },
   { _id: 'test-3', clientName: 'Priya Nair', company: 'Harbor Health Clinics', photo: 'https://i.pravatar.cc/150?img=45', message: 'They actually talked to our patients before redesigning anything. That research work is the reason the new booking flow performs so much better.', rating: 4, isPublished: true, createdAt: daysAgo(30), updatedAt: daysAgo(30) },
   { _id: 'test-4', clientName: 'Omar Sheikh', company: 'Cartly Retail Group', photo: 'https://i.pravatar.cc/150?img=51', message: 'Our storefront used to fall over every Black Friday. It has now handled two peak seasons without a single alert firing overnight.', rating: 5, isPublished: true, createdAt: daysAgo(20), updatedAt: daysAgo(20) },
@@ -507,12 +504,11 @@ export const seedLeads = [
   { _id: 'lead-4', name: 'Priya Nair', email: 'priya.nair@example.com', phone: '+91 98765 43210', category: 'Other', message: 'Just exploring options for now, will follow up in a few months.', source: 'contact', status: 'closed', createdAt: daysAgo(35) },
 ];
 
-
 // One object holding the whole "database". mockDb.js writes this shape to
 // localStorage on first run.
 export function buildSeedDb() {
   return {
-    __version: 1,
+    __version: 2, // bump this any time seed.js data (like the logo) changes
     settings: JSON.parse(JSON.stringify(seedSettings)),
     services: JSON.parse(JSON.stringify(seedServices)),
     portfolio: JSON.parse(JSON.stringify(seedPortfolio)),

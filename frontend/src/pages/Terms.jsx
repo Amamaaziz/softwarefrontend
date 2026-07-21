@@ -8,7 +8,7 @@ export default function Terms() {
       <Seo title="Terms & Conditions" description="Terms governing use of the DevInt website and services." />
       <article className="container-page max-w-3xl py-20">
         <Reveal>
-          <p className="eyebrow mb-4">legal</p>
+          
           <h1 className="text-4xl font-semibold tracking-tight">Terms & Conditions</h1>
           <p className="mt-3 text-sm">Last updated: July 6, 2026</p>
         </Reveal>

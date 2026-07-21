@@ -28,6 +28,7 @@ export const seedSettings = {
   officeAddress: 'Suite 4B, Gulgasht Colony, Multan, Punjab, Pakistan',
   social: {
     linkedin: 'https://linkedin.com/company/devint',
+     logo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784547440/WhatsApp_Image_2026-07-20_at_16.02.53-removebg-preview_1_bfpl0k.png',
     twitter: 'https://x.com/devint',
     facebook: 'https://facebook.com/devint',
     instagram: 'https://instagram.com/devint',

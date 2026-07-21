@@ -44,7 +44,7 @@ export default function PortfolioList() {
           className="absolute inset-0 bg-gradient-to-t from-[#0a1c1b] via-[#0a1c1b]/60 to-[#0a1c1b]/20"
         />
         <div className="relative container-page flex min-h-[22rem] flex-col justify-end pb-14 pt-24 sm:min-h-[26rem]">
-          <p className="font-mono text-xs uppercase tracking-wide text-accent">// selected work</p>
+          <p className="font-mono text-xs uppercase tracking-wide text-accent"></p>
           <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-white sm:text-6xl">
             Portfolio
           </h1>
@@ -58,7 +58,7 @@ export default function PortfolioList() {
 
       <section className="container-page py-20">
         <Reveal>
-          <SectionHeading eyebrow="portfolio" title="Case studies, not just screenshots" description="Every project below shipped to real users. We show the problem and the result, not just the pretty screens." />
+          <SectionHeading  title="Case studies, not just screenshots" description="Every project below shipped to real users. We show the problem and the result, not just the pretty screens." />
         </Reveal>
 
         {portfolio.status === 'success' && technologies.length > 1 && (
@@ -99,9 +99,7 @@ export default function PortfolioList() {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="eyebrow mb-2 text-xl font-semibold !text-heading-light dark:!text-heading-dark">
-                      {project.client}
-                    </p>
+                    
                      <h3 className="font-display text-sm font-semibold text-accent dark:text-accent-dark">
                        {project.title}
                       </h3>

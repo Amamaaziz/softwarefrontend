@@ -199,7 +199,7 @@ export default function Home() {
         <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="about us"
+              
               title="Where innovation thrives with the best IT services"
             />
             <p className="mt-6 text-base leading-relaxed">
@@ -324,7 +324,7 @@ export default function Home() {
       {/* ============ FEATURED PORTFOLIO SLIDER (unchanged) ============ */}
       <section className="py-24">
         <div className="container-page">
-          <SectionHeading eyebrow="proof of work" title="Recent launches" />
+          <SectionHeading  title="Recent launches" />
 
           <div className="mt-10">
             {featured.status === 'loading' && <Spinner />}
@@ -342,7 +342,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 md:grid-cols-2 bg-surface-light dark:bg-surface-dark">
                           <img src={project.coverImage} alt={decodeCommonEntities(project.title)} className="h-64 w-full object-cover md:h-full" loading="lazy" />
                           <div className="flex flex-col justify-center p-8 sm:p-10">
-                            <p className="eyebrow mb-2">{decodeCommonEntities(project.client)}</p>
+                        
                             <h3 className="font-display text-2xl font-semibold">{decodeCommonEntities(project.title)}</h3>
                             <p className="mt-3 text-sm leading-relaxed line-clamp-3">{project.result}</p>
                             <div className="mt-5 flex flex-wrap gap-2">
@@ -396,7 +396,7 @@ export default function Home() {
       {/* ============ TESTIMONIALS (unchanged) ============ */}
       <section className="bg-surface-light dark:bg-surface-dark py-24">
         <div className="container-page">
-          <SectionHeading eyebrow="client word" title="What clients say after launch" align="center" className="mx-auto" />
+          <SectionHeading  title="What clients say after launch" align="center" className="mx-auto" />
 
           <div className="mt-10">
             {testimonials.status === 'loading' && <Spinner />}

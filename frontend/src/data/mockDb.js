@@ -56,11 +56,21 @@ export function readDb() {
 
   const raw = window.localStorage.getItem(DB_KEY);
   const parsed = raw ? safeParse(raw) : null;
+  const seed = buildSeedDb();
 
-  if (!parsed || typeof parsed !== 'object' || !parsed.services) {
-    const seeded = buildSeedDb();
-    writeDb(seeded, { silent: true });
-    return seeded;
+  // Reseed if storage is missing/corrupt, OR if seed.js has moved on to a
+  // newer __version than what's cached. This is what makes edits to seed.js
+  // (like a new logo URL) actually show up, instead of leaving old browsers
+  // stuck on whatever was first ever written to localStorage.
+  const isStale =
+    !parsed ||
+    typeof parsed !== 'object' ||
+    !parsed.services ||
+    parsed.__version !== seed.__version;
+
+  if (isStale) {
+    writeDb(seed, { silent: true });
+    return seed;
   }
   return parsed;
 }

@@ -8,7 +8,7 @@ export default function Privacy() {
       <Seo title="Privacy Policy" description="How DevInt collects, uses, and protects your data." />
       <article className="container-page max-w-3xl py-20">
         <Reveal>
-          <p className="eyebrow mb-4">legal</p>
+          
           <h1 className="text-4xl font-semibold tracking-tight">Privacy Policy</h1>
           <p className="mt-3 text-sm">Last updated: July 6, 2026</p>
         </Reveal>

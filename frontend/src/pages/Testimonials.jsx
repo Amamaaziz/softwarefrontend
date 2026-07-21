@@ -18,7 +18,7 @@ export default function Testimonials() {
 
       <section className="container-page py-20">
         <Reveal>
-          <SectionHeading eyebrow="reviews" title="Client testimonials" align="center" className="mx-auto" />
+          <SectionHeading  title="Client testimonials" align="center" className="mx-auto" />
         </Reveal>
 
         <div className="mt-12">
