@@ -28,7 +28,7 @@ const HIGHLIGHTS = [
 
 const CEO = {
   name: 'Hassan Ishtiaq',
-  role: 'Chairman',
+  role: 'CEO',
   photo: 'https://res.cloudinary.com/r2fk1fws/image/upload/v1784533140/sir_hassan.jpg',
   message:
     'Real innovation begins when you stop showcasing technology and start solving human problems. That\u2019s the standard we hold every project to.',
@@ -223,7 +223,7 @@ export default function About() {
 
           <Reveal delay={150}>
             <SectionHeading
-              title="A message from our chairman"
+              title="A message from our CEO"
             />
             <blockquote className="mt-5 max-w-xl text-lg leading-relaxed text-body dark:text-body-dark">
               &ldquo;{CEO.message}&rdquo;
